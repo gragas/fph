@@ -6,4 +6,4 @@ This is a roleplaying adventure game filled with alchemy, botany, magic, craftin
 
 ## License and Redistribution
 
-This project is licensed under the GNU GENERAL PUBLIC LICENSE. Feel free to copy, modify, and redistribute this work, but please be sure to attribute me as the original author!
+This project is licensed under the GNU GENERAL PUBLIC LICENSE. Feel free to copy, modify, and redistribute this work, but please be sure to attribute me (Thomas D. Fischer) as the original author!
