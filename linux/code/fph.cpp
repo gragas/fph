@@ -5,41 +5,21 @@
 #include "SDL/SDL_image.h"
 #include <string>
 
-const int SCREEN_WIDTH = 1280;
-const int SCREEN_HEIGHT = 720;
+#include "timer.h"
+#include "utils.h"
+#include "main_menu.h"
+
+const int SCREEN_WIDTH = 1024;
+const int SCREEN_HEIGHT = 640;
 const int SCREEN_BPP = 32;
 const int FRAMES_PER_SECOND = 55;
 
 SDL_Surface *screen = NULL;
-SDL_Surface *i_splash_background = NULL;
-SDL_Surface *i_splash_title = NULL;
 
 SDL_Event event;
 
-SDL_Surface *load_image( std::string filename )
-{
-  SDL_Surface* loadedImage = NULL;
-  
-  SDL_Surface* optimizedImage = NULL;
-  
-  loadedImage = IMG_Load( filename.c_str() );
-  
-  if( loadedImage != NULL )
-  {
-    optimizedImage = SDL_DisplayFormatAlpha( loadedImage );
-    SDL_FreeSurface( loadedImage );
-  }
-  
-  return optimizedImage;
-}
-
-void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination)
-{
-  SDL_Rect offset; 
-  offset.x = x;
-  offset.y = y;
-  SDL_BlitSurface( source, NULL, destination, &offset );
-}
+void (*logic)( SDL_Event& ) = NULL;
+void (*blit)( SDL_Surface* ) = NULL;
 
 bool init()
 {
@@ -62,66 +42,57 @@ bool init()
   return true;
 }
 
-bool load_files()
+void clear_screen()
 {
-  i_splash_background = load_image( "data/images/splash/background.png" );
-  i_splash_title = load_image( "data/images/splash/title.png" );
-  
-  if( i_splash_background == NULL ||
-      i_splash_title == NULL)
-  {
-    return false;
-  }
-  
-  // If everything loaded fine
-  return true;
-}
-
-void clean_up()
-{
-  // Free the images
-  SDL_FreeSurface( i_splash_background );
-  SDL_FreeSurface( i_splash_title );
-  
-  SDL_Quit();
+    SDL_FillRect( screen, &screen->clip_rect, SDL_MapRGB( screen->format, 0x00, 0x00, 0x00 ) );
 }
 
 int main( int argc, char* args [] )
 {    
-  bool quit = false;
 
   if( init() == false )
   {
     return 1;
   }
   
-  if( load_files() == false)
+  if( l_main_menu() == false)
   {
     return 1;
   }
   
-  apply_surface( 0, 0, i_splash_background, screen );  
-  apply_surface( 0, SCREEN_HEIGHT / 3 - i_splash_title->h / 2, i_splash_title, screen );
+  int frame = 0;
+  Timer fps;
   
-  // Update the screen
-  if( SDL_Flip( screen ) == -1 )
-  {
-    return 1;
-  }
+  logic = logic_main_menu;
+  blit = b_main_menu;
   
   while( quit == false )
-  {
-    while( SDL_PollEvent( &event ) )
+  {    
+    logic( event );
+    
+    clear_screen();
+    
+    blit( screen );
+
+    // Update the screen
+    if( SDL_Flip( screen ) == -1 )
     {
-      if( event.type == SDL_QUIT )
-      {
-	quit = true;
-      }
+      return 1;
+    }
+
+    if( fps.get_ticks() < 1000 / FRAMES_PER_SECOND )
+    {
+      SDL_Delay( ( 1000 / FRAMES_PER_SECOND ) - fps.get_ticks() );
     }
   }
 
-  // Free the surfaces and quit SDL
-  clean_up();
+  // // Free the surfaces and quit SDL
+  // if( f_main_menu() == false )
+  // {
+  //   return 1;
+  // }
+  
+  SDL_Quit();
   
   return 0;
 }
