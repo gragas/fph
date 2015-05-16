@@ -1,0 +1,5 @@
+#!/bin/bash
+
+pushd ../build
+g++ -o fph ../code/fph.cpp -lSDL
+popd
