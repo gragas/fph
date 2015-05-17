@@ -13,9 +13,6 @@ SDL_Surface *screen = NULL;
 
 SDL_Event event;
 
-void (*logic)( SDL_Event& ) = NULL;
-void (*blit)( SDL_Surface* ) = NULL;
-
 bool init()
 {
   if( SDL_Init( SDL_INIT_EVERYTHING ) == -1)
@@ -23,7 +20,8 @@ bool init()
     return 1;
   }
   
-  screen = SDL_SetVideoMode( SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE );  
+  screen = SDL_SetVideoMode( utils::SCREEN_WIDTH, utils::SCREEN_HEIGHT,
+			     utils::SCREEN_BPP, SDL_SWSURFACE );  
   // If there was an error while setting up the screen
   if( screen == NULL )
   {
@@ -34,11 +32,6 @@ bool init()
   
   // If everything initialized fine
   return true;
-}
-
-void clear_screen()
-{
-  SDL_FillRect( screen, &screen->clip_rect, SDL_MapRGB( screen->format, 0x00, 0x00, 0x00 ) );
 }
 
 int main( int argc, char* args [] )
@@ -57,16 +50,16 @@ int main( int argc, char* args [] )
   int frame = 0;
   Timer fps;
   
-  logic = Main_Menu::logic;
-  blit = Main_Menu::blit;
+  utils::logic = Main_Menu::logic;
+  utils::blit = Main_Menu::blit;
   
-  while( quit == false )
+  while( utils::quit == false )
   {    
-    logic( event );
+    utils::logic( event );
     
-    clear_screen();
+    utils::clear( screen );
     
-    blit( screen );
+    utils::blit( screen );
 
     // Update the screen
     if( SDL_Flip( screen ) == -1 )
@@ -74,9 +67,9 @@ int main( int argc, char* args [] )
       return 1;
     }
 
-    if( fps.get_ticks() < 1000 / FRAMES_PER_SECOND )
+    if( fps.get_ticks() < 1000 / utils::FRAMES_PER_SECOND )
     {
-      SDL_Delay( ( 1000 / FRAMES_PER_SECOND ) - fps.get_ticks() );
+      SDL_Delay( ( 1000 / utils::FRAMES_PER_SECOND ) - fps.get_ticks() );
     }
   }
 

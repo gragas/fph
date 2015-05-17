@@ -20,6 +20,7 @@ public:
   void update( int mouse_x, int mouse_y );
   void update( bool mouse_down );
   void draw( SDL_Surface* screen );
+  void free();
 };
 
 #endif

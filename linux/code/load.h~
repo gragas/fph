@@ -1,0 +1,19 @@
+#include "SDL/SDL.h"
+
+#ifndef LOAD_H
+#define LOAD_H
+
+class Main_Menu{
+
+ private:
+  static SDL_Surface *background;
+  static Button exit_button;
+  
+ public:
+  static bool load();
+  static bool free();
+  static void logic( SDL_Event& );
+  static void blit( SDL_Surface* );
+};
+
+#endif
