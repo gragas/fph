@@ -9,11 +9,6 @@
 #include "utils.h"
 #include "main_menu.h"
 
-const int SCREEN_WIDTH = 1024;
-const int SCREEN_HEIGHT = 640;
-const int SCREEN_BPP = 32;
-const int FRAMES_PER_SECOND = 55;
-
 SDL_Surface *screen = NULL;
 
 SDL_Event event;

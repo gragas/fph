@@ -1,4 +1,5 @@
 #include "SDL/SDL.h"
+#include "button.h"
 
 #ifndef MAIN_MENU_H
 #define MAIN_MENU_H
@@ -8,6 +9,7 @@ class Main_Menu{
  private:
   static SDL_Surface *i_splash_background;
   static SDL_Surface *i_splash_title;
+  static Button exit_button;
   
  public:
   static bool load();
