@@ -39,6 +39,21 @@ void logic_main_menu( SDL_Event &event )
       {
       case SDLK_ESCAPE: quit = true;
       }
+    } else if( event.type == SDL_MOUSEMOTION )
+    {
+      // setup the enum
+    } else if( event.type == SDL_MOUSEBUTTONDOWN )
+    {
+      if( event.button.button == SDL_BUTTON_LEFT )
+      {
+	// mouse down
+      }
+    } else if( event.type == SDL_MOUSEBUTTONUP )
+    {
+      if( event.button.button == SDL_BUTTON_LEFT )
+      {
+	// mouse up
+      }
     }
   }
 }
