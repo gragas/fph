@@ -28,8 +28,7 @@ bool init()
     return 1;
   }
   
-  screen = SDL_SetVideoMode( SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE );
-  
+  screen = SDL_SetVideoMode( SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE );  
   // If there was an error while setting up the screen
   if( screen == NULL )
   {
@@ -44,7 +43,7 @@ bool init()
 
 void clear_screen()
 {
-    SDL_FillRect( screen, &screen->clip_rect, SDL_MapRGB( screen->format, 0x00, 0x00, 0x00 ) );
+  SDL_FillRect( screen, &screen->clip_rect, SDL_MapRGB( screen->format, 0x00, 0x00, 0x00 ) );
 }
 
 int main( int argc, char* args [] )
@@ -55,7 +54,7 @@ int main( int argc, char* args [] )
     return 1;
   }
   
-  if( l_main_menu() == false)
+  if( Main_Menu::load() == false)
   {
     return 1;
   }
@@ -63,8 +62,8 @@ int main( int argc, char* args [] )
   int frame = 0;
   Timer fps;
   
-  logic = logic_main_menu;
-  blit = b_main_menu;
+  logic = Main_Menu::logic;
+  blit = Main_Menu::blit;
   
   while( quit == false )
   {    

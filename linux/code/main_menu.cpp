@@ -2,16 +2,16 @@
 #include "utils.h"
 #include "main_menu.h"
 
- SDL_Surface *i_splash_background;
-SDL_Surface *i_splash_title;
+SDL_Surface *Main_Menu::i_splash_background = NULL;
+SDL_Surface *Main_Menu::i_splash_title = NULL;
 
-bool l_main_menu()
+bool Main_Menu::load()
 {
-  i_splash_background = load_image( "data/images/splash/background.png" );
-  i_splash_title = load_image( "data/images/splash/title2.png" );
+  Main_Menu::i_splash_background = load_image( "data/images/splash/background.png" );
+  Main_Menu::i_splash_title = load_image( "data/images/splash/title2.png" );
   
-  if( i_splash_background == NULL ||
-      i_splash_title == NULL)
+  if( Main_Menu::i_splash_background == NULL ||
+      Main_Menu::i_splash_title == NULL)
   {
     return false;
   }
@@ -20,13 +20,13 @@ bool l_main_menu()
   return true;
 }
 
-bool f_main_menu()
+bool Main_Menu::free()
 {
-  SDL_FreeSurface( i_splash_background );
-  SDL_FreeSurface( i_splash_title );
+  SDL_FreeSurface( Main_Menu::i_splash_background );
+  SDL_FreeSurface( Main_Menu::i_splash_title );
 }
 
-void logic_main_menu( SDL_Event &event )
+void Main_Menu::logic( SDL_Event &event )
 {
   while( SDL_PollEvent( &event ) )
   {
@@ -58,8 +58,8 @@ void logic_main_menu( SDL_Event &event )
   }
 }
 
-void b_main_menu( SDL_Surface* screen )
+void Main_Menu::blit( SDL_Surface* screen )
 {
-    apply_surface( 0, 0, i_splash_background, screen );  
-    apply_surface( screen->w / 2 - i_splash_title->w / 2,  screen->h / 3 - i_splash_title->h / 2, i_splash_title, screen );
+  apply_surface( 0, 0, Main_Menu::i_splash_background, screen );  
+  apply_surface( screen->w / 2 - Main_Menu::i_splash_title->w / 2,  screen->h / 3 - Main_Menu::i_splash_title->h / 2, Main_Menu::i_splash_title, screen );
 }
