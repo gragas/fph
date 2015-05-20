@@ -7,6 +7,8 @@ class Main_Screen
 {
  private:
   static SDL_Surface *i_background;
+  static SDL_Surface *i_red_select_square;
+  static unsigned int uint_selection;
   
  public:
   static bool load();
