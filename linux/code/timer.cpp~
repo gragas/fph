@@ -1,7 +1,0 @@
-#include "Timer.h"
-
-Timer::Timer()
-{
-  startTicks = 0;
-  pausedTicks = 0;
-}

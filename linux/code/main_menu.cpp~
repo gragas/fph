@@ -1,8 +1,0 @@
-#include "SDL/SDL.h"
-#include "main_menu.h"
-
-void b_splash(&SDL_Surface)
-{
-    apply_surface( 0, 0, i_splash_background, screen );  
-    apply_surface( SCREEN_WIDTH / 2 - i_splash_title->w / 2,  SCREEN_HEIGHT / 3 - i_splash_title->h / 2, i_splash_title, screen );
-}

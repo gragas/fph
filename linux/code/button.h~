@@ -1,8 +1,0 @@
-#include "SDL/SDL.h"
-
-#ifndef BUTTON_H
-#define BUTTON_H
-
-
-
-#endif

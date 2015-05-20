@@ -1,8 +1,0 @@
-#incldue "SDL/SDL.h"
-
-#IFNDEF MAIN_MENU_H
-#DEFINE MAIN_MENU_H
-
-void b_splash(&SDL_Surface);
-
-#endif

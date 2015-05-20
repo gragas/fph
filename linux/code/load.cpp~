@@ -1,3 +1,0 @@
-#include "SDL/SDL.h"
-#include <string>
-#include "load.h"
