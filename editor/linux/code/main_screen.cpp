@@ -22,6 +22,7 @@ bool Main_Screen::free()
 {
   SDL_FreeSurface( Main_Screen::i_background );
   SDL_FreeSurface( Main_Screen::i_red_select_square );
+  Main_Screen::t_filename.free();
   return true;
 }
 

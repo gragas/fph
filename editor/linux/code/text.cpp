@@ -47,6 +47,11 @@ std::string Text::get_text()
   return text;
 }
 
+void Text::free()
+{
+  SDL_FreeSurface( i_text );
+}
+
 void Text::blit( SDL_Surface* screen )
 {
   utils::apply_surface( x, y, i_text, screen );

@@ -15,6 +15,7 @@ public:
   Text();
   void init( std::string text, int x, int y );
   std::string get_text();
+  void free();
   void blit( SDL_Surface* screen );
 };
 

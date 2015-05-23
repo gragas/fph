@@ -56,13 +56,13 @@ int main( int argc, char* args [] )
   utils::blit = Main_Screen::blit;
   
   while( utils::quit == false )
-  {    
+  {
     utils::logic( event );
     
     utils::clear( screen );
     
     utils::blit( screen );
-
+    
     // Update the screen
     if( SDL_Flip( screen ) == -1 )
     {
@@ -75,11 +75,10 @@ int main( int argc, char* args [] )
     }
   }
 
-  // // Free the surfaces and quit SDL
-  // if( f_main_menu() == false )
-  // {
-  //   return 1;
-  // }
+  if( Main_Screen::free() == false )
+  {
+    return 1;
+  }
   
   SDL_Quit();
   
