@@ -1,17 +1,20 @@
 #include "SDL/SDL.h"
 #include <string>
-
+#include "text.h"
 #include "utils.h"
+#include "text_utils.h"
 #include "main_screen.h"
 
 SDL_Surface *Main_Screen::i_background = NULL;
 SDL_Surface *Main_Screen::i_red_select_square = NULL;
 unsigned int Main_Screen::uint_selection = 0;
+Text Main_Screen::t_filename;
 
 bool Main_Screen::load()
 {
   Main_Screen::i_background = utils::load_image( "data/images/main_screen/background.png" );
   Main_Screen::i_red_select_square = utils::load_image( "data/images/main_screen/red_select_square.png" );
+  Main_Screen::t_filename.init( "Filename", 10, 606 );
   return true;
 }
 
@@ -55,6 +58,17 @@ void Main_Screen::logic( SDL_Event& event )
 	}
       }
     }
+    else if( event.type == SDL_KEYDOWN )
+    {
+      switch( event.key.keysym.sym )
+      {
+      case SDLK_ESCAPE: 
+	utils::quit = true;
+	break;
+      default:
+	break;
+      }
+    }
   }
 }
 
@@ -75,4 +89,5 @@ void Main_Screen::blit( SDL_Surface* screen )
     utils::apply_surface( 920, 15, Main_Screen::i_red_select_square, screen );
     break;
   }
+  Main_Screen::t_filename.blit( screen );
 }

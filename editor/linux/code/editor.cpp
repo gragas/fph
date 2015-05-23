@@ -4,7 +4,7 @@
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 #include <string>
-
+#include "text_utils.h"
 #include "timer.h"
 #include "utils.h"
 #include "main_screen.h"
@@ -42,6 +42,8 @@ int main( int argc, char* args [] )
     return 1;
   }
   
+  text_utils::init();
+
   if( Main_Screen::load() == false)
   {
     return 1;
