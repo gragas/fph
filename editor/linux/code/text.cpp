@@ -11,7 +11,7 @@ Text::Text(){}
 void Text::init( std::string text, int x, int y )
 {
   this->text = text;
-  i_text = SDL_CreateRGBSurface( SDL_HWSURFACE, 16 * text.length(), 24,
+  i_text = SDL_CreateRGBSurface( SDL_HWSURFACE, 9 * text.length(), 18,
 				 32, 0x000000FF, 0x0000FF00, 0x00FF0000,
 				 0xFF000000 );
   SDL_FillRect( i_text, NULL, SDL_MapRGBA(i_text->format, 0, 0, 0, 0) );
@@ -38,7 +38,7 @@ void Text::init( std::string text, int x, int y )
       std::cout << "Invalid Text std::string " << text << std::endl;
       utils::quit = true;
     }
-    utils::apply_surface( i * 16, 0, text_utils::chars[index], i_text );
+    utils::apply_surface( i * 9, 0, text_utils::chars[index], i_text );
   }
 }
 

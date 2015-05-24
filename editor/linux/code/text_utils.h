@@ -7,7 +7,7 @@
 
 namespace text_utils
 {
-  extern std::array<SDL_Surface*, 62> chars; // numeric, lower, upper
+  extern std::array<SDL_Surface*, 65> chars; // numeric, lower, upper
   void init();
 }
 
