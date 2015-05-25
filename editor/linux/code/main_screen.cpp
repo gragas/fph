@@ -14,7 +14,7 @@ bool Main_Screen::load()
 {
   Main_Screen::i_background = utils::load_image( "data/images/main_screen/background.png" );
   Main_Screen::i_red_select_square = utils::load_image( "data/images/main_screen/red_select_square.png" );
-  Main_Screen::t_filename.init( "Filename", 1, 0, 10, 600 );
+  Main_Screen::t_filename.init( "Filename:", 2, 1, 10, 595 );
   return true;
 }
 

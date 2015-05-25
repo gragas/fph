@@ -70,6 +70,18 @@ void Text::init( std::string text, int size, int color, int x, int y )
     {
       index = int(text[i] - char(87)); // - 97 + 10
     }
+    else if( text[i] == 58 )
+    {
+      index = int(text[i] + char(4)); // - 58 + 62
+    }
+    else if( text[i] == 59 )
+    {
+      index = int(text[i] + char(4)); // - 59 + 63
+    }
+    else if( text[i] == 46 )
+    {
+      index = int(text[i] + char(18)); // - 46 + 64
+    }
     else
     {
       std::cout << "Invalid Text std::string " << text << std::endl;
