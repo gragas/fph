@@ -1,4 +1,6 @@
 #include "SDL/SDL.h"
+#include <string>
+#include <map>
 #include "text.h"
 
 #ifndef MAIN_SCREEN_H
@@ -8,9 +10,13 @@ class Main_Screen
 {
  private:
   static SDL_Surface *i_background;
-  static SDL_Surface *i_red_select_square;
-  static unsigned int uint_selection;
+  static Text t_filename_label;
   static Text t_filename;
+  static std::string s_filename;
+  static Text t_tile_label;
+  static Text t_tile;
+  static std::string s_tile;
+  static std::map<std::string, SDL_Surface*> imported_tiles;
   
  public:
   static bool load();
