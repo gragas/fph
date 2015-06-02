@@ -17,6 +17,8 @@ class Main_Screen
   static Text t_tile;
   static std::string s_tile;
   static std::map<std::string, SDL_Surface*> imported_tiles;
+  static SDL_Surface *floor;
+  static int camera_x, camera_y;
   
  public:
   static bool load();

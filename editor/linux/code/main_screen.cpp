@@ -16,6 +16,7 @@ Text Main_Screen::t_tile_label;
 Text Main_Screen::t_tile;
 std::string Main_Screen::s_tile;
 std::map<std::string, SDL_Surface*> Main_Screen::imported_tiles;
+SDL_Surface *Main_Screen::floor = NULL;
 
 bool Main_Screen::load()
 {
@@ -40,6 +41,7 @@ bool Main_Screen::load()
 	{
 	  Main_Screen::imported_tiles[ name ] = utils::load_image( "data/images/tiles/" 
 								   + name );
+	  SDL_SetAlpha( Main_Screen::imported_tiles[ name ], 0, SDL_ALPHA_OPAQUE );
 	}
       }
     }
@@ -50,6 +52,17 @@ bool Main_Screen::load()
     std::cout << "ERROR: Folder \"data/images/tiles\" could not be explored." << std::endl;
     utils::quit = true;
   }
+  
+  Main_Screen::floor = SDL_CreateRGBSurface( SDL_HWSURFACE, 
+					     utils::SCREEN_WIDTH * 3, utils::SCREEN_HEIGHT * 3,
+					     32, 0x000000FF, 0x0000FF00, 0x00FF0000,
+					     0xFF000000 );
+  SDL_FillRect( Main_Screen::floor, NULL, SDL_MapRGBA( Main_Screen::floor->format, 0, 0, 0, 0 ) );
+  /* Be sure to set the alpha of source surfaces when blitting onto floor
+     Use this:
+     SDL_SetAlpha( source, 0, SDL_ALPHA_OPAQUE );
+  */
+  
   return true;
 }
 
@@ -79,7 +92,11 @@ void Main_Screen::logic( SDL_Event& event )
     {
       if( event.button.button == SDL_BUTTON_LEFT )
       {
-	
+	/* if floor mode */
+	utils::apply_surface( utils::SCREEN_WIDTH + event.button.x - (event.button.x % 32),
+			      utils::SCREEN_HEIGHT + event.button.y - (event.button.y % 32),
+			      Main_Screen::imported_tiles[ s_tile ],
+			      Main_Screen::floor );
       }
     }
     else if( event.type == SDL_KEYDOWN )
@@ -98,6 +115,7 @@ void Main_Screen::logic( SDL_Event& event )
 
 void Main_Screen::blit( SDL_Surface* screen )
 {
+  utils::apply_surface( -1 * utils::SCREEN_WIDTH, -1 * utils::SCREEN_HEIGHT, Main_Screen::floor, screen );
   utils::apply_surface( 0, 0, Main_Screen::i_background, screen );
   Main_Screen::t_filename_label.blit( screen );
   Main_Screen::t_filename.blit( screen );

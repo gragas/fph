@@ -52,7 +52,7 @@ void Text::init( std::string text, int size, int color, int x, int y )
   i_text = SDL_CreateRGBSurface( SDL_HWSURFACE, width * text.length(), height,
 				 32, 0x000000FF, 0x0000FF00, 0x00FF0000,
 				 0xFF000000 );
-  SDL_FillRect( i_text, NULL, SDL_MapRGBA(i_text->format, 0, 0, 0, 0) );
+  SDL_FillRect( i_text, NULL, SDL_MapRGBA( i_text->format, 0, 0, 0, 0 ) );
 
 
   for( int i = 0; i < text.length(); i++ )
