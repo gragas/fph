@@ -13,6 +13,8 @@ void Text::init( std::string text, int size, int color, int x, int y )
   this->text = text;
   this->x = x;
   this->y = y;
+  this->color = color;
+  this->size = size;
   
   int offset = 0, width = 9, height = 18;
   switch( size )
@@ -49,6 +51,7 @@ void Text::init( std::string text, int size, int color, int x, int y )
     break;
   }
 
+  free();
   i_text = SDL_CreateRGBSurface( SDL_HWSURFACE, width * text.length(), height,
 				 32, 0x000000FF, 0x0000FF00, 0x00FF0000,
 				 0xFF000000 );
@@ -94,6 +97,31 @@ void Text::init( std::string text, int size, int color, int x, int y )
 std::string Text::get_text()
 {
   return text;
+}
+
+void Text::set_text( std::string text )
+{
+  this->text = text;
+}
+
+int Text::get_size()
+{
+  return size;
+}
+
+int Text::get_color()
+{
+  return color;
+}
+
+int Text::get_x()
+{
+  return x;
+}
+
+int Text::get_y()
+{
+  return y;
 }
 
 void Text::free()

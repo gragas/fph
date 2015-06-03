@@ -2,20 +2,24 @@
 #include <dirent.h>
 #include <string>
 #include <map>
+#include <vector>
 #include <iostream>
 #include "text.h"
 #include "utils.h"
 #include "text_utils.h"
 #include "main_screen.h"
+#include "text_input.h"
 
 SDL_Surface *Main_Screen::i_background = NULL;
 Text Main_Screen::t_filename_label;
 Text Main_Screen::t_filename;
 std::string Main_Screen::s_filename;
 Text Main_Screen::t_tile_label;
-Text Main_Screen::t_tile;
-std::string Main_Screen::s_tile;
+Text_Input Main_Screen::ti_tile;
+Text_Input *Main_Screen::ptr_ti_selected_text_input = NULL;
+std::string Main_Screen::s_selected_tile;
 std::map<std::string, SDL_Surface*> Main_Screen::imported_tiles;
+std::vector<Text_Input> Main_Screen::text_inputs;
 SDL_Surface *Main_Screen::floor = NULL;
 
 bool Main_Screen::load()
@@ -25,8 +29,9 @@ bool Main_Screen::load()
   Main_Screen::t_filename.init( "Unspecified", 0, 1, 795, 5 );
   Main_Screen::s_filename = "Unspecified";
   Main_Screen::t_tile_label.init( "Tile:", 0, 0, 715, 25 );
-  Main_Screen::t_tile.init( "grass.png", 0, 1, 760, 25 );
-  Main_Screen::s_tile = "grass.png";
+  Main_Screen::ti_tile.init( "grass.png", 0, 1, 760, 25, 30 );
+  Main_Screen::text_inputs.push_back( Main_Screen::ti_tile );
+  Main_Screen::s_selected_tile = "grass.png";
   /* Partial thanks to stackoverflow */
   DIR *dir;
   struct dirent *ent;
@@ -72,7 +77,7 @@ bool Main_Screen::free()
   Main_Screen::t_filename_label.free();
   Main_Screen::t_filename.free();
   Main_Screen::t_tile_label.free();
-  Main_Screen::t_tile.free();
+  Main_Screen::ti_tile.free();
   return true;
 }
 
@@ -92,11 +97,24 @@ void Main_Screen::logic( SDL_Event& event )
     {
       if( event.button.button == SDL_BUTTON_LEFT )
       {
-	/* if floor mode */
-	utils::apply_surface( utils::SCREEN_WIDTH + event.button.x - (event.button.x % 32),
-			      utils::SCREEN_HEIGHT + event.button.y - (event.button.y % 32),
-			      Main_Screen::imported_tiles[ s_tile ],
-			      Main_Screen::floor );
+	if( event.button.x < 704 )
+	{
+	  /* if floor mode */
+	  utils::apply_surface( utils::SCREEN_WIDTH + event.button.x - (event.button.x % 32),
+				utils::SCREEN_HEIGHT + event.button.y - (event.button.y % 32),
+				Main_Screen::imported_tiles[ s_selected_tile ],
+				Main_Screen::floor );
+	}
+	else
+	{
+	  for( auto &text_input : text_inputs )
+	  {
+	    if( text_input.within( event.button.x, event.button.y ) )
+	    {
+	      Main_Screen::ptr_ti_selected_text_input = &text_input;
+	    }
+	  }
+	}
       }
     }
     else if( event.type == SDL_KEYDOWN )
@@ -107,6 +125,11 @@ void Main_Screen::logic( SDL_Event& event )
 	utils::quit = true;
 	break;
       default:
+	if( Main_Screen::ptr_ti_selected_text_input != NULL )
+	{
+	  Main_Screen::ptr_ti_selected_text_input->append( int( event.key.keysym.mod ),
+							   int( event.key.keysym.sym ) );
+	}
 	break;
       }
     }
@@ -120,5 +143,5 @@ void Main_Screen::blit( SDL_Surface* screen )
   Main_Screen::t_filename_label.blit( screen );
   Main_Screen::t_filename.blit( screen );
   Main_Screen::t_tile_label.blit( screen );
-  Main_Screen::t_tile.blit( screen );
+  Main_Screen::ti_tile.blit( screen );
 }
