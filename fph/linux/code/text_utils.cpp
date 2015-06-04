@@ -43,11 +43,11 @@ void text_utils::load( std::string path )
 						    + "colon.png" );
   SDL_SetAlpha( text_utils::chars[text_utils::counter++], 0, SDL_ALPHA_OPAQUE );
   text_utils::chars[text_utils::counter] = utils::load_image( base_path + "special/"
-						    + "period.png" );
+						    + "semicolon.png" );
   SDL_SetAlpha( text_utils::chars[text_utils::counter++], 0, SDL_ALPHA_OPAQUE );
   text_utils::chars[text_utils::counter] = utils::load_image( base_path + "special/"
-						    + "semicolon.png" );
-  SDL_SetAlpha( text_utils::chars[text_utils::counter++], 0, SDL_ALPHA_OPAQUE );  
+						    + "period.png" );
+  SDL_SetAlpha( text_utils::chars[text_utils::counter++], 0, SDL_ALPHA_OPAQUE );
 }
 
 void text_utils::init()

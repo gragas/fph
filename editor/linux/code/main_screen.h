@@ -20,7 +20,7 @@ class Main_Screen
   static Text_Input *ptr_ti_selected_text_input;
   static std::string s_selected_tile;
   static std::map<std::string, SDL_Surface*> imported_tiles;
-  static std::vector<Text_Input> text_inputs;
+  static std::vector<Text_Input*> text_inputs;
   static SDL_Surface *floor;
   static int camera_x, camera_y;
   

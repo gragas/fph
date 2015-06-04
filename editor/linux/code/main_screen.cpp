@@ -19,7 +19,7 @@ Text_Input Main_Screen::ti_tile;
 Text_Input *Main_Screen::ptr_ti_selected_text_input = NULL;
 std::string Main_Screen::s_selected_tile;
 std::map<std::string, SDL_Surface*> Main_Screen::imported_tiles;
-std::vector<Text_Input> Main_Screen::text_inputs;
+std::vector<Text_Input*> Main_Screen::text_inputs;
 SDL_Surface *Main_Screen::floor = NULL;
 
 bool Main_Screen::load()
@@ -30,7 +30,7 @@ bool Main_Screen::load()
   Main_Screen::s_filename = "Unspecified";
   Main_Screen::t_tile_label.init( "Tile:", 0, 0, 715, 25 );
   Main_Screen::ti_tile.init( "grass.png", 0, 1, 760, 25, 30 );
-  Main_Screen::text_inputs.push_back( Main_Screen::ti_tile );
+  Main_Screen::text_inputs.push_back( &Main_Screen::ti_tile );
   Main_Screen::s_selected_tile = "grass.png";
   /* Partial thanks to stackoverflow */
   DIR *dir;
@@ -109,9 +109,9 @@ void Main_Screen::logic( SDL_Event& event )
 	{
 	  for( auto &text_input : text_inputs )
 	  {
-	    if( text_input.within( event.button.x, event.button.y ) )
+	    if( text_input->within( event.button.x, event.button.y ) )
 	    {
-	      Main_Screen::ptr_ti_selected_text_input = &text_input;
+	      Main_Screen::ptr_ti_selected_text_input = text_input;
 	    }
 	  }
 	}
@@ -124,6 +124,11 @@ void Main_Screen::logic( SDL_Event& event )
       case SDLK_ESCAPE: 
 	utils::quit = true;
 	break;
+      case SDLK_RETURN:
+	if( Main_Screen::imported_tiles[ Main_Screen::ti_tile.get_text() ] != NULL )
+	{
+	  Main_Screen::s_selected_tile = Main_Screen::ti_tile.get_text();
+	}
       default:
 	if( Main_Screen::ptr_ti_selected_text_input != NULL )
 	{
