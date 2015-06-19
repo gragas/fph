@@ -10,6 +10,7 @@ void Text_Input::init( std::string text, int size, int color, int x, int y, int 
 {
   Text::init( text, size, color, x, y );
   int width, height;
+  this->max_chars = max_chars;
   switch( size )
   {
   case 0:
@@ -54,10 +55,24 @@ void Text_Input::append( int mod, int value )
     Text::set_text( Text::get_text().substr(0, Text::get_text().length() - 1 ) );
     Text::init( Text::get_text(), Text::get_size(), Text::get_color(), Text::get_x(), Text::get_y() );
   }
+  if( value != int( SDLK_RETURN ) )
+  {
+    init( get_text(), get_size(), 0, get_x(), get_y(), max_chars );
+  }
 }
 
 bool Text_Input::within( int x, int y )
 {
   return x >= Text::get_x() and x <= Text::get_x() + width and
     y >= Text::get_y() and y <= Text::get_y() + height;
+}
+
+int Text_Input::get_max_chars( )
+{
+  return max_chars;
+}
+
+void Text_Input::set_max_chars( int max_chars )
+{
+  this->max_chars = max_chars;
 }

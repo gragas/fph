@@ -5,7 +5,7 @@
 #include <array>
 #include <string>
 
-std::array<SDL_Surface*, 390> text_utils::chars; // numeric, lower, upper
+std::array<SDL_Surface*, 780> text_utils::chars; // numeric, lower, upper
 int text_utils::counter = 0;
 
 void text_utils::load( std::string path )
@@ -57,5 +57,11 @@ void text_utils::init()
   text_utils::load("black/large");  
   text_utils::load("cornflower/small");  
   text_utils::load("cornflower/medium");  
-  text_utils::load("cornflower/large");  
+  text_utils::load("cornflower/large");
+  text_utils::load("green/small");
+  text_utils::load("green/medium");
+  text_utils::load("green/large");
+  text_utils::load("red/small");
+  text_utils::load("red/medium");
+  text_utils::load("red/large");
 }

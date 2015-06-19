@@ -12,7 +12,7 @@
 
 SDL_Surface *Main_Screen::i_background = NULL;
 Text Main_Screen::t_filename_label;
-Text Main_Screen::t_filename;
+Text_Input Main_Screen::ti_filename;
 std::string Main_Screen::s_filename;
 Text Main_Screen::t_tile_label;
 Text_Input Main_Screen::ti_tile;
@@ -26,10 +26,11 @@ bool Main_Screen::load()
 {
   Main_Screen::i_background = utils::load_image( "data/images/main_screen/background.png" );
   Main_Screen::t_filename_label.init( "Filename:", 0, 0, 715, 5 );
-  Main_Screen::t_filename.init( "Unspecified", 0, 1, 795, 5 );
-  Main_Screen::s_filename = "Unspecified";
+  Main_Screen::ti_filename.init( "test.map", 0, 2, 795, 5, 30 );
+  Main_Screen::text_inputs.push_back( &Main_Screen::ti_filename );
+  Main_Screen::s_filename = "test.map";
   Main_Screen::t_tile_label.init( "Tile:", 0, 0, 715, 25 );
-  Main_Screen::ti_tile.init( "grass.png", 0, 1, 760, 25, 30 );
+  Main_Screen::ti_tile.init( "grass.png", 0, 2, 760, 25, 30 );
   Main_Screen::text_inputs.push_back( &Main_Screen::ti_tile );
   Main_Screen::s_selected_tile = "grass.png";
   /* Partial thanks to stackoverflow */
@@ -75,7 +76,7 @@ bool Main_Screen::free()
 {
   SDL_FreeSurface( Main_Screen::i_background );
   Main_Screen::t_filename_label.free();
-  Main_Screen::t_filename.free();
+  Main_Screen::ti_filename.free();
   Main_Screen::t_tile_label.free();
   Main_Screen::ti_tile.free();
   return true;
@@ -125,9 +126,44 @@ void Main_Screen::logic( SDL_Event& event )
 	utils::quit = true;
 	break;
       case SDLK_RETURN:
-	if( Main_Screen::imported_tiles[ Main_Screen::ti_tile.get_text() ] != NULL )
+	if( Main_Screen::imported_tiles[ Main_Screen::ti_tile.get_text( ) ] != NULL )
 	{
-	  Main_Screen::s_selected_tile = Main_Screen::ti_tile.get_text();
+	  Main_Screen::s_selected_tile = Main_Screen::ti_tile.get_text( );
+	  Main_Screen::ti_tile.init( Main_Screen::ti_tile.get_text( ),
+				     Main_Screen::ti_tile.get_size( ),
+				     2,
+				     Main_Screen::ti_tile.get_x( ),
+				     Main_Screen::ti_tile.get_y( ),
+				     Main_Screen::ti_tile.get_max_chars( ) );
+	}
+	else
+	{
+	  Main_Screen::ti_tile.init( Main_Screen::ti_tile.get_text( ),
+				     Main_Screen::ti_tile.get_size( ),
+				     3,
+				     Main_Screen::ti_tile.get_x( ),
+				     Main_Screen::ti_tile.get_y( ),
+				     Main_Screen::ti_tile.get_max_chars( ) );
+	}
+	if( Main_Screen::ti_filename.get_text().substr( 
+	      Main_Screen::ti_filename.get_text().length() - 4, 4 ).compare( ".map" ) == 0 )
+	{
+	  Main_Screen::s_filename = Main_Screen::ti_filename.get_text();	
+	  Main_Screen::ti_filename.init( Main_Screen::ti_filename.get_text( ),
+					 Main_Screen::ti_filename.get_size( ),
+					 2,
+					 Main_Screen::ti_filename.get_x( ),
+					 Main_Screen::ti_filename.get_y( ),
+					 Main_Screen::ti_filename.get_max_chars( ) );  
+	}
+	else
+	{
+	  Main_Screen::ti_filename.init( Main_Screen::ti_filename.get_text( ),
+					 Main_Screen::ti_filename.get_size( ),
+					 3,
+					 Main_Screen::ti_filename.get_x( ),
+					 Main_Screen::ti_filename.get_y( ),
+					 Main_Screen::ti_filename.get_max_chars( ) );  
 	}
       default:
 	if( Main_Screen::ptr_ti_selected_text_input != NULL )
@@ -146,7 +182,7 @@ void Main_Screen::blit( SDL_Surface* screen )
   utils::apply_surface( -1 * utils::SCREEN_WIDTH, -1 * utils::SCREEN_HEIGHT, Main_Screen::floor, screen );
   utils::apply_surface( 0, 0, Main_Screen::i_background, screen );
   Main_Screen::t_filename_label.blit( screen );
-  Main_Screen::t_filename.blit( screen );
+  Main_Screen::ti_filename.blit( screen );
   Main_Screen::t_tile_label.blit( screen );
   Main_Screen::ti_tile.blit( screen );
 }

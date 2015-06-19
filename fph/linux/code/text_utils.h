@@ -8,7 +8,7 @@
 
 namespace text_utils
 {
-  extern std::array<SDL_Surface*, 390> chars; // numeric, lower, upper
+  extern std::array<SDL_Surface*, 780> chars; // numeric, lower, upper, special
   extern int counter;
   void load( std::string path );
   void init();

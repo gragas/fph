@@ -13,7 +13,7 @@ class Main_Screen
  private:
   static SDL_Surface *i_background;
   static Text t_filename_label;
-  static Text t_filename;
+  static Text_Input ti_filename;
   static std::string s_filename;
   static Text t_tile_label;
   static Text_Input ti_tile;

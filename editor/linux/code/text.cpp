@@ -46,8 +46,15 @@ void Text::init( std::string text, int size, int color, int x, int y )
   case 1:
     offset += 195;
     break;
+  case 2:
+    offset += 390;
+    break;
+  case 3:
+    offset += 585;
+    break;
   default:
     std::cout << "Invalid color for Text object '" << text << "'." << std::endl;
+    utils::quit = true;
     break;
   }
 
