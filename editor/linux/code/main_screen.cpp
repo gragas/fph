@@ -1,5 +1,4 @@
 #include "SDL/SDL.h"
-#include <dirent.h>
 #include <string>
 #include <map>
 #include <vector>
@@ -9,6 +8,7 @@
 #include "text_utils.h"
 #include "main_screen.h"
 #include "text_input.h"
+#include "map_utils.h"
 
 SDL_Surface *Main_Screen::i_background = NULL;
 Text Main_Screen::t_filename_label;
@@ -18,9 +18,7 @@ Text Main_Screen::t_tile_label;
 Text_Input Main_Screen::ti_tile;
 Text_Input *Main_Screen::ptr_ti_selected_text_input = NULL;
 std::string Main_Screen::s_selected_tile;
-std::map<std::string, SDL_Surface*> Main_Screen::imported_tiles;
 std::vector<Text_Input*> Main_Screen::text_inputs;
-SDL_Surface *Main_Screen::floor = NULL;
 
 bool Main_Screen::load()
 {
@@ -33,42 +31,11 @@ bool Main_Screen::load()
   Main_Screen::ti_tile.init( "grass.png", 0, 2, 760, 25, 30 );
   Main_Screen::text_inputs.push_back( &Main_Screen::ti_tile );
   Main_Screen::s_selected_tile = "grass.png";
-  /* Partial thanks to stackoverflow */
-  DIR *dir;
-  struct dirent *ent;
-  if ( (dir = opendir("data/images/tiles")) != NULL )
-  {
-    while( (ent = readdir( dir )) != NULL )
-    {
-      std::string name = ent->d_name;
-      if( name.length() > 4 )
-      {
-	if( name.substr( name.length() - 4, 4 ).compare( ".png" ) == 0 )
-	{
-	  Main_Screen::imported_tiles[ name ] = utils::load_image( "data/images/tiles/" 
-								   + name );
-	  SDL_SetAlpha( Main_Screen::imported_tiles[ name ], 0, SDL_ALPHA_OPAQUE );
-	}
-      }
-    }
-    closedir( dir );
-  }
-  else
-  {
-    std::cout << "ERROR: Folder \"data/images/tiles\" could not be explored." << std::endl;
-    utils::quit = true;
-  }
-  
-  Main_Screen::floor = SDL_CreateRGBSurface( SDL_HWSURFACE, 
-					     utils::SCREEN_WIDTH * 3, utils::SCREEN_HEIGHT * 3,
-					     32, 0x000000FF, 0x0000FF00, 0x00FF0000,
-					     0xFF000000 );
-  SDL_FillRect( Main_Screen::floor, NULL, SDL_MapRGBA( Main_Screen::floor->format, 0, 0, 0, 0 ) );
-  /* Be sure to set the alpha of source surfaces when blitting onto floor
-     Use this:
-     SDL_SetAlpha( source, 0, SDL_ALPHA_OPAQUE );
-  */
-  
+
+  map_utils::init( );
+  map_utils::load_plugins( );
+  map_utils::update_map( );
+ 
   return true;
 }
 
@@ -103,8 +70,8 @@ void Main_Screen::logic( SDL_Event& event )
 	  /* if floor mode */
 	  utils::apply_surface( utils::SCREEN_WIDTH + event.button.x - (event.button.x % 32),
 				utils::SCREEN_HEIGHT + event.button.y - (event.button.y % 32),
-				Main_Screen::imported_tiles[ s_selected_tile ],
-				Main_Screen::floor );
+				map_utils::imported_tiles[ s_selected_tile ],
+				map_utils::surface_tiles );
 	}
 	else
 	{
@@ -126,7 +93,7 @@ void Main_Screen::logic( SDL_Event& event )
 	utils::quit = true;
 	break;
       case SDLK_RETURN:
-	if( Main_Screen::imported_tiles[ Main_Screen::ti_tile.get_text( ) ] != NULL )
+	if( map_utils::imported_tiles[ Main_Screen::ti_tile.get_text( ) ] != NULL )
 	{
 	  Main_Screen::s_selected_tile = Main_Screen::ti_tile.get_text( );
 	  Main_Screen::ti_tile.init( Main_Screen::ti_tile.get_text( ),
@@ -179,7 +146,7 @@ void Main_Screen::logic( SDL_Event& event )
 
 void Main_Screen::blit( SDL_Surface* screen )
 {
-  utils::apply_surface( -1 * utils::SCREEN_WIDTH, -1 * utils::SCREEN_HEIGHT, Main_Screen::floor, screen );
+  utils::apply_surface( -1 * utils::SCREEN_WIDTH, -1 * utils::SCREEN_HEIGHT, map_utils::surface_tiles, screen );
   utils::apply_surface( 0, 0, Main_Screen::i_background, screen );
   Main_Screen::t_filename_label.blit( screen );
   Main_Screen::ti_filename.blit( screen );

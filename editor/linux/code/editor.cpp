@@ -3,6 +3,7 @@
 
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
+#include <iostream>
 #include <string>
 #include "text_utils.h"
 #include "timer.h"
@@ -74,6 +75,8 @@ int main( int argc, char* args [] )
       SDL_Delay( ( 1000 / utils::FRAMES_PER_SECOND ) - fps.get_ticks() );
     }
   }
+  
+  std::cout << std::endl;
 
   if( Main_Screen::free() == false )
   {

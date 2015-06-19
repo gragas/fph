@@ -1,0 +1,47 @@
+define grass.png as g
+define sand.png as s
+define temperate.climate as t
+
+Tiles:
+s g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g
+s g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g
+g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g
+g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g
+g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g
+g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g
+g g g g g g g g g g g s s s g g g g g g g g g g g g g g g g g g
+g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g
+g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g
+g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g
+g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g
+g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g
+g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g
+g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g
+g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g
+g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g
+g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g
+g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g
+g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g
+g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g
+
+Climate:
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
