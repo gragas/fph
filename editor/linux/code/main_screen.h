@@ -21,7 +21,6 @@ class Main_Screen
   static std::string s_selected_tile;
   static std::vector<Text_Input*> text_inputs;
   static SDL_Surface *floor;
-  static int camera_x, camera_y;
   
  public:
   static bool load();

@@ -10,13 +10,17 @@ namespace map_utils
   extern std::vector<std::string> MAP_NAMES;
   
   extern int camera_x, camera_y; // camera offset in pixels
+  extern int camera_xv, camera_yv;
+  extern int camera_cx, camera_cy;
+  extern int camera_cx_coord, camera_cy_coord;
+  extern int camera_velocity;
 
   extern int year, month, day;
   extern int temperature;
   extern bool fahrenheit;
-  extern bool load_left, load_right, load_up, load_down;
 
   extern SDL_Surface* surface_tiles;
+  extern SDL_Surface* surface_tiles_storage;
   extern SDL_Surface* surface_one;
   extern SDL_Surface* surface_two;
   extern SDL_Surface* surface_characters;
@@ -33,6 +37,7 @@ namespace map_utils
   void load_chunk( int x, int y ); // x and y chunk coordinates
   void free_chunks( );
   void update_map( );
+  void update_camera( );
 }
 
 #endif

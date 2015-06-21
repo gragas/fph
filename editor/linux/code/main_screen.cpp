@@ -33,8 +33,6 @@ bool Main_Screen::load()
   Main_Screen::s_selected_tile = "grass.png";
 
   map_utils::init( );
-  map_utils::load_plugins( );
-  map_utils::update_map( );
  
   return true;
 }
@@ -68,19 +66,27 @@ void Main_Screen::logic( SDL_Event& event )
 	if( event.button.x < 704 )
 	{
 	  /* if floor mode */
-	  utils::apply_surface( utils::SCREEN_WIDTH + event.button.x - (event.button.x % 32),
-				utils::SCREEN_HEIGHT + event.button.y - (event.button.y % 32),
+	  int x = ( map_utils::camera_x ) % ( 3 * utils::SCREEN_WIDTH ) * -1 + utils::SCREEN_WIDTH + event.button.x;
+	  int y = ( map_utils::camera_y ) % ( 3 * utils::SCREEN_HEIGHT ) * -1 + utils::SCREEN_HEIGHT + event.button.y;
+	  utils::apply_surface( x - x % 32,
+				y - y % 32,
 				map_utils::imported_tiles[ s_selected_tile ],
 				map_utils::surface_tiles );
 	}
 	else
 	{
+	  bool clicked_a_text_input = false;
 	  for( auto &text_input : text_inputs )
 	  {
 	    if( text_input->within( event.button.x, event.button.y ) )
 	    {
 	      Main_Screen::ptr_ti_selected_text_input = text_input;
+	      clicked_a_text_input = true;
 	    }
+	  }
+	  if( not clicked_a_text_input )
+	  {
+	    Main_Screen::ptr_ti_selected_text_input = NULL;
 	  }
 	}
       }
@@ -96,6 +102,7 @@ void Main_Screen::logic( SDL_Event& event )
 	if( map_utils::imported_tiles[ Main_Screen::ti_tile.get_text( ) ] != NULL )
 	{
 	  Main_Screen::s_selected_tile = Main_Screen::ti_tile.get_text( );
+	  Main_Screen::ptr_ti_selected_text_input = NULL;
 	  Main_Screen::ti_tile.init( Main_Screen::ti_tile.get_text( ),
 				     Main_Screen::ti_tile.get_size( ),
 				     2,
@@ -115,7 +122,8 @@ void Main_Screen::logic( SDL_Event& event )
 	if( Main_Screen::ti_filename.get_text().substr( 
 	      Main_Screen::ti_filename.get_text().length() - 4, 4 ).compare( ".map" ) == 0 )
 	{
-	  Main_Screen::s_filename = Main_Screen::ti_filename.get_text();	
+	  Main_Screen::s_filename = Main_Screen::ti_filename.get_text();
+	  Main_Screen::ptr_ti_selected_text_input = NULL;
 	  Main_Screen::ti_filename.init( Main_Screen::ti_filename.get_text( ),
 					 Main_Screen::ti_filename.get_size( ),
 					 2,
@@ -146,7 +154,11 @@ void Main_Screen::logic( SDL_Event& event )
 
 void Main_Screen::blit( SDL_Surface* screen )
 {
-  utils::apply_surface( -1 * utils::SCREEN_WIDTH, -1 * utils::SCREEN_HEIGHT, map_utils::surface_tiles, screen );
+  map_utils::update_map( );
+  utils::apply_surface( -utils::SCREEN_WIDTH + ( map_utils::camera_cx - map_utils::camera_x ),
+			-utils::SCREEN_HEIGHT + ( map_utils::camera_cy - map_utils::camera_y ),
+			map_utils::surface_tiles,
+			screen );
   utils::apply_surface( 0, 0, Main_Screen::i_background, screen );
   Main_Screen::t_filename_label.blit( screen );
   Main_Screen::ti_filename.blit( screen );

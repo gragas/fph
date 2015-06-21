@@ -7,6 +7,7 @@
 #include <sstream>
 #include <iterator>
 #include <map>
+#include <math.h>
 #include "map_utils.h"
 #include "utils.h"
 
@@ -17,17 +18,28 @@ namespace map_utils
 
   int camera_x = 0;
   int camera_y = 0;
+  int camera_xv = 0;
+  int camera_yv = 0;
+  int camera_velocity = 20;
+  int camera_cx = 0;
+  int camera_cy = 0;
+  int camera_cx_coord = 0;
+  int camera_cy_coord = 0;
   int year = 3700;
   int month = 6;
   int day = 30;
   int temperature = 75;
   bool fahrenheit = true;
-  bool load_left = false, load_right = false, load_up = false, load_down = false;
 
   SDL_Surface* surface_tiles = SDL_CreateRGBSurface( SDL_HWSURFACE, 
 						     utils::SCREEN_WIDTH * 3, utils::SCREEN_HEIGHT * 3,
 						     32, 0x000000FF, 0x0000FF00, 0x00FF0000,
 						     0xFF000000 );
+
+  SDL_Surface* surface_tiles_storage = SDL_CreateRGBSurface( SDL_HWSURFACE, 
+							     utils::SCREEN_WIDTH * 3, utils::SCREEN_HEIGHT * 3,
+							     32, 0x000000FF, 0x0000FF00, 0x00FF0000,
+							     0xFF000000 );
 
   SDL_Surface* surface_one = SDL_CreateRGBSurface( SDL_HWSURFACE, 
 						   utils::SCREEN_WIDTH * 3, utils::SCREEN_HEIGHT * 3,
@@ -53,7 +65,9 @@ namespace map_utils
   
   void init( )
   {
+    load_plugins( );
     SDL_FillRect( surface_tiles, NULL, SDL_MapRGBA( surface_tiles->format, 0, 0, 0, 0 ) );
+    SDL_FillRect( surface_tiles_storage, NULL, SDL_MapRGBA( surface_tiles_storage->format, 0, 0, 0, 0 ) );
     SDL_FillRect( surface_one, NULL, SDL_MapRGBA( surface_one->format, 0, 0, 0, 0 ) );
     SDL_FillRect( surface_two, NULL, SDL_MapRGBA( surface_two->format, 0, 0, 0, 0 ) );
     SDL_FillRect( surface_characters, NULL, SDL_MapRGBA( surface_characters->format, 0, 0, 0, 0 ) );
@@ -86,6 +100,17 @@ namespace map_utils
       std::cout << "ERROR: Folder \"data/images/tiles\" could not be explored." << std::endl;
       utils::quit = true;
     }
+    load_chunk( 0, 0 );
+    //
+    load_chunk( -1, -1 );
+    load_chunk( 0, -1 );
+    load_chunk( 1, -1 );
+    load_chunk( -1, 0 );
+    load_chunk( 1, 0 );
+    load_chunk( -1, 1 );
+    load_chunk( 0, 1 );
+    load_chunk( 1, 1 );
+    //
   }
 
   void load_plugins( )
@@ -97,7 +122,7 @@ namespace map_utils
       std::cout << "\nPlugins List:" << std::endl;
       while( std::getline( plugins_file, line ) )
       {
-	std::cout << line << std::endl << std::endl;
+	std::cout << line << std::endl;
 	MAP_NAMES.push_back( line.substr( 0, line.length() - 4 ) );
       }
       plugins_file.close();
@@ -177,8 +202,8 @@ namespace map_utils
 		  for( int i = 0; i < properties.size(); i++ )
 		  {
 		    array_tiles[ i ][ line_counter ] = properties[ i ];
-		    utils::apply_surface( camera_x + utils::SCREEN_WIDTH * ( x + 1 ) + i * 32,
-					  camera_y + utils::SCREEN_HEIGHT * ( y + 1 ) + line_counter * 32,
+		    utils::apply_surface( utils::SCREEN_WIDTH * ( x + 1 ) - camera_x + i * 32,
+					  utils::SCREEN_HEIGHT * ( y + 1 ) - camera_y + line_counter * 32,
 					  imported_tiles[ definitions[ properties[ i ] ] ],
 					  surface_tiles );
 		  }
@@ -204,74 +229,67 @@ namespace map_utils
       {
 	// chunk not found within this plugin
       }
-      if( !chunk_found ) // chunk not found within any plugin
-      {
-	std::cout << "Chunk with ID " + string_x + string_y + " not found." << std::endl;
-      }
+    }
+    if( !chunk_found ) // chunk not found within any plugin
+    {
+
     }
   }
 
   void free_chunks( )
   {
-    SDL_FillRect( surface_tiles, NULL, SDL_MapRGBA( surface_tiles->format, 0, 0, 0, 0 ) );
-    SDL_FillRect( surface_one, NULL, SDL_MapRGBA( surface_one->format, 0, 0, 0, 0 ) );
-    SDL_FillRect( surface_two, NULL, SDL_MapRGBA( surface_two->format, 0, 0, 0, 0 ) );    
+    utils::clear( surface_tiles );
+    utils::clear( surface_one );
+    utils::clear( surface_two );
   }
   
   void update_map( )
   {
-    int x = map_utils::camera_x, y = map_utils::camera_y;
-    bool must_load = false;
-    bool temp_ll, temp_lr, temp_lu, temp_ld;
-    if ( x % utils::SCREEN_WIDTH < 0 )
+    Uint8 *keystates = SDL_GetKeyState( NULL );
+    if( keystates[ SDLK_w ] )
     {
-      temp_ll = true;
+      camera_yv = -1 * camera_velocity;
     }
-    else if ( x % utils::SCREEN_WIDTH > 0 )
+    if( keystates[ SDLK_s ] )
     {
-      temp_lr = true;
+      camera_yv = camera_velocity;
     }
-    else
+    if( keystates[ SDLK_d ] )
     {
-      temp_ll = true;
-      temp_lr = true;
+      camera_xv = camera_velocity;
     }
-    if ( y % utils::SCREEN_HEIGHT < 0 )
+    if( keystates[ SDLK_a ] )
     {
-      temp_lu = true;
+      camera_xv = -1 * camera_velocity;
     }
-    else if ( y % utils::SCREEN_HEIGHT > 0 )
+    if( not keystates[ SDLK_w ] and not keystates[ SDLK_s ] )
     {
-      temp_ld = true;
+      camera_yv = 0;
     }
-    else
+    if( not keystates[ SDLK_d ] and not keystates[ SDLK_a ] )
     {
-      temp_lu = true;
-      temp_ld = true;
+      camera_xv = 0;
     }
-    if( temp_ll != load_left or temp_lr != load_right or temp_lu != load_up or temp_ld != load_down )
+
+    camera_x += camera_xv;
+    camera_y += camera_yv;
+
+    int x_modifier = 0, y_modifier = 0;
+    if( camera_x + utils::SCREEN_WIDTH / 2 < 0 )
     {
-      must_load = true;
+      x_modifier = -1;
     }
-    load_left = temp_ll;
-    load_right = temp_lr;
-    load_up = temp_lu;
-    load_down = temp_ld;
-    if( must_load )
+    if( camera_y + utils::SCREEN_HEIGHT / 2 < 0 )
+    {
+      y_modifier = -1;
+    }
+    int x_coord = ( camera_x + utils::SCREEN_WIDTH / 2 ) / utils::SCREEN_WIDTH + x_modifier;
+    int y_coord = ( camera_y + utils::SCREEN_HEIGHT / 2 ) / utils::SCREEN_HEIGHT + y_modifier;
+
+    if( camera_cx_coord != x_coord or camera_cy_coord != y_coord )
     {
       free_chunks( );
-      int x_modifier = 0, y_modifier = 0;
-      if( x < 0 )
-      {
-	x_modifier = -1;
-      }
-      if( y < 0 )
-      {
-	y_modifier = -1;
-      }
-      int x_coord = x / utils::SCREEN_WIDTH + x_modifier, y_coord = y / utils::SCREEN_HEIGHT + y_modifier;
       load_chunk( x_coord, y_coord );
-      //
       load_chunk( x_coord - 1, y_coord - 1 );
       load_chunk( x_coord, y_coord - 1 );
       load_chunk( x_coord + 1, y_coord - 1 );
@@ -280,93 +298,14 @@ namespace map_utils
       load_chunk( x_coord, y_coord + 1 );
       load_chunk( x_coord - 1, y_coord + 1 );
       load_chunk( x_coord - 1, y_coord );
-      //
+      camera_cx = camera_x;
+      camera_cy = camera_y;
+      camera_cx_coord = x_coord;
+      camera_cy_coord = y_coord;
+    }
+    else
+    {
       
-      /* Uncomment the following for possible optimization
-      if ( load_left and load_right and load_up and load_down )
-      {
-	load_chunk( x_coord - 1, y_coord - 1 );
-	load_chunk( x_coord, y_coord - 1 );
-	load_chunk( x_coord + 1, y_coord - 1 );
-	load_chunk( x_coord + 1, y_coord );
-	load_chunk( x_coord + 1, y_coord + 1 );
-	load_chunk( x_coord, y_coord + 1 );
-	load_chunk( x_coord - 1, y_coord + 1 );
-	load_chunk( x_coord - 1, y_coord );
-      }
-      else if ( load_left and load_right and load_up )
-      {
-       	load_chunk( x_coord - 1, y_coord - 1 );
-	load_chunk( x_coord, y_coord - 1 );
-	load_chunk( x_coord + 1, y_coord - 1 );
-	load_chunk( x_coord + 1, y_coord );
-	load_chunk( x_coord - 1, y_coord );
-      }
-      else if ( load_left and load_right and load_down )
-      {
-       	load_chunk( x_coord - 1, y_coord + 1 );
-	load_chunk( x_coord, y_coord + 1 );
-	load_chunk( x_coord + 1, y_coord + 1 );
-	load_chunk( x_coord + 1, y_coord );
-	load_chunk( x_coord - 1, y_coord );
-      }
-      else if ( load_up and load_down and load_left )
-      {
-	load_chunk( x_coord, y_coord - 1 );
-	load_chunk( x_coord, y_coord + 1 );
-	load_chunk( x_coord - 1, y_coord - 1 );
-	load_chunk( x_coord - 1, y_coord + 1 );
-	load_chunk( x_coord - 1, y_coord );
-      }
-      else if ( load_up and load_down and load_right )
-      {
-	load_chunk( x_coord, y_coord - 1 );
-	load_chunk( x_coord, y_coord + 1 );
-	load_chunk( x_coord + 1, y_coord - 1 );
-	load_chunk( x_coord + 1, y_coord + 1 );
-	load_chunk( x_coord + 1, y_coord );
-      }
-      else if( load_left and load_up )
-      {
-	load_chunk( x_coord - 1, y_coord - 1 );
-	load_chunk( x_coord - 1, y_coord );
-	load_chunk( x_coord, y_coord - 1);
-      }
-      else if( load_left and load_down )
-      {
-	load_chunk( x_coord - 1, y_coord + 1 );
-	load_chunk( x_coord - 1, y_coord );
-	load_chunk( x_coord, y_coord + 1);
-      }
-      else if( load_right and load_up )
-      {
-	load_chunk( x_coord + 1, y_coord - 1 );
-	load_chunk( x_coord + 1, y_coord );
-	load_chunk( x_coord, y_coord - 1);
-      }
-      else if( load_right and load_down )
-      {
-	load_chunk( x_coord + 1, y_coord + 1 );
-	load_chunk( x_coord + 1, y_coord );
-	load_chunk( x_coord, y_coord + 1);
-      }
-      else if( load_left )
-      {
-	load_chunk( x_coord - 1, y_coord );
-      }
-      else if( load_right )
-      {
-	load_chunk( x_coord + 1, y_coord );
-      }
-      else if( load_up )
-      {
-	load_chunk( x_coord, y_coord - 1 );
-      }
-      else if( load_down )
-      {
-	load_chunk( x_coord, y_coord + 1 );
-      }
-      */
     }
   }
   

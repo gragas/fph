@@ -35,7 +35,7 @@ void Text::init( std::string text, int size, int color, int x, int y )
     height = 39;
     break;
   default:
-    std::cout << "Invalid color for Text object '" << text << "'." << std::endl;
+    std::cout << "Invalid size for Text object '" << text << "'." << std::endl;
     break;
   }
   switch( color )
@@ -67,7 +67,7 @@ void Text::init( std::string text, int size, int color, int x, int y )
 
   for( int i = 0; i < text.length(); i++ )
   {
-    int index = 0;
+    int index;
     if( text[i] >= 48 && text[i] <= 57 )
     {
       index = int(text[i] - char(48));

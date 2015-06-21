@@ -4,6 +4,7 @@
 #include "utils.h"
 #include <array>
 #include <string>
+#include <iostream>
 
 std::array<SDL_Surface*, 780> text_utils::chars; // numeric, lower, upper
 int text_utils::counter = 0;
@@ -15,9 +16,9 @@ void text_utils::load( std::string path )
   /* Load the numeric charcters */
   for(char i = 0; i <= 9; i++)
   {
-    text_utils::chars[i] = utils::load_image( base_path + "numeric/"
+    text_utils::chars[text_utils::counter + i] = utils::load_image( base_path + "numeric/"
 					      + char(i + char(48)) + ".png" );
-    SDL_SetAlpha( text_utils::chars[i], 0, SDL_ALPHA_OPAQUE );
+    SDL_SetAlpha( text_utils::chars[text_utils::counter + i], 0, SDL_ALPHA_OPAQUE );
     text_utils::counter++;
   }
   stop_counter = text_utils::counter;
@@ -52,7 +53,7 @@ void text_utils::load( std::string path )
 
 void text_utils::init()
 {
-  text_utils::load("black/small");  
+  text_utils::load("black/small");
   text_utils::load("black/medium");  
   text_utils::load("black/large");  
   text_utils::load("cornflower/small");  
