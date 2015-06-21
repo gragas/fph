@@ -66,8 +66,8 @@ void Main_Screen::logic( SDL_Event& event )
 	if( event.button.x < 704 )
 	{
 	  /* if floor mode */
-	  int x = ( map_utils::camera_x ) % ( 3 * utils::SCREEN_WIDTH ) * -1 + utils::SCREEN_WIDTH + event.button.x;
-	  int y = ( map_utils::camera_y ) % ( 3 * utils::SCREEN_HEIGHT ) * -1 + utils::SCREEN_HEIGHT + event.button.y;
+	  int x = utils::SCREEN_WIDTH - ( map_utils::camera_cx - map_utils::camera_x ) + event.button.x;
+	  int y = utils::SCREEN_HEIGHT - ( map_utils::camera_cy - map_utils::camera_y ) + event.button.y;
 	  utils::apply_surface( x - x % 32,
 				y - y % 32,
 				map_utils::imported_tiles[ s_selected_tile ],
