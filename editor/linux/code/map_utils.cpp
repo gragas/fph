@@ -20,7 +20,7 @@ namespace map_utils
   int camera_y = 0;
   int camera_xv = 0;
   int camera_yv = 0;
-  int camera_velocity = 20;
+  int camera_velocity = 5;
   int camera_cx = 0;
   int camera_cy = 0;
   int camera_cx_coord = 0;

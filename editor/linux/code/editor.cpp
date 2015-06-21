@@ -70,7 +70,7 @@ int main( int argc, char* args [] )
       return 1;
     }
 
-    if( fps.get_ticks() < 1000 / utils::FRAMES_PER_SECOND )
+    if( utils::CAP_FRAME_RATE and fps.get_ticks() < 1000 / utils::FRAMES_PER_SECOND )
     {
       SDL_Delay( ( 1000 / utils::FRAMES_PER_SECOND ) - fps.get_ticks() );
     }

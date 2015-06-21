@@ -10,6 +10,7 @@ namespace utils
   extern const int SCREEN_HEIGHT;
   extern const int SCREEN_BPP;
   extern const int FRAMES_PER_SECOND;
+  extern const bool CAP_FRAME_RATE;
 
   extern bool quit;
 

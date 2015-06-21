@@ -10,6 +10,7 @@ namespace utils
   const int SCREEN_HEIGHT = 640;
   const int SCREEN_BPP = 32;
   const int FRAMES_PER_SECOND = 60;
+  const bool CAP_FRAME_RATE = false;
 
   bool quit = false;
 
