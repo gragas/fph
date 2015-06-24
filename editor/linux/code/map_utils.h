@@ -12,6 +12,7 @@ namespace map_utils
   extern int camera_x, camera_y; // camera offset in pixels
   extern int camera_xv, camera_yv;
   extern int camera_cx, camera_cy;
+  extern int camera_x_trans, camera_y_trans;
   extern int camera_cx_coord, camera_cy_coord;
   extern int camera_velocity;
 
@@ -34,7 +35,7 @@ namespace map_utils
 
   void init( );
   void load_plugins( );
-  void load_chunk( int x, int y ); // x and y chunk coordinates
+  void load_chunk( int x, int y, int x_offset, int y_offset ); // x and y chunk coordinates
   void free_chunks( );
   void update_map( );
   void update_camera( );

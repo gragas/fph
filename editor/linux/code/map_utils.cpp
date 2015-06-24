@@ -23,6 +23,8 @@ namespace map_utils
   int camera_velocity = 5;
   int camera_cx = 0;
   int camera_cy = 0;
+  int camera_x_trans = 0;
+  int camera_y_trans = 0;
   int camera_cx_coord = 0;
   int camera_cy_coord = 0;
   int year = 3700;
@@ -100,16 +102,16 @@ namespace map_utils
       std::cout << "ERROR: Folder \"data/images/tiles\" could not be explored." << std::endl;
       utils::quit = true;
     }
-    load_chunk( 0, 0 );
+    load_chunk( 0, 0, 0, 0 );
     //
-    load_chunk( -1, -1 );
-    load_chunk( 0, -1 );
-    load_chunk( 1, -1 );
-    load_chunk( -1, 0 );
-    load_chunk( 1, 0 );
-    load_chunk( -1, 1 );
-    load_chunk( 0, 1 );
-    load_chunk( 1, 1 );
+    load_chunk( -1, -1, -1, -1 );
+    load_chunk( 0, -1, 0, -1 );
+    load_chunk( 1, -1, 1, -1 );
+    load_chunk( -1, 0, -1, 0 );
+    load_chunk( 1, 0, 1, 0 );
+    load_chunk( -1, 1, -1, 1 );
+    load_chunk( 0, 1, 0, 1 );
+    load_chunk( 1, 1, 1, 1 );
     //
   }
 
@@ -134,7 +136,7 @@ namespace map_utils
     }
   }
 
-  void load_chunk( int x, int y )
+  void load_chunk( int x, int y, int x_offset, int y_offset )
   {
     std::string x_flag, y_flag;
     if( x < 0 )
@@ -202,8 +204,8 @@ namespace map_utils
 		  for( int i = 0; i < properties.size(); i++ )
 		  {
 		    array_tiles[ i ][ line_counter ] = properties[ i ];
-		    utils::apply_surface( utils::SCREEN_WIDTH * ( x + 1 ) - camera_x + i * 32,
-					  utils::SCREEN_HEIGHT * ( y + 1 ) - camera_y + line_counter * 32,
+		    utils::apply_surface( utils::SCREEN_WIDTH * ( x_offset + 1 ) + i * 32,
+					  utils::SCREEN_HEIGHT * ( y_offset + 1 ) + line_counter * 32,
 					  imported_tiles[ definitions[ properties[ i ] ] ],
 					  surface_tiles );
 		  }
@@ -289,15 +291,17 @@ namespace map_utils
     if( camera_cx_coord != x_coord or camera_cy_coord != y_coord )
     {
       free_chunks( );
-      load_chunk( x_coord, y_coord );
-      load_chunk( x_coord - 1, y_coord - 1 );
-      load_chunk( x_coord, y_coord - 1 );
-      load_chunk( x_coord + 1, y_coord - 1 );
-      load_chunk( x_coord + 1, y_coord );
-      load_chunk( x_coord + 1, y_coord + 1 );
-      load_chunk( x_coord, y_coord + 1 );
-      load_chunk( x_coord - 1, y_coord + 1 );
-      load_chunk( x_coord - 1, y_coord );
+      load_chunk( x_coord, y_coord, 0, 0 );
+      load_chunk( x_coord - 1, y_coord - 1, -1, -1 );
+      load_chunk( x_coord, y_coord - 1, 0, -1 );
+      load_chunk( x_coord + 1, y_coord - 1, 1, -1 );
+      load_chunk( x_coord + 1, y_coord, 1, 0 );
+      load_chunk( x_coord + 1, y_coord + 1, 1, 1 );
+      load_chunk( x_coord, y_coord + 1, 0, 1 );
+      load_chunk( x_coord - 1, y_coord + 1, -1, 1 );
+      load_chunk( x_coord - 1, y_coord, -1, 0 );
+      camera_x_trans = camera_x - x_coord * utils::SCREEN_WIDTH;
+      camera_y_trans = camera_y - y_coord * utils::SCREEN_HEIGHT;
       camera_cx = camera_x;
       camera_cy = camera_y;
       camera_cx_coord = x_coord;

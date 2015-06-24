@@ -66,8 +66,8 @@ void Main_Screen::logic( SDL_Event& event )
 	if( event.button.x < 704 )
 	{
 	  /* if floor mode */
-	  int x = utils::SCREEN_WIDTH - ( map_utils::camera_cx - map_utils::camera_x ) + event.button.x;
-	  int y = utils::SCREEN_HEIGHT - ( map_utils::camera_cy - map_utils::camera_y ) + event.button.y;
+	  int x = utils::SCREEN_WIDTH - ( map_utils::camera_cx - map_utils::camera_x ) + map_utils::camera_x_trans + event.button.x;
+	  int y = utils::SCREEN_HEIGHT - ( map_utils::camera_cy - map_utils::camera_y ) + map_utils::camera_y_trans + event.button.y;
 	  utils::apply_surface( x - x % 32,
 				y - y % 32,
 				map_utils::imported_tiles[ s_selected_tile ],
@@ -155,8 +155,8 @@ void Main_Screen::logic( SDL_Event& event )
 void Main_Screen::blit( SDL_Surface* screen )
 {
   map_utils::update_map( );
-  utils::apply_surface( -utils::SCREEN_WIDTH + ( map_utils::camera_cx - map_utils::camera_x ),
-			-utils::SCREEN_HEIGHT + ( map_utils::camera_cy - map_utils::camera_y ),
+  utils::apply_surface( -utils::SCREEN_WIDTH + ( map_utils::camera_cx - map_utils::camera_x ) - map_utils::camera_x_trans,
+			-utils::SCREEN_HEIGHT + ( map_utils::camera_cy - map_utils::camera_y ) - map_utils::camera_y_trans,
 			map_utils::surface_tiles,
 			screen );
   utils::apply_surface( 0, 0, Main_Screen::i_background, screen );
