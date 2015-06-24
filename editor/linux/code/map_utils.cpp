@@ -121,10 +121,8 @@ namespace map_utils
     std::ifstream plugins_file( "plugins.options" );
     if( plugins_file.is_open() )
     {
-      std::cout << "\nPlugins List:" << std::endl;
       while( std::getline( plugins_file, line ) )
       {
-	std::cout << line << std::endl;
 	MAP_NAMES.push_back( line.substr( 0, line.length() - 4 ) );
       }
       plugins_file.close();
