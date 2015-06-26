@@ -3,18 +3,18 @@ define grass.png as g
 define temperate.climate as t
 
 Tiles:
-s s s g g g g g g g g g g g g g g g g g g g g g g g g g g g g s
-s s s g s g s g s g s g s g s g s g s g s g s g s g s g s g s s
-s s s s g s g s g s g s g s g s g s g s g s g s g s g s g s g s
+g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g s
 g g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s s
 g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s
 g g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s s
 g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s
 g g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s s
-g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s
-g g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s s
-g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s
-g g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s s
+g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s g g
+g g s g s g s g s g s g s g s g s g s g s g s g s g s g s g g g
+g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s g g
+g g s g s g s g s g s g s g s g s g s g s g s g s g s g s g g g
+g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s g g
+g g s g s g s g s g s g s g s g s g s g s g s g s g s g s g g g
 g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s
 g g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s s
 g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s

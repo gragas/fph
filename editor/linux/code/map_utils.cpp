@@ -58,10 +58,10 @@ namespace map_utils
 						   32, 0x000000FF, 0x0000FF00, 0x00FF0000,
 						   0xFF000000 );
 
-  std::string array_tiles[32][20];
-  std::string array_one[32][20];
-  std::string array_two[32][20];
-  std::string array_climate[32][20];
+  std::string array_tiles[ 32 * 3 ][ 20 * 3 ];
+  std::string array_one[ 32 * 3 ][ 20 * 3 ];
+  std::string array_two[ 32 * 3 ][ 20 * 3 ];
+  std::string array_climate[ 32 * 3 ][ 20 * 3 ];
   
   std::map<std::string, SDL_Surface*> imported_tiles;
   
@@ -136,6 +136,17 @@ namespace map_utils
 
   void load_chunk( int x, int y, int x_offset, int y_offset )
   {
+    /* clear the chunk right off */
+    for( int tx = 0; tx < 32; tx++ )
+    {
+      for( int ty = 0; ty < 20; ty++ )
+      {
+	array_tiles[ tx + 32 * ( x_offset + 1 ) ][ ty + 20 * ( y_offset + 1 ) ] = "blank";
+	array_climate[ tx + 32 * ( x_offset + 1 ) ][ ty + 20 * ( y_offset + 1 ) ] = "blank";
+	array_one[ tx + 32 * ( x_offset + 1 ) ][ ty + 20 * ( y_offset + 1 ) ] = "blank";
+	array_two[ tx + 32 * ( x_offset + 1 ) ][ ty + 20 * ( y_offset + 1 ) ] = "blank";
+      }
+    }
     std::string x_flag, y_flag;
     if( x < 0 )
     {
@@ -189,6 +200,12 @@ namespace map_utils
 	      mode = 0;
 	      scanning = false;
 	    }
+	    else if( line.substr( 0, 8 ).compare( "Climate:" ) == 0 )
+	    {
+	      line_counter = 0;
+	      mode = 3;
+	      scanning = false;
+	    }
 	  }
 	  else
 	  {
@@ -201,10 +218,11 @@ namespace map_utils
 		{
 		  for( int i = 0; i < properties.size(); i++ )
 		  {
-		    array_tiles[ i ][ line_counter ] = properties[ i ];
+		    std::string key = definitions.count( properties[ i ] ) > 0 ? definitions[ properties[ i ] ] : properties[ i ];
+		    array_tiles[ i + 32 * ( x_offset + 1 ) ][ line_counter + 20 * (y_offset + 1 ) ] = key;
 		    utils::apply_surface( utils::SCREEN_WIDTH * ( x_offset + 1 ) + i * 32,
 					  utils::SCREEN_HEIGHT * ( y_offset + 1 ) + line_counter * 32,
-					  imported_tiles[ definitions[ properties[ i ] ] ],
+					  imported_tiles[ key ],
 					  surface_tiles );
 		  }
 		}
@@ -212,7 +230,7 @@ namespace map_utils
 		{
 		  for( int i = 0; i < properties.size(); i++ )
 		  {
-		    array_climate[ i ][ line_counter ] = properties[ i ];
+		    array_climate[ i + 32 * ( x_offset + 1 ) ][ line_counter + 20 * ( y_offset + 1 ) ] = properties[ i ];
 		  }
 		}
 		line_counter++;
@@ -243,7 +261,7 @@ namespace map_utils
     utils::clear( surface_two );
   }
   
-  void update_map( )
+  void update_map( std::string map_name, bool should_save_static )
   {
     Uint8 *keystates = SDL_GetKeyState( NULL );
     if( keystates[ SDLK_w ] )
@@ -288,6 +306,7 @@ namespace map_utils
 
     if( camera_cx_coord != x_coord or camera_cy_coord != y_coord )
     {
+      save_area( camera_cx_coord, camera_cy_coord, map_name, should_save_static );
       free_chunks( );
       load_chunk( x_coord, y_coord, 0, 0 );
       load_chunk( x_coord - 1, y_coord - 1, -1, -1 );
@@ -311,4 +330,83 @@ namespace map_utils
     }
   }
   
+  void save_chunk( int x, int y, int x_offset, int y_offset, std::string map_name, bool should_save_static )
+  {
+
+    std::string x_flag, y_flag;
+    if( x < 0 )
+    {
+      x_flag = "xa";
+    }
+    else
+    {
+      x_flag = "x";
+    }
+    if( y < 0 )
+    {
+      y_flag = "ya";
+    }
+    else
+    {
+      y_flag = "y";
+    }
+    std::string string_x = x_flag + std::to_string( std::abs( x ) );
+    std::string string_y = y_flag + std::to_string( std::abs( y ) );
+    std::ofstream chunk_file( "data/maps/" + map_name + "/" + string_x + string_y + ".chunk" );
+    if( chunk_file.is_open( ) )
+    {
+      std::map<std::string, std::string> definitions; // add definitions feature to save function sometime
+      
+      /* Save dynamic parts of the map */
+      
+      /* Then save the static parts of the map if necessary */
+      if( should_save_static )
+      {
+	chunk_file << "Tiles:\n";
+	for( int ty = 0; ty < 20; ty++ )
+	{
+	  for( int tx = 0; tx < 32; tx++ )
+	  {
+	    chunk_file << ( array_tiles[ tx + 32 * ( x_offset + 1 )][ ty + 20 * ( y_offset + 1 ) ] ) << " ";
+	  }
+	  chunk_file << "\n";
+	}
+	chunk_file << "\n";
+	
+	chunk_file << "Climate:\n";
+	for( int ty = 0; ty < 20; ty++ )
+	{
+	  for( int tx = 0; tx < 32; tx++ )
+	  {
+	    chunk_file << array_climate[ tx + 32 * ( x_offset + 1 )][ ty + 20 * ( y_offset + 1 ) ] << " ";
+	  }
+	  chunk_file << "\n";
+	}
+	chunk_file << "\n";
+	
+
+	/* save the other static layers too */
+	
+	chunk_file.close();
+      }
+    }
+    else
+    {
+      // The chunk failed to open
+      std::cout << "Could not open file \"" << ("data/maps/" + map_name + "/" + string_x + string_y + ".chunk") << "\"." << std::endl;
+    }
+  }
+  
+  void save_area( int x_coord, int y_coord, std::string map_name, bool should_save_static )
+  {
+    save_chunk( x_coord, y_coord, 0, 0, map_name, should_save_static );
+    save_chunk( x_coord - 1, y_coord - 1, -1, -1, map_name, should_save_static );
+    save_chunk( x_coord, y_coord - 1, 0, -1, map_name, should_save_static );
+    save_chunk( x_coord + 1, y_coord - 1, 1, -1, map_name, should_save_static );
+    save_chunk( x_coord + 1, y_coord, 1, 0, map_name, should_save_static );
+    save_chunk( x_coord + 1, y_coord + 1, 1, 1, map_name, should_save_static );
+    save_chunk( x_coord, y_coord + 1, 0, 1, map_name, should_save_static );
+    save_chunk( x_coord - 1, y_coord + 1, -1, 1, map_name, should_save_static );
+    save_chunk( x_coord - 1, y_coord, -1, 0, map_name, should_save_static );
+  }
 }

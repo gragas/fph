@@ -28,9 +28,9 @@ bool Main_Screen::load()
   Main_Screen::text_inputs.push_back( &Main_Screen::ti_filename );
   Main_Screen::s_filename = "test.map";
   Main_Screen::t_tile_label.init( "Tile:", 0, 0, 715, 25 );
-  Main_Screen::ti_tile.init( "grass.png", 0, 2, 760, 25, 30 );
+  Main_Screen::ti_tile.init( "lava.png", 0, 2, 760, 25, 30 );
   Main_Screen::text_inputs.push_back( &Main_Screen::ti_tile );
-  Main_Screen::s_selected_tile = "grass.png";
+  Main_Screen::s_selected_tile = "lava.png";
 
   map_utils::init( );
  
@@ -72,6 +72,8 @@ void Main_Screen::logic( SDL_Event& event )
 				y - y % 32,
 				map_utils::imported_tiles[ s_selected_tile ],
 				map_utils::surface_tiles );
+	  /* update array_tiles */
+	  map_utils::array_tiles[ x / 32 ][ y / 32 ] = s_selected_tile;
 	}
 	else
 	{
@@ -154,7 +156,7 @@ void Main_Screen::logic( SDL_Event& event )
 
 void Main_Screen::blit( SDL_Surface* screen )
 {
-  map_utils::update_map( );
+  map_utils::update_map( Main_Screen::s_filename.substr(0, Main_Screen::s_filename.length() - 4 ), true );
   utils::apply_surface( -utils::SCREEN_WIDTH + ( map_utils::camera_cx - map_utils::camera_x ) - map_utils::camera_x_trans,
 			-utils::SCREEN_HEIGHT + ( map_utils::camera_cy - map_utils::camera_y ) - map_utils::camera_y_trans,
 			map_utils::surface_tiles,
