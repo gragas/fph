@@ -4,6 +4,7 @@
 #include <vector>
 #include "text.h"
 #include "text_input.h"
+#include "button.h"
 
 #ifndef MAIN_SCREEN_H
 #define MAIN_SCREEN_H
@@ -21,6 +22,7 @@ class Main_Screen
   static std::string s_selected_tile;
   static std::vector<Text_Input*> text_inputs;
   static SDL_Surface *floor;
+  static Button save_button;
   
  public:
   static bool load();

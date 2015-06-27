@@ -4,15 +4,15 @@ define lava.png as l
 define temperate.climate as t
 
 Tiles:
-l s s g g g g g g g g g g g g g g g g g g g g g g g g g g s s s
-s s s g s g s g s g s g s g s g s g s g s g s g s g s g s s s s
-s s s s g s g s g s g s g s g s g s g s g s g s g s g s g s s s
-g g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s s
+s s s g g g g g g g g g g g g g g g g g g g g g g g g g g s s s
+s s s g s g s g s g l g s g s g s g s g s g s g s g s g s s s s
+s s s s g s g s g s l s g s g s g s g s g s g s g s g s g s s s
+g g s g s g s g s g l g s g s g s g s g s g s g s g s g s g s s
+g s g s g s g s g s l l l s g s g s g s g s g s g s g s g s g s
+g g s g s g s g s g g g s g s g s g s g s g s g s g s g s g s s
 g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s
 g g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s s
-g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s
-g g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s s
-g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s
+g s g s g s g s g s g g g s g s g s g s g s g s g s g s g s g s
 g g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s s
 g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s
 g g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s s

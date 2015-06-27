@@ -18,7 +18,7 @@ bool Main_Menu::load()
 			       "data/images/main_menu/exit_button_unpressed.png" );
 
   
-  if( Main_Menu::i_background == NULL ||
+  if( Main_Menu::i_background == NULL or
       Main_Menu::i_title == NULL)
   {
     return false;

@@ -9,6 +9,7 @@
 #include "main_screen.h"
 #include "text_input.h"
 #include "map_utils.h"
+#include "button.h"
 
 SDL_Surface *Main_Screen::i_background = NULL;
 Text Main_Screen::t_filename_label;
@@ -19,6 +20,7 @@ Text_Input Main_Screen::ti_tile;
 Text_Input *Main_Screen::ptr_ti_selected_text_input = NULL;
 std::string Main_Screen::s_selected_tile;
 std::vector<Text_Input*> Main_Screen::text_inputs;
+Button Main_Screen::save_button;
 
 bool Main_Screen::load()
 {
@@ -31,6 +33,10 @@ bool Main_Screen::load()
   Main_Screen::ti_tile.init( "lava.png", 0, 2, 760, 25, 30 );
   Main_Screen::text_inputs.push_back( &Main_Screen::ti_tile );
   Main_Screen::s_selected_tile = "lava.png";
+  Main_Screen::save_button.init( 715, utils::SCREEN_HEIGHT - 37,
+				 "data/images/main_screen/save_button_pressed.png",
+				 "data/images/main_screen/save_button.png",
+				 false );
 
   map_utils::init( );
  
@@ -44,6 +50,8 @@ bool Main_Screen::free()
   Main_Screen::ti_filename.free();
   Main_Screen::t_tile_label.free();
   Main_Screen::ti_tile.free();
+  map_utils::free_chunks();
+  Main_Screen::save_button.free();
   return true;
 }
 
@@ -55,9 +63,16 @@ void Main_Screen::logic( SDL_Event& event )
     {
       utils::quit = true;
     }
+    else if( event.type == SDL_MOUSEMOTION )
+    {
+      Main_Screen::save_button.update( event.motion.x, event.motion.y );
+    }
     else if( event.type == SDL_MOUSEBUTTONDOWN ) 
     {
-      //
+      if( event.button.button == SDL_BUTTON_LEFT )
+      {
+	Main_Screen::save_button.update( true );
+      }
     }
     else if( event.type == SDL_MOUSEBUTTONUP )
     {
@@ -89,6 +104,17 @@ void Main_Screen::logic( SDL_Event& event )
 	  if( not clicked_a_text_input )
 	  {
 	    Main_Screen::ptr_ti_selected_text_input = NULL;
+	  }
+	  Main_Screen::save_button.update( false );
+	  if( Main_Screen::save_button.within )
+	  {
+	    
+	    map_utils::save_area( map_utils::camera_cx_coord, 
+				  map_utils::camera_cy_coord,
+				  Main_Screen::s_filename.substr( 
+				    0, Main_Screen::s_filename.length() - 4 
+				    ),
+				  true );
 	  }
 	}
       }
@@ -166,4 +192,5 @@ void Main_Screen::blit( SDL_Surface* screen )
   Main_Screen::ti_filename.blit( screen );
   Main_Screen::t_tile_label.blit( screen );
   Main_Screen::ti_tile.blit( screen );
+  Main_Screen::save_button.draw( screen );
 }
