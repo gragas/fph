@@ -187,6 +187,15 @@ void Main_Screen::blit( SDL_Surface* screen )
 			-utils::SCREEN_HEIGHT + ( map_utils::camera_cy - map_utils::camera_y ) - map_utils::camera_y_trans,
 			map_utils::surface_tiles,
 			screen );
+  utils::apply_surface( -utils::SCREEN_WIDTH + ( map_utils::camera_cx - map_utils::camera_x ) - map_utils::camera_x_trans,
+			-utils::SCREEN_HEIGHT + ( map_utils::camera_cy - map_utils::camera_y ) - map_utils::camera_y_trans,
+			map_utils::surface_one,
+			screen );
+  // If there is a character, draw them here, between one and two
+  utils::apply_surface( -utils::SCREEN_WIDTH + ( map_utils::camera_cx - map_utils::camera_x ) - map_utils::camera_x_trans,
+			-utils::SCREEN_HEIGHT + ( map_utils::camera_cy - map_utils::camera_y ) - map_utils::camera_y_trans,
+			map_utils::surface_two,
+			screen );
   utils::apply_surface( 0, 0, Main_Screen::i_background, screen );
   Main_Screen::t_filename_label.blit( screen );
   Main_Screen::ti_filename.blit( screen );

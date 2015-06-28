@@ -200,6 +200,18 @@ namespace map_utils
 	      mode = 0;
 	      scanning = false;
 	    }
+	    else if( line.substr( 0, 4 ).compare( "One:" ) == 0 )
+	    {
+	      line_counter = 0;
+	      mode = 1;
+	      scanning = false;
+	    }
+	    else if( line.substr( 0, 4 ).compare( "Two:" ) == 0 )
+	    {
+	      line_counter = 0;
+	      mode = 2;
+	      scanning = false;
+	    }
 	    else if( line.substr( 0, 8 ).compare( "Climate:" ) == 0 )
 	    {
 	      line_counter = 0;
@@ -225,6 +237,30 @@ namespace map_utils
 					  imported_tiles[ key ],
 					  surface_tiles );
 		  }
+		}
+		else if( mode == 1 ) // one
+		{
+		  for( int i = 0; i < properties.size(); i++ )
+		  {
+		    std::string key = definitions.count( properties[ i ] ) > 0 ? definitions[ properties[ i ] ] : properties[ i ];
+		    array_one[ i + 32 * ( x_offset + 1 ) ][ line_counter + 20 * (y_offset + 1 ) ] = key;
+		    utils::apply_surface( utils::SCREEN_WIDTH * ( x_offset + 1 ) + i * 32,
+					  utils::SCREEN_HEIGHT * ( y_offset + 1 ) + line_counter * 32,
+					  imported_tiles[ key ],
+					  surface_one );
+		  }
+		}
+		else if( mode == 2 ) // two
+		{
+		  for( int i = 0; i < properties.size(); i++ )
+		  {
+		    std::string key = definitions.count( properties[ i ] ) > 0 ? definitions[ properties[ i ] ] : properties[ i ];
+		    array_two[ i + 32 * ( x_offset + 1 ) ][ line_counter + 20 * (y_offset + 1 ) ] = key;
+		    utils::apply_surface( utils::SCREEN_WIDTH * ( x_offset + 1 ) + i * 32,
+					  utils::SCREEN_HEIGHT * ( y_offset + 1 ) + line_counter * 32,
+					  imported_tiles[ key ],
+					  surface_two );
+		  }		  
 		}
 		else if( mode == 3 ) // climate
 		{
@@ -373,6 +409,28 @@ namespace map_utils
 	}
 	chunk_file << "\n";
 	
+	chunk_file << "One:\n";
+	for( int ty = 0; ty < 20; ty++ )
+	{
+	  for( int tx = 0; tx < 32; tx++ )
+	  {
+	    chunk_file << ( array_one[ tx + 32 * ( x_offset + 1 )][ ty + 20 * ( y_offset + 1 ) ] ) << " ";
+	  }
+	  chunk_file << "\n";
+	}
+	chunk_file << "\n";
+
+	chunk_file << "Two:\n";
+	for( int ty = 0; ty < 20; ty++ )
+	{
+	  for( int tx = 0; tx < 32; tx++ )
+	  {
+	    chunk_file << ( array_two[ tx + 32 * ( x_offset + 1 )][ ty + 20 * ( y_offset + 1 ) ] ) << " ";
+	  }
+	  chunk_file << "\n";
+	}
+	chunk_file << "\n";
+
 	chunk_file << "Climate:\n";
 	for( int ty = 0; ty < 20; ty++ )
 	{
