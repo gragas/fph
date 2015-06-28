@@ -1,28 +1,75 @@
 define sand.png as s
 define grass.png as g
+define lava.png as l
+define signbottom.png as sb
+define signtop.png as st
 define temperate.climate as t
 
 Tiles:
-g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g s
-g g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s s
-g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s
-g g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s s
-g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s
-g g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s s
-g s g s g s g s g s g s g s g s g s g s g s g s g s g s g g g g
-g g s g s g s g s g s g s g s g s g s g s g s g s g s g s g g g
-g s g s g s g s g s g s g s g s g s g s g s g s g s g s g g g g
-g g s g s g s g s g s g s g s g s g s g s g s g s g s g s g g g
-g s g s g s g s g s g s g s g s g s g s g s g s g s g s g g g g
-g g s g s g s g s g s g s g s g s g s g s g s g s g s g s g g g
-g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s
-g g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s s
-g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s
-g g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s s
-g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s g s
-s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s
-s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s
-s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s
+g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g 
+g g g g g g g g g g g g g g g g g g s s s s s s s s s s s s s g 
+g g g g g g g g g g g g g g g g g g s l l l l l l l l l l l s g 
+g g g g g g g g g g g g g g g g g g s l l l l l l l l l l l s g 
+g g g g g g g g g g g g g g g g g g s l l l l l l l l l l l s g 
+g g g g g g g g g g g g g g g g g g s s s l l l l l l l l l s g 
+g g g g g g g g g g g g g g g g g s s s s s s s s s s s s s s g 
+s s s s s s s s s s s s s s s s s s s s g g g g g g g g g g g g 
+s s s s s s s s s s s s s s s s s s s g g g g g g g g g g g g g 
+g g g g g g g g g g s s s s g g g g g g g g g g g g g g g g g g 
+g g g g g g g g g g g s s g g g g g g g g g g g g g g g g g g g 
+g g g g g g g g g g g s s g g g g g g g g g g g g g g g g g g g 
+g g g g g g g g g g g s s g g g g g g g g g g g g g g g g g g g 
+g g g g g g g g g g g s s g g g g g g g g g g g g g g g g g g g 
+g g g g g g g g g g g s s s s g g g g g g g g g g g g g g g g g 
+g g g g g g g g g g g g s s s s g g g g g g g g g g g g g g g g 
+g g g g g g g g g g g g g s s s s g g g g g g g g g g g g g g g 
+g g g g g g g g g g g g g g g s s g g g g g g g g g g g g g g g 
+g g g g g g g g g g g g g g g s s g g g g g g g g g g g g g g g 
+g g g g g g g g g g g g g g g s s g g g g g g g g g g g g g g g 
+
+One:
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - sb - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Two:
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - st - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 Climate:
 t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t

@@ -1,32 +1,24 @@
-define sand.png as s
-define grass.png as g
-define lava.png as l
-define signbottom.png as sb
-define signtop.png as st
-define temperate.climate as t
-define blank as -
-
 Tiles:
-g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g 
-g g g g g g g g g g g g g g g g g g s s s s s s s s s s s s s g 
-g g g g g g g g g g g g g g g g g g s l l l l l l l l l l l s g 
-g g g g g g g g g g g g g g g g g g s l l l l l l l l l l l s g 
-g g g g g g g g g g g g g g g g g g s l l l l l l l l l l l s g 
-g g g g g g g g g g g g g g g g g g s s s l l l l l l l l l s g 
-g g g g g g g g g g g g g g g g g s s s s s s s s s s s s s s g 
-s s s s s s s s s s s s s s s s s s s s g g g g g g g g g g g g 
-s s s s s s s s s s s s s s s s s s s g g g g g g g g g g g g g 
-g g g g g g g g g g s s s s g g g g g g g g g g g g g g g g g g 
-g g g g g g g g g g g s s g g g g g g g g g g g g g g g g g g g 
-g g g g g g g g g g g s s g g g g g g g g g g g g g g g g g g g 
-g g g g g g g g g g g s s g g g g g g g g g g g g g g g g g g g 
-g g g g g g g g g g g s s g g g g g g g g g g g g g g g g g g g 
-g g g g g g g g g g g s s s s g g g g g g g g g g g g g g g g g 
-g g g g g g g g g g g g s s s s g g g g g g g g g g g g g g g g 
-g g g g g g g g g g g g g s s s s g g g g g g g g g g g g g g g 
-g g g g g g g g g g g g g g g s s g g g g g g g g g g g g g g g 
-g g g g g g g g g g g g g g g s s g g g g g g g g g g g g g g g 
-g g g g g g g g g g g g g g g s s g g g g g g g g g g g g g g g 
+grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png 
+grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png grass.png 
+grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png sand.png lava.png lava.png lava.png lava.png lava.png lava.png lava.png lava.png lava.png lava.png lava.png sand.png grass.png 
+grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png sand.png lava.png lava.png lava.png lava.png lava.png lava.png lava.png lava.png lava.png lava.png lava.png sand.png grass.png 
+grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png sand.png lava.png lava.png lava.png lava.png lava.png lava.png lava.png lava.png lava.png lava.png lava.png sand.png grass.png 
+grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png - grass.png - grass.png grass.png grass.png grass.png sand.png sand.png sand.png lava.png lava.png lava.png lava.png lava.png lava.png lava.png lava.png lava.png sand.png grass.png 
+grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png - signbottom.png grass.png grass.png grass.png grass.png grass.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png grass.png 
+sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png 
+sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png sand.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png 
+grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png sand.png sand.png sand.png sand.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png 
+grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png sand.png sand.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png 
+grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png sand.png sand.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png 
+grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png sand.png sand.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png 
+grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png sand.png sand.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png 
+grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png sand.png sand.png sand.png sand.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png 
+grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png sand.png sand.png sand.png sand.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png 
+grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png sand.png sand.png sand.png sand.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png 
+grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png sand.png sand.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png 
+grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png sand.png sand.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png 
+grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png sand.png sand.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png grass.png 
 
 One:
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -35,7 +27,7 @@ One:
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-- - - - - - - - - - - sb - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - signbottom.png - - - - - - - - - - - - - - - - - - - - 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -56,7 +48,7 @@ Two:
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-- - - - - - - - - - - st - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - signtop.png - - - - - - - - - - - - - - - - - - - - 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -73,24 +65,24 @@ Two:
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 Climate:
-t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
-t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
-t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
-t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
-t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
-t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
-t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
-t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
-t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
-t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
-t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
-t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
-t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
-t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
-t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
-t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
-t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
-t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
-t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
-t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t 
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t 
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t 
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t 
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t 
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t 
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t 
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t 
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t 
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t 
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t 
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t 
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t 
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t 
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t 
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t 
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t 
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t 
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t 
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t 
 

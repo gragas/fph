@@ -1,6 +1,8 @@
 define sand.png as s
 define grass.png as g
 define lava.png as l
+define signbottom.png as sb
+define signtop.png as st
 define temperate.climate as t
 define blank as -
 

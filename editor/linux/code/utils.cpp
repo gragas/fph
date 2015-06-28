@@ -47,9 +47,15 @@ namespace utils
     SDL_BlitSurface( source, NULL, destination, &offset );
   }
 
-  void clear( SDL_Surface* screen)
+  void clear( SDL_Surface* screen )
   {
     SDL_FillRect( screen, &screen->clip_rect,
 		  SDL_MapRGB( screen->format, 0x00, 0x00, 0x00 ) );
+  }
+  
+  void clearA( SDL_Surface* screen )
+  {
+    SDL_FillRect( screen, &screen->clip_rect,
+		  SDL_MapRGBA( screen->format, 0x00, 0x00, 0x0, 0x00 ) );
   }
 }

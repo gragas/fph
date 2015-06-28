@@ -21,8 +21,12 @@ class Main_Screen
   static Text_Input *ptr_ti_selected_text_input;
   static std::string s_selected_tile;
   static std::vector<Text_Input*> text_inputs;
-  static SDL_Surface *floor;
   static Button save_button;
+  static Button tiles_button;
+  static Button one_button;
+  static Button two_button;
+  static SDL_Surface **ptr_selected_surface;
+  static std::string ( *ptr_selected_array )[32 * 3][20 * 3];
   
  public:
   static bool load();

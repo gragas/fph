@@ -58,6 +58,11 @@ namespace map_utils
 						   32, 0x000000FF, 0x0000FF00, 0x00FF0000,
 						   0xFF000000 );
 
+  SDL_Surface* empty_tile = SDL_CreateRGBSurface( SDL_HWSURFACE, 
+						  32, 32,
+						  32, 0x000000FF, 0x0000FF00, 0x00FF0000,
+						  0xFF000000 );
+
   std::string array_tiles[ 32 * 3 ][ 20 * 3 ];
   std::string array_one[ 32 * 3 ][ 20 * 3 ];
   std::string array_two[ 32 * 3 ][ 20 * 3 ];
@@ -141,10 +146,10 @@ namespace map_utils
     {
       for( int ty = 0; ty < 20; ty++ )
       {
-	array_tiles[ tx + 32 * ( x_offset + 1 ) ][ ty + 20 * ( y_offset + 1 ) ] = "blank";
-	array_climate[ tx + 32 * ( x_offset + 1 ) ][ ty + 20 * ( y_offset + 1 ) ] = "blank";
-	array_one[ tx + 32 * ( x_offset + 1 ) ][ ty + 20 * ( y_offset + 1 ) ] = "blank";
-	array_two[ tx + 32 * ( x_offset + 1 ) ][ ty + 20 * ( y_offset + 1 ) ] = "blank";
+	array_tiles[ tx + 32 * ( x_offset + 1 ) ][ ty + 20 * ( y_offset + 1 ) ] = "-";
+	array_climate[ tx + 32 * ( x_offset + 1 ) ][ ty + 20 * ( y_offset + 1 ) ] = "-";
+	array_one[ tx + 32 * ( x_offset + 1 ) ][ ty + 20 * ( y_offset + 1 ) ] = "-";
+	array_two[ tx + 32 * ( x_offset + 1 ) ][ ty + 20 * ( y_offset + 1 ) ] = "-";
       }
     }
     std::string x_flag, y_flag;
@@ -221,7 +226,7 @@ namespace map_utils
 	  }
 	  else
 	  {
-	    if( line_counter < utils::SCREEN_HEIGHT / 32 )
+            if( line_counter < utils::SCREEN_HEIGHT / 32 )
 	    {
 		std::istringstream buffer( line );
 		std::istream_iterator< std::string > beginning( buffer ), end;
@@ -271,7 +276,7 @@ namespace map_utils
 		}
 		line_counter++;
 	    }
-	    else
+            else
 	    {
 	      scanning = true;
 	    }
@@ -292,9 +297,9 @@ namespace map_utils
 
   void free_chunks( )
   {
-    utils::clear( surface_tiles );
-    utils::clear( surface_one );
-    utils::clear( surface_two );
+    utils::clearA( surface_tiles );
+    utils::clearA( surface_one );
+    utils::clearA( surface_two );
   }
   
   void update_map( std::string map_name, bool should_save_static )
@@ -344,15 +349,7 @@ namespace map_utils
     {
       save_area( camera_cx_coord, camera_cy_coord, map_name, should_save_static );
       free_chunks( );
-      load_chunk( x_coord, y_coord, 0, 0 );
-      load_chunk( x_coord - 1, y_coord - 1, -1, -1 );
-      load_chunk( x_coord, y_coord - 1, 0, -1 );
-      load_chunk( x_coord + 1, y_coord - 1, 1, -1 );
-      load_chunk( x_coord + 1, y_coord, 1, 0 );
-      load_chunk( x_coord + 1, y_coord + 1, 1, 1 );
-      load_chunk( x_coord, y_coord + 1, 0, 1 );
-      load_chunk( x_coord - 1, y_coord + 1, -1, 1 );
-      load_chunk( x_coord - 1, y_coord, -1, 0 );
+      load_area( x_coord, y_coord );
       camera_x_trans = camera_x - x_coord * utils::SCREEN_WIDTH;
       camera_y_trans = camera_y - y_coord * utils::SCREEN_HEIGHT;
       camera_cx = camera_x;
@@ -366,6 +363,19 @@ namespace map_utils
     }
   }
   
+  void load_area( int x_coord, int y_coord )
+  {
+      load_chunk( x_coord, y_coord, 0, 0 );
+      load_chunk( x_coord - 1, y_coord - 1, -1, -1 );
+      load_chunk( x_coord, y_coord - 1, 0, -1 );
+      load_chunk( x_coord + 1, y_coord - 1, 1, -1 );
+      load_chunk( x_coord + 1, y_coord, 1, 0 );
+      load_chunk( x_coord + 1, y_coord + 1, 1, 1 );
+      load_chunk( x_coord, y_coord + 1, 0, 1 );
+      load_chunk( x_coord - 1, y_coord + 1, -1, 1 );
+      load_chunk( x_coord - 1, y_coord, -1, 0 );
+  }
+
   void save_chunk( int x, int y, int x_offset, int y_offset, std::string map_name, bool should_save_static )
   {
 

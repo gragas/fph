@@ -21,6 +21,11 @@ Text_Input *Main_Screen::ptr_ti_selected_text_input = NULL;
 std::string Main_Screen::s_selected_tile;
 std::vector<Text_Input*> Main_Screen::text_inputs;
 Button Main_Screen::save_button;
+Button Main_Screen::tiles_button;
+Button Main_Screen::one_button;
+Button Main_Screen::two_button;
+SDL_Surface **Main_Screen::ptr_selected_surface = NULL;
+std::string ( *Main_Screen::ptr_selected_array )[32 * 3][20 * 3];
 
 bool Main_Screen::load()
 {
@@ -37,6 +42,21 @@ bool Main_Screen::load()
 				 "data/images/main_screen/save_button_pressed.png",
 				 "data/images/main_screen/save_button.png",
 				 false );
+  Main_Screen::tiles_button.init( 715, 50,
+				 "data/images/main_screen/tiles_button_pressed.png",
+				 "data/images/main_screen/tiles_button.png",
+				 false );
+  Main_Screen::one_button.init( 752, 50,
+				 "data/images/main_screen/one_button_pressed.png",
+				 "data/images/main_screen/one_button.png",
+				 false );
+  Main_Screen::two_button.init( 789, 50,
+				 "data/images/main_screen/two_button_pressed.png",
+				 "data/images/main_screen/two_button.png",
+				 false );
+  
+  Main_Screen::ptr_selected_surface = &map_utils::surface_tiles;
+  Main_Screen::ptr_selected_array = &map_utils::array_tiles;
 
   map_utils::init( );
  
@@ -52,6 +72,9 @@ bool Main_Screen::free()
   Main_Screen::ti_tile.free();
   map_utils::free_chunks();
   Main_Screen::save_button.free();
+  Main_Screen::tiles_button.free();
+  Main_Screen::one_button.free();
+  Main_Screen::two_button.free();
   return true;
 }
 
@@ -66,12 +89,18 @@ void Main_Screen::logic( SDL_Event& event )
     else if( event.type == SDL_MOUSEMOTION )
     {
       Main_Screen::save_button.update( event.motion.x, event.motion.y );
+      Main_Screen::tiles_button.update( event.motion.x, event.motion.y );
+      Main_Screen::one_button.update( event.motion.x, event.motion.y );
+      Main_Screen::two_button.update( event.motion.x, event.motion.y );
     }
     else if( event.type == SDL_MOUSEBUTTONDOWN ) 
     {
       if( event.button.button == SDL_BUTTON_LEFT )
       {
 	Main_Screen::save_button.update( true );
+	Main_Screen::tiles_button.update( true );
+	Main_Screen::one_button.update( true );
+	Main_Screen::two_button.update( true );
       }
     }
     else if( event.type == SDL_MOUSEBUTTONUP )
@@ -80,15 +109,14 @@ void Main_Screen::logic( SDL_Event& event )
       {
 	if( event.button.x < 704 )
 	{
-	  /* if floor mode */
 	  int x = utils::SCREEN_WIDTH - ( map_utils::camera_cx - map_utils::camera_x ) + map_utils::camera_x_trans + event.button.x;
 	  int y = utils::SCREEN_HEIGHT - ( map_utils::camera_cy - map_utils::camera_y ) + map_utils::camera_y_trans + event.button.y;
 	  utils::apply_surface( x - x % 32,
 				y - y % 32,
 				map_utils::imported_tiles[ s_selected_tile ],
-				map_utils::surface_tiles );
-	  /* update array_tiles */
-	  map_utils::array_tiles[ x / 32 ][ y / 32 ] = s_selected_tile;
+				*Main_Screen::ptr_selected_surface );
+	  ( *Main_Screen::ptr_selected_array )[ x / 32 ][ y / 32 ] = s_selected_tile;
+	  
 	}
 	else
 	{
@@ -116,6 +144,36 @@ void Main_Screen::logic( SDL_Event& event )
 				    ),
 				  true );
 	  }
+	  Main_Screen::tiles_button.update( false );
+	  if( Main_Screen::tiles_button.within )
+	  {
+	    Main_Screen::ptr_selected_surface = &map_utils::surface_tiles;
+	  }
+	  Main_Screen::one_button.update( false );
+	  if( Main_Screen::one_button.within )
+	  {
+	    Main_Screen::ptr_selected_surface = &map_utils::surface_one;
+	  }
+	  Main_Screen::two_button.update( false );
+	  if( Main_Screen::two_button.within )
+	  {
+	    Main_Screen::ptr_selected_surface = &map_utils::surface_two;
+	  }
+	}
+      }
+      else if( event.button.button == SDL_BUTTON_RIGHT )
+      {
+	if( event.button.x < 704 )
+	{
+	  int x = utils::SCREEN_WIDTH - ( map_utils::camera_cx - map_utils::camera_x ) + map_utils::camera_x_trans + event.button.x;
+	  int y = utils::SCREEN_HEIGHT - ( map_utils::camera_cy - map_utils::camera_y ) + map_utils::camera_y_trans + event.button.y;
+	  SDL_Rect area;
+	  area.x = x - x % 32;
+	  area.y = y - y % 32;
+	  area.w = 32;
+	  area.h = 32;
+	  SDL_FillRect( *Main_Screen::ptr_selected_surface, &area, SDL_MapRGBA( (*Main_Screen::ptr_selected_surface)->format, 0x00, 0x00, 0x00, 0x00 ) );
+	  ( *Main_Screen::ptr_selected_array )[ x / 32 ][ y / 32 ] = "-";
 	}
       }
     }
@@ -202,4 +260,7 @@ void Main_Screen::blit( SDL_Surface* screen )
   Main_Screen::t_tile_label.blit( screen );
   Main_Screen::ti_tile.blit( screen );
   Main_Screen::save_button.draw( screen );
+  Main_Screen::tiles_button.draw( screen );
+  Main_Screen::one_button.draw( screen );
+  Main_Screen::two_button.draw( screen );
 }

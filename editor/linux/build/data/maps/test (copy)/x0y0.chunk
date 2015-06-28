@@ -4,7 +4,6 @@ define lava.png as l
 define signbottom.png as sb
 define signtop.png as st
 define temperate.climate as t
-define blank as -
 
 Tiles:
 g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g 
