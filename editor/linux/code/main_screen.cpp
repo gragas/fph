@@ -148,16 +148,19 @@ void Main_Screen::logic( SDL_Event& event )
 	  if( Main_Screen::tiles_button.within )
 	  {
 	    Main_Screen::ptr_selected_surface = &map_utils::surface_tiles;
+	    Main_Screen::ptr_selected_array = &map_utils::array_tiles;
 	  }
 	  Main_Screen::one_button.update( false );
 	  if( Main_Screen::one_button.within )
 	  {
 	    Main_Screen::ptr_selected_surface = &map_utils::surface_one;
+	    Main_Screen::ptr_selected_array = &map_utils::array_one;
 	  }
 	  Main_Screen::two_button.update( false );
 	  if( Main_Screen::two_button.within )
 	  {
 	    Main_Screen::ptr_selected_surface = &map_utils::surface_two;
+	    Main_Screen::ptr_selected_array = &map_utils::array_two;
 	  }
 	}
       }
