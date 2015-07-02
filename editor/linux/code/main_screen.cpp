@@ -24,6 +24,7 @@ Button Main_Screen::save_button;
 Button Main_Screen::tiles_button;
 Button Main_Screen::one_button;
 Button Main_Screen::two_button;
+Button Main_Screen::climate_button;
 SDL_Surface **Main_Screen::ptr_selected_surface = NULL;
 std::string ( *Main_Screen::ptr_selected_array )[32 * 3][20 * 3];
 
@@ -54,6 +55,10 @@ bool Main_Screen::load()
 				 "data/images/main_screen/two_button_pressed.png",
 				 "data/images/main_screen/two_button.png",
 				 false );
+  Main_Screen::climate_button.init( 826, 50,
+				    "data/images/main_screen/climate_button_pressed.png",
+				    "data/images/main_screen/climate_button.png",
+				    false );
   
   Main_Screen::ptr_selected_surface = &map_utils::surface_tiles;
   Main_Screen::ptr_selected_array = &map_utils::array_tiles;
@@ -75,6 +80,7 @@ bool Main_Screen::free()
   Main_Screen::tiles_button.free();
   Main_Screen::one_button.free();
   Main_Screen::two_button.free();
+  Main_Screen::climate_button.free();
   return true;
 }
 
@@ -92,6 +98,7 @@ void Main_Screen::logic( SDL_Event& event )
       Main_Screen::tiles_button.update( event.motion.x, event.motion.y );
       Main_Screen::one_button.update( event.motion.x, event.motion.y );
       Main_Screen::two_button.update( event.motion.x, event.motion.y );
+      Main_Screen::climate_button.update( event.motion.x, event.motion.y );
     }
     else if( event.type == SDL_MOUSEBUTTONDOWN ) 
     {
@@ -101,12 +108,18 @@ void Main_Screen::logic( SDL_Event& event )
 	Main_Screen::tiles_button.update( true );
 	Main_Screen::one_button.update( true );
 	Main_Screen::two_button.update( true );
+	Main_Screen::climate_button.update( true );
       }
     }
     else if( event.type == SDL_MOUSEBUTTONUP )
     {
       if( event.button.button == SDL_BUTTON_LEFT )
       {
+	Main_Screen::save_button.update( false );
+	Main_Screen::tiles_button.update( false );
+	Main_Screen::one_button.update( false );
+	Main_Screen::two_button.update( false );
+	Main_Screen::climate_button.update( false );
 	if( event.button.x < 704 )
 	{
 	  int x = utils::SCREEN_WIDTH - ( map_utils::camera_cx - map_utils::camera_x ) + map_utils::camera_x_trans + event.button.x;
@@ -133,7 +146,6 @@ void Main_Screen::logic( SDL_Event& event )
 	  {
 	    Main_Screen::ptr_ti_selected_text_input = NULL;
 	  }
-	  Main_Screen::save_button.update( false );
 	  if( Main_Screen::save_button.within )
 	  {
 	    
@@ -144,23 +156,26 @@ void Main_Screen::logic( SDL_Event& event )
 				    ),
 				  true );
 	  }
-	  Main_Screen::tiles_button.update( false );
-	  if( Main_Screen::tiles_button.within )
+	  else if( Main_Screen::tiles_button.within )
 	  {
 	    Main_Screen::ptr_selected_surface = &map_utils::surface_tiles;
 	    Main_Screen::ptr_selected_array = &map_utils::array_tiles;
 	  }
-	  Main_Screen::one_button.update( false );
-	  if( Main_Screen::one_button.within )
+	  else if( Main_Screen::one_button.within )
 	  {
 	    Main_Screen::ptr_selected_surface = &map_utils::surface_one;
 	    Main_Screen::ptr_selected_array = &map_utils::array_one;
 	  }
-	  Main_Screen::two_button.update( false );
-	  if( Main_Screen::two_button.within )
+	  else if( Main_Screen::two_button.within )
 	  {
 	    Main_Screen::ptr_selected_surface = &map_utils::surface_two;
 	    Main_Screen::ptr_selected_array = &map_utils::array_two;
+	  }
+	  else if( Main_Screen::climate_button.within )
+	  {
+	    // Main_Screen::ptr_selected_surface = &map_utils::surface_two;
+	    // figure out how to do the climate surface
+	    Main_Screen::ptr_selected_array = &map_utils::array_climate;
 	  }
 	}
       }
@@ -266,4 +281,5 @@ void Main_Screen::blit( SDL_Surface* screen )
   Main_Screen::tiles_button.draw( screen );
   Main_Screen::one_button.draw( screen );
   Main_Screen::two_button.draw( screen );
+  Main_Screen::climate_button.draw( screen );
 }

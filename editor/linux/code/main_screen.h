@@ -25,6 +25,7 @@ class Main_Screen
   static Button tiles_button;
   static Button one_button;
   static Button two_button;
+  static Button climate_button;
   static SDL_Surface **ptr_selected_surface;
   static std::string ( *ptr_selected_array )[32 * 3][20 * 3];
   
