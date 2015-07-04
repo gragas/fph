@@ -160,22 +160,25 @@ void Main_Screen::logic( SDL_Event& event )
 	  {
 	    Main_Screen::ptr_selected_surface = &map_utils::surface_tiles;
 	    Main_Screen::ptr_selected_array = &map_utils::array_tiles;
+	    map_utils::blit_climate_surface = false;
 	  }
 	  else if( Main_Screen::one_button.within )
 	  {
 	    Main_Screen::ptr_selected_surface = &map_utils::surface_one;
 	    Main_Screen::ptr_selected_array = &map_utils::array_one;
+	    map_utils::blit_climate_surface = false;
 	  }
 	  else if( Main_Screen::two_button.within )
 	  {
 	    Main_Screen::ptr_selected_surface = &map_utils::surface_two;
 	    Main_Screen::ptr_selected_array = &map_utils::array_two;
+	    map_utils::blit_climate_surface = false;
 	  }
 	  else if( Main_Screen::climate_button.within )
 	  {
-	    // Main_Screen::ptr_selected_surface = &map_utils::surface_two;
-	    // figure out how to do the climate surface
+	    Main_Screen::ptr_selected_surface = &map_utils::surface_climate;
 	    Main_Screen::ptr_selected_array = &map_utils::array_climate;
+	    map_utils::blit_climate_surface = true;
 	  }
 	}
       }
@@ -258,20 +261,17 @@ void Main_Screen::logic( SDL_Event& event )
 
 void Main_Screen::blit( SDL_Surface* screen )
 {
+  int x_position = -utils::SCREEN_WIDTH + ( map_utils::camera_cx - map_utils::camera_x ) - map_utils::camera_x_trans;
+  int y_position = -utils::SCREEN_HEIGHT + ( map_utils::camera_cy - map_utils::camera_y ) - map_utils::camera_y_trans;
   map_utils::update_map( Main_Screen::s_filename.substr(0, Main_Screen::s_filename.length() - 4 ), true );
-  utils::apply_surface( -utils::SCREEN_WIDTH + ( map_utils::camera_cx - map_utils::camera_x ) - map_utils::camera_x_trans,
-			-utils::SCREEN_HEIGHT + ( map_utils::camera_cy - map_utils::camera_y ) - map_utils::camera_y_trans,
-			map_utils::surface_tiles,
-			screen );
-  utils::apply_surface( -utils::SCREEN_WIDTH + ( map_utils::camera_cx - map_utils::camera_x ) - map_utils::camera_x_trans,
-			-utils::SCREEN_HEIGHT + ( map_utils::camera_cy - map_utils::camera_y ) - map_utils::camera_y_trans,
-			map_utils::surface_one,
-			screen );
+  utils::apply_surface( x_position, y_position, map_utils::surface_tiles, screen );
+  utils::apply_surface( x_position, y_position, map_utils::surface_one, screen );
   // If there is a character, draw them here, between one and two
-  utils::apply_surface( -utils::SCREEN_WIDTH + ( map_utils::camera_cx - map_utils::camera_x ) - map_utils::camera_x_trans,
-			-utils::SCREEN_HEIGHT + ( map_utils::camera_cy - map_utils::camera_y ) - map_utils::camera_y_trans,
-			map_utils::surface_two,
-			screen );
+  utils::apply_surface( x_position, y_position, map_utils::surface_two, screen );
+  if( map_utils::blit_climate_surface )
+  {
+    utils::apply_surface( x_position, y_position, map_utils::surface_climate, screen );
+  }
   utils::apply_surface( 0, 0, Main_Screen::i_background, screen );
   Main_Screen::t_filename_label.blit( screen );
   Main_Screen::ti_filename.blit( screen );

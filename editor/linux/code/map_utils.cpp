@@ -54,14 +54,16 @@ namespace map_utils
 						   0xFF000000 );
 
   SDL_Surface* surface_characters = SDL_CreateRGBSurface( SDL_HWSURFACE, 
-						   utils::SCREEN_WIDTH * 3, utils::SCREEN_HEIGHT * 3,
-						   32, 0x000000FF, 0x0000FF00, 0x00FF0000,
-						   0xFF000000 );
+							  utils::SCREEN_WIDTH * 3, utils::SCREEN_HEIGHT * 3,
+							  32, 0x000000FF, 0x0000FF00, 0x00FF0000,
+							  0xFF000000 );
 
-  SDL_Surface* empty_tile = SDL_CreateRGBSurface( SDL_HWSURFACE, 
-						  32, 32,
-						  32, 0x000000FF, 0x0000FF00, 0x00FF0000,
-						  0xFF000000 );
+  SDL_Surface* surface_climate = SDL_CreateRGBSurface( SDL_HWSURFACE, 
+						       utils::SCREEN_WIDTH * 3, utils::SCREEN_HEIGHT * 3,
+						       32, 0x000000FF, 0x0000FF00, 0x00FF0000,
+						       0xFF000000 );
+
+  bool blit_climate_surface = false;
 
   std::string array_tiles[ 32 * 3 ][ 20 * 3 ];
   std::string array_one[ 32 * 3 ][ 20 * 3 ];
@@ -78,6 +80,7 @@ namespace map_utils
     SDL_FillRect( surface_one, NULL, SDL_MapRGBA( surface_one->format, 0, 0, 0, 0 ) );
     SDL_FillRect( surface_two, NULL, SDL_MapRGBA( surface_two->format, 0, 0, 0, 0 ) );
     SDL_FillRect( surface_characters, NULL, SDL_MapRGBA( surface_characters->format, 0, 0, 0, 0 ) );
+    SDL_FillRect( surface_climate, NULL, SDL_MapRGBA( surface_climate->format, 0, 0, 0, 0 ) );
   /* Be sure to set the alpha of source surfaces when blitting onto floor
      Use this:
      SDL_SetAlpha( source, 0, SDL_ALPHA_OPAQUE );
@@ -271,7 +274,12 @@ namespace map_utils
 		{
 		  for( int i = 0; i < properties.size(); i++ )
 		  {
+		    std::string key = definitions.count( properties[ i ] ) > 0 ? definitions[ properties[ i ] ] : properties[ i ];
 		    array_climate[ i + 32 * ( x_offset + 1 ) ][ line_counter + 20 * ( y_offset + 1 ) ] = properties[ i ];
+		    utils::apply_surface( utils::SCREEN_WIDTH * ( x_offset + 1 ) + i * 32,
+					  utils::SCREEN_HEIGHT * ( y_offset + 1 ) + line_counter * 32,
+					  imported_tiles[ key ],
+					  surface_climate );
 		  }
 		}
 		line_counter++;

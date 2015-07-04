@@ -24,7 +24,8 @@ namespace map_utils
   extern SDL_Surface* surface_one;
   extern SDL_Surface* surface_two;
   extern SDL_Surface* surface_characters;
-  extern SDL_Surface* empty_tile;
+  extern SDL_Surface* surface_climate;
+  extern bool blit_climate_surface;
 
   extern std::string array_tiles[32 * 3][20 * 3];
   extern std::string array_one[32 * 3][20 * 3];
