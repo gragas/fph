@@ -9,7 +9,8 @@ namespace utils
   const int SCREEN_WIDTH = 1024;
   const int SCREEN_HEIGHT = 640;
   const int SCREEN_BPP = 32;
-  const int FRAMES_PER_SECOND = 55;
+  const int FRAMES_PER_SECOND = 60;
+  const bool CAP_FRAME_RATE = false;
 
   bool quit = false;
 
@@ -46,9 +47,15 @@ namespace utils
     SDL_BlitSurface( source, NULL, destination, &offset );
   }
 
-  void clear( SDL_Surface* screen)
+  void clear( SDL_Surface* screen )
   {
     SDL_FillRect( screen, &screen->clip_rect,
 		  SDL_MapRGB( screen->format, 0x00, 0x00, 0x00 ) );
+  }
+  
+  void clearA( SDL_Surface* screen )
+  {
+    SDL_FillRect( screen, &screen->clip_rect,
+		  SDL_MapRGBA( screen->format, 0x00, 0x00, 0x0, 0x00 ) );
   }
 }

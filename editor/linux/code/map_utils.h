@@ -1,4 +1,5 @@
 #include "SDL/SDL.h"
+#include <map>
 #include <vector>
 #include <string>
 
@@ -14,7 +15,7 @@ namespace map_utils
   extern int camera_cx, camera_cy;
   extern int camera_x_trans, camera_y_trans;
   extern int camera_cx_coord, camera_cy_coord;
-  extern int camera_velocity;
+  extern int camera_speed;
 
   extern int year, month, day;
   extern int temperature;

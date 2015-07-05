@@ -67,10 +67,10 @@ int main( int argc, char* args [] )
       return 1;
     }
 
-    if( fps.get_ticks() < 1000 / utils::FRAMES_PER_SECOND )
-    {
-      SDL_Delay( ( 1000 / utils::FRAMES_PER_SECOND ) - fps.get_ticks() );
-    }
+    // if( fps.get_ticks() < 1000 / utils::FRAMES_PER_SECOND )
+    // {
+    //   SDL_Delay( ( 1000 / utils::FRAMES_PER_SECOND ) - fps.get_ticks() );
+    // }
   }
 
   // // Free the surfaces and quit SDL

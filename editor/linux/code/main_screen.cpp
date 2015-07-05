@@ -63,7 +63,7 @@ bool Main_Screen::load()
   Main_Screen::ptr_selected_surface = &map_utils::surface_tiles;
   Main_Screen::ptr_selected_array = &map_utils::array_tiles;
 
-  map_utils::init( );
+  map_utils::init();
  
   return true;
 }
@@ -263,7 +263,6 @@ void Main_Screen::blit( SDL_Surface* screen )
 {
   int x_position = -utils::SCREEN_WIDTH + ( map_utils::camera_cx - map_utils::camera_x ) - map_utils::camera_x_trans;
   int y_position = -utils::SCREEN_HEIGHT + ( map_utils::camera_cy - map_utils::camera_y ) - map_utils::camera_y_trans;
-  map_utils::update_map( Main_Screen::s_filename.substr(0, Main_Screen::s_filename.length() - 4 ), true );
   utils::apply_surface( x_position, y_position, map_utils::surface_tiles, screen );
   utils::apply_surface( x_position, y_position, map_utils::surface_one, screen );
   // If there is a character, draw them here, between one and two
@@ -272,6 +271,7 @@ void Main_Screen::blit( SDL_Surface* screen )
   {
     utils::apply_surface( x_position, y_position, map_utils::surface_climate, screen );
   }
+  map_utils::update_map( Main_Screen::s_filename.substr(0, Main_Screen::s_filename.length() - 4 ), true );
   utils::apply_surface( 0, 0, Main_Screen::i_background, screen );
   Main_Screen::t_filename_label.blit( screen );
   Main_Screen::ti_filename.blit( screen );

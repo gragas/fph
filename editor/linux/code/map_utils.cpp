@@ -20,7 +20,7 @@ namespace map_utils
   int camera_y = 0;
   int camera_xv = 0;
   int camera_yv = 0;
-  int camera_velocity = 5;
+  int camera_speed = 5;
   int camera_cx = 0;
   int camera_cy = 0;
   int camera_x_trans = 0;
@@ -316,19 +316,19 @@ namespace map_utils
     Uint8 *keystates = SDL_GetKeyState( NULL );
     if( keystates[ SDLK_w ] )
     {
-      camera_yv = -1 * camera_velocity;
+      camera_yv = -1 * camera_speed;
     }
     if( keystates[ SDLK_s ] )
     {
-      camera_yv = camera_velocity;
+      camera_yv = camera_speed;
     }
     if( keystates[ SDLK_d ] )
     {
-      camera_xv = camera_velocity;
+      camera_xv = camera_speed;
     }
     if( keystates[ SDLK_a ] )
     {
-      camera_xv = -1 * camera_velocity;
+      camera_xv = -1 * camera_speed;
     }
     if( not keystates[ SDLK_w ] and not keystates[ SDLK_s ] )
     {
