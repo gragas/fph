@@ -308,6 +308,7 @@ namespace map_utils
     utils::clearA( surface_tiles );
     utils::clearA( surface_one );
     utils::clearA( surface_two );
+    utils::clearA( surface_climate );
   }
   
   void update_map( std::string map_name, bool should_save_static )
