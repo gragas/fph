@@ -8,8 +8,10 @@ private:
   static int x, y;
   static int health_current, health_maximum;
   static int health_shield;
+  static int mana_current, mana_maximum;
   static int speed_walk, speed_run;
   static Rectangle rectangle_health;
+  static Rectangle rectangle_mana;
 
 public:
   static void load( std::string character_name );
