@@ -41,7 +41,7 @@ namespace utils
 
   void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination)
   {
-    SDL_Rect offset; 
+    SDL_Rect offset;
     offset.x = x;
     offset.y = y;
     SDL_BlitSurface( source, NULL, destination, &offset );
@@ -56,6 +56,6 @@ namespace utils
   void clearA( SDL_Surface* screen )
   {
     SDL_FillRect( screen, &screen->clip_rect,
-		  SDL_MapRGBA( screen->format, 0x00, 0x00, 0x0, 0x00 ) );
+		  SDL_MapRGBA( screen->format, 0x00, 0x00, 0x00, 0x00 ) );
   }
 }

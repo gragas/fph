@@ -32,19 +32,45 @@ void SoloGame::logic( SDL_Event& event )
     {
       utils::quit = true;
     }
+    else if( event.type == SDL_KEYUP )
+    {
+      switch( event.key.keysym.sym )
+      {
+      case SDLK_ESCAPE:
+	utils::quit = true;
+	break;
+      default:
+	break;
+      }
+    }
   }
 }
 
-void SoloGame::blit( SDL_Surface* screen )
-{
-  // utils::apply_surface( 0, 0, SoloGame::i_background, screen );
-  
-  int x_position = -utils::SCREEN_WIDTH + ( map_utils::camera_cx - map_utils::camera_x ) - map_utils::camera_x_trans;
-  int y_position = -utils::SCREEN_HEIGHT + ( map_utils::camera_cy - map_utils::camera_y ) - map_utils::camera_y_trans;
-  utils::apply_surface( x_position, y_position, map_utils::surface_tiles, screen );
-  utils::apply_surface( x_position, y_position, map_utils::surface_one, screen );
+void SoloGame::blit( SDL_Surface * destination )
+{  
+  int x_position = -utils::SCREEN_WIDTH + \
+    ( map_utils::camera_cx - map_utils::camera_x ) - \
+    map_utils::camera_x_trans;
+  int y_position = -utils::SCREEN_HEIGHT + \
+    ( map_utils::camera_cy - map_utils::camera_y ) - \
+    map_utils::camera_y_trans;
+
+  utils::apply_surface( 
+    x_position, y_position,
+    map_utils::surface_tiles,
+    destination );
+  utils::apply_surface( 
+    x_position, y_position,
+    map_utils::surface_one,
+    destination );
   // If there is a character, draw them here, between one and two
-  utils::apply_surface( x_position, y_position, map_utils::surface_two, screen );
+  utils::apply_surface( 
+    x_position, y_position,
+    map_utils::surface_two,
+    destination );
+
   map_utils::update_map( "test", true );
+
+  Player::blit( destination );
 
 }

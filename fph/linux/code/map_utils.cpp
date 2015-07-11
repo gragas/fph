@@ -33,35 +33,47 @@ namespace map_utils
   int temperature = 75;
   bool fahrenheit = true;
 
-  SDL_Surface* surface_tiles = SDL_CreateRGBSurface( SDL_HWSURFACE, 
-						     utils::SCREEN_WIDTH * 3, utils::SCREEN_HEIGHT * 3,
-						     32, 0x000000FF, 0x0000FF00, 0x00FF0000,
-						     0xFF000000 );
+  SDL_Surface* surface_tiles = SDL_CreateRGBSurface( 
+    SDL_HWSURFACE, 
+    utils::SCREEN_WIDTH * 3, utils::SCREEN_HEIGHT * 3,
+    32,
+    0x000000FF, 0x0000FF00, 0x00FF0000,
+    0xFF000000 );
 
-  SDL_Surface* surface_tiles_storage = SDL_CreateRGBSurface( SDL_HWSURFACE, 
-							     utils::SCREEN_WIDTH * 3, utils::SCREEN_HEIGHT * 3,
-							     32, 0x000000FF, 0x0000FF00, 0x00FF0000,
-							     0xFF000000 );
+  SDL_Surface* surface_tiles_storage = SDL_CreateRGBSurface( 
+    SDL_HWSURFACE, 
+    utils::SCREEN_WIDTH * 3, utils::SCREEN_HEIGHT * 3,
+    32,
+    0x000000FF, 0x0000FF00, 0x00FF0000,
+    0xFF000000 );
 
-  SDL_Surface* surface_one = SDL_CreateRGBSurface( SDL_HWSURFACE, 
-						   utils::SCREEN_WIDTH * 3, utils::SCREEN_HEIGHT * 3,
-						   32, 0x000000FF, 0x0000FF00, 0x00FF0000,
-						   0xFF000000 );
+  SDL_Surface* surface_one = SDL_CreateRGBSurface( 
+    SDL_HWSURFACE, 
+    utils::SCREEN_WIDTH * 3, utils::SCREEN_HEIGHT * 3,
+    32,
+    0x000000FF, 0x0000FF00, 0x00FF0000,
+    0xFF000000 );
 
-  SDL_Surface* surface_two = SDL_CreateRGBSurface( SDL_HWSURFACE, 
-						   utils::SCREEN_WIDTH * 3, utils::SCREEN_HEIGHT * 3,
-						   32, 0x000000FF, 0x0000FF00, 0x00FF0000,
-						   0xFF000000 );
+  SDL_Surface* surface_two = SDL_CreateRGBSurface( 
+    SDL_HWSURFACE, 
+    utils::SCREEN_WIDTH * 3, utils::SCREEN_HEIGHT * 3,
+    32,
+    0x000000FF, 0x0000FF00, 0x00FF0000,
+    0xFF000000 );
 
-  SDL_Surface* surface_characters = SDL_CreateRGBSurface( SDL_HWSURFACE, 
-							  utils::SCREEN_WIDTH * 3, utils::SCREEN_HEIGHT * 3,
-							  32, 0x000000FF, 0x0000FF00, 0x00FF0000,
-							  0xFF000000 );
+  SDL_Surface* surface_characters = SDL_CreateRGBSurface( 
+    SDL_HWSURFACE, 
+    utils::SCREEN_WIDTH * 3, utils::SCREEN_HEIGHT * 3,
+    32,
+    0x000000FF, 0x0000FF00, 0x00FF0000,
+    0xFF000000 );
 
-  SDL_Surface* surface_climate = SDL_CreateRGBSurface( SDL_HWSURFACE, 
-						       utils::SCREEN_WIDTH * 3, utils::SCREEN_HEIGHT * 3,
-						       32, 0x000000FF, 0x0000FF00, 0x00FF0000,
-						       0xFF000000 );
+  SDL_Surface* surface_climate = SDL_CreateRGBSurface( 
+    SDL_HWSURFACE, 
+    utils::SCREEN_WIDTH * 3, utils::SCREEN_HEIGHT * 3,
+    32,
+    0x000000FF, 0x0000FF00, 0x00FF0000,
+    0xFF000000 );
 
   bool blit_climate_surface = false;
 
