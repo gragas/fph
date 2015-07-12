@@ -4,6 +4,7 @@
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 #include <string>
+#include <sstream>
 
 #include "timer.h"
 #include "utils.h"
@@ -49,12 +50,18 @@ int main( int argc, char* args [] )
   
   int frame = 0;
   Timer fps;
+  Timer update;
+
+  update.start();
   
   utils::logic = Main_Menu::logic;
   utils::blit = Main_Menu::blit;
   
   while( utils::quit == false )
   {    
+    
+    fps.start();
+
     utils::logic( event );
     
     utils::clear( screen );
@@ -67,9 +74,28 @@ int main( int argc, char* args [] )
       return 1;
     }
 
-    if( fps.get_ticks() < 1000 / utils::FRAMES_PER_SECOND )
+    frame++;
+
+    if( (utils::CAP_FRAME_RATE) && 
+	(fps.get_ticks() < 1000 / utils::FRAMES_PER_SECOND)
+      )
     {
       SDL_Delay( ( 1000 / utils::FRAMES_PER_SECOND ) - fps.get_ticks() );
+    }
+
+    if( update.get_ticks() > 1000 )
+    {
+      //The frame rate as a string 
+      std::stringstream caption;
+      //Calculate the frames per second and create the string
+      caption << "Average Frames Per Second: " << frame;
+      //Reset the caption 
+      SDL_WM_SetCaption( caption.str().c_str(), NULL );
+
+      frame = 0;
+
+      //Restart the update timer
+      update.start();
     }
   }
 
