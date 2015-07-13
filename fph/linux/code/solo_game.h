@@ -12,6 +12,7 @@ class SoloGame
  public:
   static bool load( std::string character_name );
   static bool free();
+  static void update();
   static void logic( SDL_Event& event );
   static void blit( SDL_Surface* screen );
 };

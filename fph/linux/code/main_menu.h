@@ -10,6 +10,10 @@ class Main_Menu
   static SDL_Surface *i_background;
   static SDL_Surface *i_title;
   static Button exit_button;
+  static Button options_button;
+  static Button multiplayer_button;
+  static Button load_button;
+  static Button new_button;
   
  public:
   static bool load();

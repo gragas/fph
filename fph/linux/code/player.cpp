@@ -15,8 +15,8 @@ int Player::health_maximum = 10;
 int Player::health_shield = 0;
 int Player::mana_current = 20;
 int Player::mana_maximum = 20;
-int Player::speed_walk = 2;
-int Player::speed_run = 3;
+int Player::speed_walk = 1;
+int Player::speed_run = 2;
 
 Rectangle Player::rectangle_health = Rectangle(
   5, 5,
@@ -52,7 +52,14 @@ void Player::load( std::string character_name )
 
 void Player::update()
 {
-  
+  if( utils::keystates[ SDLK_LSHIFT ] )
+  {
+    map_utils::camera_speed = Player::speed_run;
+  }
+  else
+  {
+    map_utils::camera_speed = Player::speed_walk;
+  }
 }
 
 void Player::blit( SDL_Surface * destination )

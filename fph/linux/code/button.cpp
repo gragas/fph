@@ -21,16 +21,13 @@ void Button::init( int x,  int y, std::string filename1, std::string filename2, 
   }
 }
 
-void Button::update( int mouse_x, int mouse_y )
-{
-  this->mouse_x = mouse_x;
-  this->mouse_y = mouse_y;
-  within = ( mouse_x > box.x && mouse_x < box.x + box.w && mouse_y > box.y && mouse_y < box.y + box.h );
-}
-
 void Button::update( bool mouse_down )
 {
   this->mouse_down = mouse_down;
+  within = (utils::mouse_x > box.x) &&
+           (utils::mouse_x < box.x + box.w) && 
+	   (utils::mouse_y > box.y) && 
+           (utils::mouse_y < box.y + box.h);
 }
 
 void Button::draw( SDL_Surface* screen )

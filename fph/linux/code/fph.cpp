@@ -50,9 +50,11 @@ int main( int argc, char* args [] )
   
   int frame = 0;
   Timer fps;
+  Timer fps_counter;
   Timer update;
 
   update.start();
+  fps_counter.start();
   
   utils::logic = Main_Menu::logic;
   utils::blit = Main_Menu::blit;
@@ -61,6 +63,15 @@ int main( int argc, char* args [] )
   {    
     
     fps.start();
+
+    if( update.get_ticks() > 1000 / utils::UPDATES_PER_SECOND )
+    {
+      if( utils::update != NULL )
+      {
+	utils::update();
+      }
+      update.start();
+    }
 
     utils::logic( event );
     
@@ -83,7 +94,7 @@ int main( int argc, char* args [] )
       SDL_Delay( ( 1000 / utils::FRAMES_PER_SECOND ) - fps.get_ticks() );
     }
 
-    if( update.get_ticks() > 1000 )
+    if( fps_counter.get_ticks() > 1000 )
     {
       //The frame rate as a string 
       std::stringstream caption;
@@ -95,7 +106,7 @@ int main( int argc, char* args [] )
       frame = 0;
 
       //Restart the update timer
-      update.start();
+      fps_counter.start();
     }
   }
 

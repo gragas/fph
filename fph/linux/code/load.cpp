@@ -41,6 +41,7 @@ void Load::logic( SDL_Event& event )
 	  std::cout << "ERROR: Failed ot free Load resources" << std::endl;
 	  utils::quit = true;
 	}
+	utils::update = SoloGame::update;
 	utils::logic = SoloGame::logic;
 	utils::blit = SoloGame::blit;
 	SoloGame::load( "Tom" );

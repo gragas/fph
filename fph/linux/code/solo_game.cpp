@@ -55,15 +55,17 @@ void SoloGame::blit( SDL_Surface * destination )
     ( map_utils::camera_cy - map_utils::camera_y ) - \
     map_utils::camera_y_trans;
 
-  Player::update();
-
-  utils::apply_surface( 
+//  utils::apply_surface( 
+//    x_position, y_position,
+//    map_utils::surface_tiles,
+//    destination );
+//  utils::apply_surface( 
+//    x_position, y_position,
+//    map_utils::surface_one,
+//    destination );
+  utils::apply_surface(
     x_position, y_position,
-    map_utils::surface_tiles,
-    destination );
-  utils::apply_surface( 
-    x_position, y_position,
-    map_utils::surface_one,
+    map_utils::surface_bottom,
     destination );
   // If there is a character, draw them here, between one and two
   Player::blit( destination );
@@ -71,6 +73,11 @@ void SoloGame::blit( SDL_Surface * destination )
     x_position, y_position,
     map_utils::surface_two,
     destination );
+}
 
+void SoloGame::update( )
+{
+  utils::keystates = SDL_GetKeyState( NULL );
+  Player::update();
   map_utils::update_map( "test", true );
 }

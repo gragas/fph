@@ -9,11 +9,18 @@ namespace utils
   const int SCREEN_WIDTH = 1024;
   const int SCREEN_HEIGHT = 640;
   const int SCREEN_BPP = 32;
-  const int FRAMES_PER_SECOND = 60;
+  const int UPDATES_PER_SECOND = 50;
+  const int FRAMES_PER_SECOND = 120;
   const bool CAP_FRAME_RATE = false;
+
+  int mouse_x = 0;
+  int mouse_y = 0;
+
+  Uint8 * keystates = NULL;
 
   bool quit = false;
 
+  void (*update)( ) = NULL;
   void (*logic)( SDL_Event& event ) = NULL;
   void (*blit)( SDL_Surface* screen ) = NULL;
 

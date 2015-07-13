@@ -40,14 +40,14 @@ namespace map_utils
     0x000000FF, 0x0000FF00, 0x00FF0000,
     0xFF000000 );
 
-  SDL_Surface* surface_tiles_storage = SDL_CreateRGBSurface( 
+  SDL_Surface* surface_one = SDL_CreateRGBSurface( 
     SDL_HWSURFACE, 
     utils::SCREEN_WIDTH * 3, utils::SCREEN_HEIGHT * 3,
     32,
     0x000000FF, 0x0000FF00, 0x00FF0000,
     0xFF000000 );
 
-  SDL_Surface* surface_one = SDL_CreateRGBSurface( 
+  SDL_Surface* surface_bottom = SDL_CreateRGBSurface( 
     SDL_HWSURFACE, 
     utils::SCREEN_WIDTH * 3, utils::SCREEN_HEIGHT * 3,
     32,
@@ -88,8 +88,8 @@ namespace map_utils
   {
     load_plugins( );
     SDL_FillRect( surface_tiles, NULL, SDL_MapRGBA( surface_tiles->format, 0, 0, 0, 0 ) );
-    SDL_FillRect( surface_tiles_storage, NULL, SDL_MapRGBA( surface_tiles_storage->format, 0, 0, 0, 0 ) );
     SDL_FillRect( surface_one, NULL, SDL_MapRGBA( surface_one->format, 0, 0, 0, 0 ) );
+    SDL_FillRect( surface_bottom, NULL, SDL_MapRGBA( surface_bottom->format, 0, 0, 0, 0 ) );
     SDL_FillRect( surface_two, NULL, SDL_MapRGBA( surface_two->format, 0, 0, 0, 0 ) );
     SDL_FillRect( surface_characters, NULL, SDL_MapRGBA( surface_characters->format, 0, 0, 0, 0 ) );
     SDL_FillRect( surface_climate, NULL, SDL_MapRGBA( surface_climate->format, 0, 0, 0, 0 ) );
@@ -133,6 +133,13 @@ namespace map_utils
     load_chunk( 0, 1, 0, 1 );
     load_chunk( 1, 1, 1, 1 );
     //
+    SDL_SetAlpha( surface_bottom, 0, SDL_ALPHA_OPAQUE );
+    utils::apply_surface( 0, 0,
+			  surface_tiles,
+			  surface_bottom );
+    utils::apply_surface( 0, 0,
+			  surface_one,
+			  surface_bottom );
   }
 
   void load_plugins( )
@@ -321,32 +328,33 @@ namespace map_utils
     utils::clearA( surface_one );
     utils::clearA( surface_two );
     utils::clearA( surface_climate );
+    utils::clearA( surface_bottom );
   }
   
   void update_map( std::string map_name, bool should_save_static )
   {
-    Uint8 *keystates = SDL_GetKeyState( NULL );
-    if( keystates[ SDLK_w ] )
+
+    if( utils::keystates[ SDLK_w ] )
     {
       camera_yv = -1 * camera_speed;
     }
-    if( keystates[ SDLK_s ] )
+    if( utils::keystates[ SDLK_s ] )
     {
       camera_yv = camera_speed;
     }
-    if( keystates[ SDLK_d ] )
+    if( utils::keystates[ SDLK_d ] )
     {
       camera_xv = camera_speed;
     }
-    if( keystates[ SDLK_a ] )
+    if( utils::keystates[ SDLK_a ] )
     {
       camera_xv = -1 * camera_speed;
     }
-    if( not keystates[ SDLK_w ] and not keystates[ SDLK_s ] )
+    if( not utils::keystates[ SDLK_w ] and not utils::keystates[ SDLK_s ] )
     {
       camera_yv = 0;
     }
-    if( not keystates[ SDLK_d ] and not keystates[ SDLK_a ] )
+    if( not utils::keystates[ SDLK_d ] and not utils::keystates[ SDLK_a ] )
     {
       camera_xv = 0;
     }
@@ -395,6 +403,12 @@ namespace map_utils
       load_chunk( x_coord, y_coord + 1, 0, 1 );
       load_chunk( x_coord - 1, y_coord + 1, -1, 1 );
       load_chunk( x_coord - 1, y_coord, -1, 0 );
+      utils::apply_surface( 0, 0,
+			    surface_tiles,
+			    surface_bottom );
+      utils::apply_surface( 0, 0,
+			    surface_one,
+			    surface_bottom );
   }
 
   void save_chunk( int x, int y, int x_offset, int y_offset, std::string map_name, bool should_save_static )

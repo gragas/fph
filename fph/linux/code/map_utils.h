@@ -23,6 +23,7 @@ namespace map_utils
 
   extern SDL_Surface* surface_tiles;
   extern SDL_Surface* surface_one;
+  extern SDL_Surface* surface_bottom;
   extern SDL_Surface* surface_two;
   extern SDL_Surface* surface_characters;
   extern SDL_Surface* surface_climate;
