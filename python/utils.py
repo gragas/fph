@@ -1,7 +1,7 @@
 import pygame
 import pygame.font
 
-def init( logic_func=None, render_func=None ):
+def init( logic_func=None, update_func=None, render_func=None ):
 
     global SCREEN_W, SCREEN_H
     global SCREEN_S, SCREEN_M
@@ -31,9 +31,11 @@ def init( logic_func=None, render_func=None ):
     FRAMES_PER_SECOND = 120
     
     global logic
+    global update
     global render    
 
     logic = logic_func
+    update = update_func
     render = render_func
 
     global delta
