@@ -2,10 +2,10 @@ from random import random
 from math import sin, pi
 
 import pygame
-import utils
+from buffalo import utils
 
-from label import Label
-from button import Button
+from buffalo.label import Label
+from buffalo.button import Button
 
 def init():
 
@@ -22,23 +22,20 @@ def init():
     BACKGROUND_TIMER = 0
     OSCILLATION_TIME = 10000
 
+
+    global buttons
     global labels
-    
+
+    buttons = set([])    
     labels = set([])
 
-    global label_version
     label_version = Label(
         (5, utils.SCREEN_H - 5),
-        "FPH 0.0 alpha + July 15th, 2015",
+        "FPH 0.0 alpha + July 20th, 2015",
         invert_y_pos=True,
         )
     labels.add( label_version )
 
-    global buttons
-
-    buttons = set([])
-
-    global button_exit
     button_exit = Button(
         (utils.SCREEN_W / 2, 3 * utils.SCREEN_H / 4),
         "Exit",
@@ -48,8 +45,7 @@ def init():
         func=exit,
         )
     buttons.add( button_exit )
-    
-    global button_options
+
     button_options = Button(
         (utils.SCREEN_W / 2, button_exit.pos[1] - 10),
         "Options",
@@ -59,7 +55,6 @@ def init():
         )
     buttons.add( button_options )
 
-    global button_multiplayer
     button_multiplayer = Button(
         (utils.SCREEN_W / 2, button_options.pos[1] - 10),
         "Multiplayer",
@@ -69,7 +64,6 @@ def init():
         )
     buttons.add( button_multiplayer )
 
-    global button_select_character
     button_select_character = Button(
         (utils.SCREEN_W / 2, button_multiplayer.pos[1] - 10),
         "Select Character",
@@ -79,7 +73,6 @@ def init():
         )
     buttons.add( button_select_character )
 
-    global button_new_character
     button_new_character = Button(
         (utils.SCREEN_W / 2, button_select_character.pos[1] - 10),
         "New Character",

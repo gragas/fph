@@ -1,11 +1,11 @@
 import pygame
-import utils
+from buffalo import utils
 
 import menu
 
 def main():
 
-    while not utils.end:    
+    while not utils.end:
         utils.logic()
         utils.update()
         utils.render()
@@ -13,11 +13,15 @@ def main():
 
 if __name__ == "__main__":
     
-    utils.init( 
+    if not utils.init( 
         logic_func=menu.logic, 
         update_func=menu.update, 
-        render_func=menu.render 
-        )
+        render_func=menu.render,
+        ):
+        print('buffalo.utils failed to initialize')
+        pygame.quit()
+        exit()
+
     menu.init()
     main()
 
