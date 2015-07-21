@@ -2,11 +2,20 @@ from random import random
 from math import sin, pi
 
 import pygame
-from buffalo import utils
 
+from buffalo import utils
 from buffalo.label import Label
 from buffalo.button import Button
 
+import new_character
+
+def go_to_new_character():
+
+    utils.logic = new_character.logic
+    utils.update = new_character.update
+    utils.render = new_character.render
+    new_character.init()
+    
 def init():
 
     global BACKGROUND_COLOR, R_MAX, G_MAX, B_MAX
@@ -18,10 +27,9 @@ def init():
         int(random() * 150) + 50,
         255,
         )
-    BACKGROUND_COLOR_SWITCH = 0
+    BACKGROUND_COLOR_SWITCH = 2
     BACKGROUND_TIMER = 0
     OSCILLATION_TIME = 10000
-
 
     global buttons
     global labels
@@ -30,9 +38,8 @@ def init():
     labels = set([])
 
     label_version = Label(
-        (5, utils.SCREEN_H - 5),
+        (5, 5),
         "FPH 0.0 alpha + July 20th, 2015",
-        invert_y_pos=True,
         )
     labels.add( label_version )
 
@@ -79,6 +86,7 @@ def init():
         invert_y_pos=True,
         x_centered=True,
         feathering=10,
+        func=go_to_new_character,
         )
     buttons.add( button_new_character )
 
@@ -128,6 +136,6 @@ def render():
         label.blit( utils.screen )
     for button in buttons:
         button.blit( utils.screen )
-
+                             
     pygame.display.update()
     

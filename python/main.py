@@ -14,7 +14,7 @@ def main():
 if __name__ == "__main__":
     
     if not utils.init( 
-        logic_func=menu.logic, 
+        logic_func=menu.logic,
         update_func=menu.update, 
         render_func=menu.render,
         ):
