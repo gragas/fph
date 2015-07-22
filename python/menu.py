@@ -48,7 +48,6 @@ def init():
         "Exit",
         x_centered=True,
         y_centered=True,
-        feathering=10,
         func=exit,
         )
     buttons.add( button_exit )
@@ -58,7 +57,6 @@ def init():
         "Options",
         invert_y_pos=True,
         x_centered=True,
-        feathering=10,
         )
     buttons.add( button_options )
 
@@ -67,7 +65,6 @@ def init():
         "Multiplayer",
         invert_y_pos=True,
         x_centered=True,
-        feathering=10,
         )
     buttons.add( button_multiplayer )
 
@@ -76,7 +73,6 @@ def init():
         "Select Character",
         invert_y_pos=True,
         x_centered=True,
-        feathering=10,
         )
     buttons.add( button_select_character )
 
@@ -85,7 +81,6 @@ def init():
         "New Character",
         invert_y_pos=True,
         x_centered=True,
-        feathering=10,
         func=go_to_new_character,
         )
     buttons.add( button_new_character )

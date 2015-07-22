@@ -38,7 +38,6 @@ def init():
         (20, utils.SCREEN_H - 20),
         "Back",
         invert_y_pos=True,
-        feathering=10,
         func=return_to_menu,
         )
     buttons.add( button_back )
