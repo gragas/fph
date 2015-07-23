@@ -6,6 +6,7 @@ from buffalo import utils
 from buffalo.label import Label
 from buffalo.button import Button
 from buffalo.input import Input
+from buffalo.option import Option
 
 import menu
 
@@ -22,6 +23,7 @@ def init():
     global buttons
     global labels
     global inputs
+    global options
 
     BACKGROUND_COLOR = (
         int(random() * 150) + 70,
@@ -33,6 +35,7 @@ def init():
     buttons = set([])
     labels = set([])
     inputs = set([])
+    options = set([])
 
     button_back = Button(
         (20, utils.SCREEN_H - 20),
@@ -66,6 +69,26 @@ def init():
         )
     inputs.add( input_character_name )
 
+    label_race = Label(
+        (20, label_character_name.pos[1] + label_character_name.surface.get_size()[1] + 10),
+        "Race:",
+        )
+    labels.add( label_race )
+
+    option_race = Option(
+        (label_race.pos[0] + label_race.surface.get_size()[0] + 10, label_race.pos[1]),
+        (
+            "Human",
+            "Wood Elf",
+            "High Elf",
+            "Dark Elf",
+            "Dwarf",
+            "Hobbit",
+            "Askarian",
+        )
+        )
+    options.add( option_race )
+
 def logic():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -82,6 +105,11 @@ def logic():
             for button in buttons:
                 if button.get_rect().collidepoint( mouse_pos ):
                     button.set_selected(True)
+            for option in options:
+                if option.get_left_rect().collidepoint( mouse_pos ):
+                    option.set_left_selected(True)
+                if option.get_right_rect().collidepoint( mouse_pos ):
+                    option.set_right_selected(True)
         elif event.type == pygame.MOUSEBUTTONUP:
             mouse_pos = pygame.mouse.get_pos()
             for button in buttons:
@@ -94,6 +122,11 @@ def logic():
                     inpt.select()
                 else:
                     inpt.deselect()
+            for option in options:
+                if option.get_left_rect().collidepoint( mouse_pos ):
+                    option.go_left()
+                if option.get_right_rect().collidepoint( mouse_pos ):
+                    option.go_right()
 
 def update():
     pass
@@ -107,5 +140,7 @@ def render():
         inpt.blit( utils.screen )
     for button in buttons:
         button.blit( utils.screen )
+    for option in options:
+        option.blit( utils.screen )    
 
     pygame.display.update()

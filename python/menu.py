@@ -39,7 +39,7 @@ def init():
 
     label_version = Label(
         (5, 5),
-        "FPH 0.0 alpha + July 20th, 2015",
+        "FPH 0.1 alpha + July 22nd, 2015",
         )
     labels.add( label_version )
 
