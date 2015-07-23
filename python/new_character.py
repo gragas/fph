@@ -79,15 +79,49 @@ def init():
         (label_race.pos[0] + label_race.surface.get_size()[0] + 10, label_race.pos[1]),
         (
             "Human",
-            "Wood Elf",
-            "High Elf",
-            "Dark Elf",
-            "Dwarf",
-            "Hobbit",
+            "Riptide",
+            "Eiliac Elf",
+            "Lerbore Elf",
+            "Dun-Hal Elf",
+            "Whitesmith Dwarf",
+            "Dayok-Mur Dwarf",
+            "Halfling",
             "Askarian",
         )
         )
     options.add( option_race )
+
+    label_profession = Label(
+        (20, label_race.pos[1] + label_race.surface.get_size()[1] + 10),
+        "Profession:",
+        )
+    labels.add( label_profession )
+
+    option_profession = Option(
+        (label_profession.pos[0] + label_profession.surface.get_size()[0] + 10, label_profession.pos[1]),
+        (
+            "Alchemist",
+            "Geologist",
+            "Ethnobotanist",
+            "Diviner",
+            "Hunter",
+            "Gatherer",
+            "Merchant",
+            "Mercenary",
+            "Enchanter",
+            "Mage",
+            "Environmentalist",
+            "Biologist",
+            "Theif",
+            "Beggar",
+            "Smith",
+            "Fletcher",
+            "Leatherworker",
+            "Monk",
+            "Mathematician",
+        )
+        )
+    options.add( option_profession )
 
 def logic():
     for event in pygame.event.get():
