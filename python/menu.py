@@ -68,22 +68,39 @@ def init():
         )
     buttons.add( button_multiplayer )
 
-    button_select_character = Button(
+    button_load_game = Button(
         (utils.SCREEN_W / 2, button_multiplayer.pos[1] - 10),
-        "Select Character",
+        "Load Game",
         invert_y_pos=True,
         x_centered=True,
         )
-    buttons.add( button_select_character )
+    buttons.add( button_load_game )
 
-    button_new_character = Button(
-        (utils.SCREEN_W / 2, button_select_character.pos[1] - 10),
-        "New Character",
+    button_new = Button(
+        (utils.SCREEN_W / 2, button_load_game.pos[1] - 10),
+        "New Game",
         invert_y_pos=True,
         x_centered=True,
+        )
+    buttons.add( button_new )
+
+    button_new_character = Button(
+        (20, utils.SCREEN_H - 20),
+        "New Character",
+        invert_y_pos=True,
         func=go_to_new_character,
         )
     buttons.add( button_new_character )
+
+    button_select_character = Button(
+        (
+            button_new_character.pos[0] + button_new_character.size[0] + 20,
+            utils.SCREEN_H - 20
+        ),
+        "Select Character",
+        invert_y_pos=True,
+        )
+    buttons.add( button_select_character )
 
 def logic():
     for event in pygame.event.get():

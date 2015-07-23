@@ -17,6 +17,12 @@ def return_to_menu():
     utils.render = menu.render
     menu.init()
 
+def create_character():
+
+    # First create the character
+    # Then go back to the main menu
+    return_to_menu()
+
 def init():
 
     global BACKGROUND_COLOR
@@ -44,6 +50,14 @@ def init():
         func=return_to_menu,
         )
     buttons.add( button_back )
+
+    button_create = Button(
+        (button_back.pos[0] + button_back.size[0] + 10, utils.SCREEN_H - 20),
+        "Create",
+        invert_y_pos=True,
+        func=create_character,
+        )
+    buttons.add( button_create )
 
     global value_character_name
     value_character_name = "Tom"
