@@ -93,14 +93,16 @@ def init():
         (label_race.pos[0] + label_race.surface.get_size()[0] + 10, label_race.pos[1]),
         (
             "Human",
+            "Almander",
+            "Lormander",
             "Riptide",
+            "Askarian",
             "Eiliac Elf",
             "Lerbore Elf",
             "Dun-Hal Elf",
             "Whitesmith Dwarf",
             "Dayok-Mur Dwarf",
             "Halfling",
-            "Askarian",
         )
         )
     options.add( option_race )
@@ -112,19 +114,26 @@ def init():
     labels.add( label_profession )
 
     option_profession = Option(
-        (label_profession.pos[0] + label_profession.surface.get_size()[0] + 10, label_profession.pos[1]),
+        (
+            label_profession.pos[0] + label_profession.surface.get_size()[0] + 10,
+            label_profession.pos[1]
+        ),
         (
             "Alchemist",
             "Geologist",
             "Ethnobotanist",
             "Diviner",
+            "Shaman",
             "Hunter",
             "Gatherer",
             "Merchant",
             "Mercenary",
             "Enchanter",
+            "Rider",
+            "Guard",
             "Mage",
             "Environmentalist",
+            "Eschatologist",
             "Biologist",
             "Theif",
             "Beggar",

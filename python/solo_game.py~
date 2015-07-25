@@ -1,0 +1,19 @@
+import pygame
+
+from buffalo import utils
+
+def init():
+
+    pass
+
+def logic():
+
+    pass
+
+def update():
+
+    pass
+
+def render():
+
+    pass

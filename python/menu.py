@@ -8,6 +8,7 @@ from buffalo.label import Label
 from buffalo.button import Button
 
 import new_character
+import solo_game
 
 def go_to_new_character():
 
@@ -15,7 +16,14 @@ def go_to_new_character():
     utils.update = new_character.update
     utils.render = new_character.render
     new_character.init()
-    
+
+def load_game():
+
+    utils.logic = solo_game.logic
+    utils.update = solo_game.update
+    utils.render = solo_game.render
+    solo_game.init()
+
 def init():
 
     global BACKGROUND_COLOR, R_MAX, G_MAX, B_MAX
@@ -73,6 +81,7 @@ def init():
         "Load Game",
         invert_y_pos=True,
         x_centered=True,
+        func=load_game,
         )
     buttons.add( button_load_game )
 
