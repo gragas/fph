@@ -3,3 +3,5 @@
 *.py~
 *.pyc
 *.save~
+*.race~
+*.profession~
