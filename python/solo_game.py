@@ -21,10 +21,20 @@ def logic():
 def update():
 
     # A little camera movement demonstration
-    speed = 0.2
-    change = int(speed * utils.delta)
+    speed = .004 * (1000.0 / utils.FRAMES_PER_SECOND)
+    run_mult = 1.9
     
     keys = pygame.key.get_pressed()
+
+    if (keys[pygame.K_a] or keys[pygame.K_d]) and \
+       (keys[pygame.K_w] or keys[pygame.K_s]):
+        speed /= 1.06625
+
+    if keys[pygame.K_LSHIFT]:
+        speed *= run_mult
+
+    change = int(speed * utils.delta)
+    
     if keys[pygame.K_a]:
         camera.BLIT_POSITION = (camera.BLIT_POSITION[0] + change, camera.BLIT_POSITION[1])
     if keys[pygame.K_d]:

@@ -12,18 +12,18 @@ def init():
     global BOARDER_SIZE, BLIT_POSITION
 
     TILE_SIZE = 32
-    BOARDER_SIZE = 0
-    SURFACE_SIZE = (
-        utils.SCREEN_W + 2 * BOARDER_SIZE * TILE_SIZE,
-        utils.SCREEN_H + 2 * BOARDER_SIZE * TILE_SIZE
-        )
-    SW_IN_TILES = utils.SCREEN_W // TILE_SIZE
-    SH_IN_TILES = utils.SCREEN_H // TILE_SIZE
+    BOARDER_SIZE = 2
+    NUM_TILES_SW = utils.SCREEN_W // TILE_SIZE
+    NUM_TILES_SH = utils.SCREEN_H // TILE_SIZE
     if not utils.SCREEN_W % TILE_SIZE == 0:
-        SW_IN_TILES += 1
+        NUM_TILES_SW += 1
     if not utils.SCREEN_H % TILE_SIZE == 0:
-        SH_IN_TILES += 1
-    BLIT_POSITION = (-BOARDER_SIZE * TILE_SIZE + 100, -BOARDER_SIZE * TILE_SIZE + 100)
+        NUM_TILES_SH += 1
+    SURFACE_SIZE = (
+        (NUM_TILES_SW + 2 * BOARDER_SIZE) * TILE_SIZE,
+        (NUM_TILES_SH + 2 * BOARDER_SIZE) * TILE_SIZE,
+        )
+    BLIT_POSITION = (-BOARDER_SIZE * TILE_SIZE, -BOARDER_SIZE * TILE_SIZE)
     
     global zero, one, two
     
@@ -31,9 +31,20 @@ def init():
     one = utils.empty_surface( SURFACE_SIZE )
     two = utils.empty_surface( SURFACE_SIZE )
 
+    global LOCK_TO_PLAYER
+    LOCK_TO_PLAYER = True
+
     # Fill zero with randomly colored tiles
-    for y in range(SH_IN_TILES):
-        for x in range(SW_IN_TILES):
+    for y in range(
+            0,
+            SURFACE_SIZE[1] + TILE_SIZE,
+            TILE_SIZE
+    ):
+        for x in range(
+                0,
+                SURFACE_SIZE[0] + TILE_SIZE,
+                TILE_SIZE
+        ):
             pygame.draw.rect( zero,
                               (
                                   int(random() * 256),
@@ -41,5 +52,9 @@ def init():
                                   int(random() * 256),
                                   255
                               ),
-                              ( x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE )
+                              ( x, y, TILE_SIZE, TILE_SIZE )
                           )
+
+def update():
+    if self.LOCK_TO_PLAYER:
+        pass
