@@ -1,3 +1,4 @@
+import os.path
 from random import random
 
 import pygame
@@ -9,6 +10,7 @@ from buffalo.input import Input
 from buffalo.option import Option
 
 import menu
+import storage
 
 def return_to_menu():
     
@@ -22,6 +24,9 @@ def create_character():
     # First create the character
     # Then go back to the main menu
     return_to_menu()
+
+def update_race_labels():
+    pass
 
 def init():
 
@@ -80,37 +85,197 @@ def init():
             ),
         value_character_name,
         func=set_character_name,
-        )
+    )
     inputs.add( input_character_name )
 
     label_race = Label(
         (20, label_character_name.pos[1] + label_character_name.surface.get_size()[1] + 10),
         "Race:",
-        )
+    )
     labels.add( label_race )
 
+    global race_name, race_description, race_icon
+    global race_cons_mod, race_endu_mod, race_pneu_mod
+    global race_resi_mod, race_reso_mod, race_prov_mod
+    
+    storage.load_races()
+
+    if not storage.races:
+        race_description = "None"
+        race_icon = utils.empty_surface( (64, 64) )
+        race_cons_mod = "None"
+        race_endu_mod = "None"
+        race_pneu_mod = "None"
+        race_resi_mod = "None"
+        race_reso_mod = "None"
+        race_prov_mod = "None"
+    else:
+        race_description = storage.races[storage.race_names[0]].description
+        try:
+            race_icon = pygame.image.load(
+                os.path.join(
+                    'data','races','icons',storage.races[storage.race_names[0]].icon_filename
+                )
+            ).convert_alpha()
+        except:
+            race_icon = utils.empty_surface( (64, 64) )
+        print(storage.races[storage.race_names[0]].cons_mod)
+        race_cons_mod = str(storage.races[storage.race_names[0]].cons_mod)
+        race_endu_mod = str(storage.races[storage.race_names[0]].endu_mod)
+        race_pneu_mod = str(storage.races[storage.race_names[0]].pneu_mod)
+        race_resi_mod = str(storage.races[storage.race_names[0]].resi_mod)
+        race_reso_mod = str(storage.races[storage.race_names[0]].reso_mod)
+        race_prov_mod = str(storage.races[storage.race_names[0]].prov_mod)
+        for n in ("cons", "endu", "pneu", "resi", "reso", "prov",):
+            if int(globals()["race_" + n + "_mod"]) > 0:
+                globals()["race_" + n + "_mod"] = "+" + globals()["race_" + n + "_mod"]
+    
     option_race = Option(
         (label_race.pos[0] + label_race.surface.get_size()[0] + 10, label_race.pos[1]),
-        (
-            "Human",
-            "Almander",
-            "Lormander",
-            "Riptide",
-            "Askarian",
-            "Eiliac Elf",
-            "Lerbore Elf",
-            "Dun-Hal Elf",
-            "Whitesmith Dwarf",
-            "Dayok-Mur Dwarf",
-            "Halfling",
-        )
-        )
+        storage.race_names
+    )
     options.add( option_race )
 
-    label_profession = Label(
+    label_race_description = Label(
         (20, label_race.pos[1] + label_race.surface.get_size()[1] + 10),
+        "Description:",
+    )
+    labels.add( label_race_description )
+
+    label_race_description_value = Label(
+        (
+            label_race_description.pos[0] + label_race_description.surface.get_size()[0] + 10,
+            label_race_description.pos[1]
+        ),
+        race_description,
+    )
+    labels.add( label_race_description_value )
+
+    label_race_cons_mod = Label(
+        (
+            20,
+            label_race_description_value.pos[1] + \
+            label_race_description_value.surface.get_size()[1] + 10
+        ),
+        "Constitution Mod:",
+    )
+    labels.add( label_race_cons_mod )
+
+    label_race_cons_mod_value = Label(
+        (
+            label_race_cons_mod.pos[0] + label_race_cons_mod.surface.get_size()[0] + 10,
+            label_race_cons_mod.pos[1]
+        ),
+        race_cons_mod,
+    )
+    labels.add( label_race_cons_mod_value )
+
+    label_race_endu_mod = Label(
+        (
+            20,
+            label_race_cons_mod.pos[1] + \
+            label_race_cons_mod.surface.get_size()[1] + 10
+        ),
+        "Endurance Mod:",
+    )
+    labels.add( label_race_endu_mod )
+
+    label_race_endu_mod_value = Label(
+        (
+            label_race_cons_mod_value.pos[0] + label_race_cons_mod_value.surface.get_size()[0],
+            label_race_endu_mod.pos[1]
+        ),
+        race_endu_mod,
+        invert_x_pos=True,
+    )
+    labels.add( label_race_endu_mod_value )
+
+    label_race_pneu_mod = Label(
+        (
+            20,
+            label_race_endu_mod.pos[1] + \
+            label_race_endu_mod.surface.get_size()[1] + 10
+        ),
+        "Pneuma Mod:",
+    )
+    labels.add( label_race_pneu_mod )
+
+    label_race_pneu_mod_value = Label(
+        (
+            label_race_cons_mod_value.pos[0] + label_race_cons_mod_value.surface.get_size()[0],
+            label_race_pneu_mod.pos[1]
+        ),
+        race_pneu_mod,
+        invert_x_pos=True,
+    )
+    labels.add( label_race_pneu_mod_value )
+
+    label_race_resi_mod = Label(
+        (
+            20,
+            label_race_pneu_mod.pos[1] + \
+            label_race_pneu_mod.surface.get_size()[1] + 10
+        ),
+        "Resiliance Mod:",
+    )
+    labels.add( label_race_resi_mod )
+
+    label_race_resi_mod_value = Label(
+        (
+            label_race_cons_mod_value.pos[0] + label_race_cons_mod_value.surface.get_size()[0],
+            label_race_resi_mod.pos[1]
+        ),
+        race_resi_mod,
+        invert_x_pos=True,
+    )
+    labels.add( label_race_resi_mod_value )
+
+    label_race_reso_mod = Label(
+        (
+            20,
+            label_race_resi_mod.pos[1] + \
+            label_race_resi_mod.surface.get_size()[1] + 10
+        ),
+        "Resolution Mod:",
+    )
+    labels.add( label_race_reso_mod )
+
+    label_race_reso_mod_value = Label(
+        (
+            label_race_cons_mod_value.pos[0] + label_race_cons_mod_value.surface.get_size()[0],
+            label_race_reso_mod.pos[1]
+        ),
+        race_reso_mod,
+        invert_x_pos=True,
+    )
+    labels.add( label_race_reso_mod_value )
+
+    label_race_prov_mod = Label(
+        (
+            20,
+            label_race_reso_mod.pos[1] + \
+            label_race_reso_mod.surface.get_size()[1] + 10
+        ),
+        "Providence Mod:",
+    )
+    labels.add( label_race_prov_mod )
+
+    label_race_prov_mod_value = Label(
+        (
+            label_race_cons_mod_value.pos[0] + label_race_cons_mod_value.surface.get_size()[0],
+            label_race_prov_mod.pos[1]
+        ),
+        race_prov_mod,
+        invert_x_pos=True,
+    )
+    labels.add( label_race_prov_mod_value )
+
+    update_race_labels()
+
+    label_profession = Label(
+        (20, label_race_prov_mod.pos[1] + label_race_prov_mod.surface.get_size()[1] + 10),
         "Profession:",
-        )
+    )
     labels.add( label_profession )
 
     option_profession = Option(
