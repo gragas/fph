@@ -1,2 +1,5 @@
 *.cpp~
 *.h~
+*.py~
+*.pyc
+*.save~
