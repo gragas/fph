@@ -25,8 +25,65 @@ def create_character():
     # Then go back to the main menu
     return_to_menu()
 
+def update_race_selection():
+
+    global race_name
+    race_name = option_race.data[option_race.index]
+    update_race_labels()
+
 def update_race_labels():
-    pass
+
+    global race_name, race_description, race_icon
+    global race_cons_mod, race_endu_mod, race_pneu_mod
+    global race_resi_mod, race_reso_mod, race_prov_mod
+    
+    global label_race_description_value
+    global label_race_cons_mod_value, label_race_endu_mod_value, label_race_pneu_mod_value
+    global label_race_resi_mod_value, label_race_reso_mod_value, label_race_prov_mod_value
+
+    if not storage.races:
+        race_description = "None"
+        race_icon = utils.empty_surface( (0, 0) )
+        race_cons_mod = "None"
+        race_endu_mod = "None"
+        race_pneu_mod = "None"
+        race_resi_mod = "None"
+        race_reso_mod = "None"
+        race_prov_mod = "None"
+    else:
+        race_description = storage.races[race_name].description
+        try:
+            race_icon = pygame.image.load(
+                os.path.join(
+                    'data','races','icons',storage.races[race_name].icon_filename
+                )
+            ).convert_alpha()
+        except:
+            race_icon = utils.empty_surface( (0, 0) )
+        race_cons_mod = str(storage.races[race_name].cons_mod)
+        race_endu_mod = str(storage.races[race_name].endu_mod)
+        race_pneu_mod = str(storage.races[race_name].pneu_mod)
+        race_resi_mod = str(storage.races[race_name].resi_mod)
+        race_reso_mod = str(storage.races[race_name].reso_mod)
+        race_prov_mod = str(storage.races[race_name].prov_mod)
+        for n in ("cons", "endu", "pneu", "resi", "reso", "prov",):
+            if int(globals()["race_" + n + "_mod"]) > 0:
+                globals()["race_" + n + "_mod"] = "+" + globals()["race_" + n + "_mod"]
+
+    label_race_description_value.text = race_description
+    label_race_description_value.render()
+    label_race_cons_mod_value.text = race_cons_mod
+    label_race_cons_mod_value.render()
+    label_race_endu_mod_value.text = race_endu_mod
+    label_race_endu_mod_value.render()
+    label_race_pneu_mod_value.text = race_pneu_mod
+    label_race_pneu_mod_value.render()
+    label_race_resi_mod_value.text = race_resi_mod
+    label_race_resi_mod_value.render()
+    label_race_reso_mod_value.text = race_reso_mod
+    label_race_reso_mod_value.render()
+    label_race_prov_mod_value.text = race_prov_mod
+    label_race_prov_mod_value.render()
 
 def init():
 
@@ -98,46 +155,31 @@ def init():
     global race_cons_mod, race_endu_mod, race_pneu_mod
     global race_resi_mod, race_reso_mod, race_prov_mod
     
+    global label_race_description_value
+    global label_race_cons_mod_value, label_race_endu_mod_value, label_race_pneu_mod_value
+    global label_race_resi_mod_value, label_race_reso_mod_value, label_race_prov_mod_value
+
+    global option_race
+
     storage.load_races()
 
-    if not storage.races:
-        race_description = "None"
-        race_icon = utils.empty_surface( (64, 64) )
-        race_cons_mod = "None"
-        race_endu_mod = "None"
-        race_pneu_mod = "None"
-        race_resi_mod = "None"
-        race_reso_mod = "None"
-        race_prov_mod = "None"
-    else:
-        race_description = storage.races[storage.race_names[0]].description
-        try:
-            race_icon = pygame.image.load(
-                os.path.join(
-                    'data','races','icons',storage.races[storage.race_names[0]].icon_filename
-                )
-            ).convert_alpha()
-        except:
-            race_icon = utils.empty_surface( (64, 64) )
-        print(storage.races[storage.race_names[0]].cons_mod)
-        race_cons_mod = str(storage.races[storage.race_names[0]].cons_mod)
-        race_endu_mod = str(storage.races[storage.race_names[0]].endu_mod)
-        race_pneu_mod = str(storage.races[storage.race_names[0]].pneu_mod)
-        race_resi_mod = str(storage.races[storage.race_names[0]].resi_mod)
-        race_reso_mod = str(storage.races[storage.race_names[0]].reso_mod)
-        race_prov_mod = str(storage.races[storage.race_names[0]].prov_mod)
-        for n in ("cons", "endu", "pneu", "resi", "reso", "prov",):
-            if int(globals()["race_" + n + "_mod"]) > 0:
-                globals()["race_" + n + "_mod"] = "+" + globals()["race_" + n + "_mod"]
+    if storage.races:
+        race_name = storage.races[storage.race_names[0]].name
     
     option_race = Option(
         (label_race.pos[0] + label_race.surface.get_size()[0] + 10, label_race.pos[1]),
-        storage.race_names
+        storage.race_names,
+        rfunc=update_race_selection,
+        lfunc=update_race_selection,
     )
     options.add( option_race )
 
     label_race_description = Label(
-        (20, label_race.pos[1] + label_race.surface.get_size()[1] + 10),
+        (
+            20,
+            label_race.pos[1] + label_race.surface.get_size()[1] + 10 + \
+            64 + 10,
+        ),
         "Description:",
     )
     labels.add( label_race_description )
@@ -147,7 +189,7 @@ def init():
             label_race_description.pos[0] + label_race_description.surface.get_size()[0] + 10,
             label_race_description.pos[1]
         ),
-        race_description,
+        "None",
     )
     labels.add( label_race_description_value )
 
@@ -166,7 +208,7 @@ def init():
             label_race_cons_mod.pos[0] + label_race_cons_mod.surface.get_size()[0] + 10,
             label_race_cons_mod.pos[1]
         ),
-        race_cons_mod,
+        "None",
     )
     labels.add( label_race_cons_mod_value )
 
@@ -185,7 +227,7 @@ def init():
             label_race_cons_mod_value.pos[0] + label_race_cons_mod_value.surface.get_size()[0],
             label_race_endu_mod.pos[1]
         ),
-        race_endu_mod,
+        "None",
         invert_x_pos=True,
     )
     labels.add( label_race_endu_mod_value )
@@ -205,7 +247,7 @@ def init():
             label_race_cons_mod_value.pos[0] + label_race_cons_mod_value.surface.get_size()[0],
             label_race_pneu_mod.pos[1]
         ),
-        race_pneu_mod,
+        "None",
         invert_x_pos=True,
     )
     labels.add( label_race_pneu_mod_value )
@@ -225,7 +267,7 @@ def init():
             label_race_cons_mod_value.pos[0] + label_race_cons_mod_value.surface.get_size()[0],
             label_race_resi_mod.pos[1]
         ),
-        race_resi_mod,
+        "None",
         invert_x_pos=True,
     )
     labels.add( label_race_resi_mod_value )
@@ -245,7 +287,7 @@ def init():
             label_race_cons_mod_value.pos[0] + label_race_cons_mod_value.surface.get_size()[0],
             label_race_reso_mod.pos[1]
         ),
-        race_reso_mod,
+        "None",
         invert_x_pos=True,
     )
     labels.add( label_race_reso_mod_value )
@@ -265,7 +307,7 @@ def init():
             label_race_cons_mod_value.pos[0] + label_race_cons_mod_value.surface.get_size()[0],
             label_race_prov_mod.pos[1]
         ),
-        race_prov_mod,
+        "None",
         invert_x_pos=True,
     )
     labels.add( label_race_prov_mod_value )
@@ -363,6 +405,13 @@ def render():
     for button in buttons:
         button.blit( utils.screen )
     for option in options:
-        option.blit( utils.screen )    
+        option.blit( utils.screen )
+    utils.screen.blit(
+        race_icon,
+        (
+            20,
+            option_race.pos[1] + option_race.size[1] + 10
+        )
+    )
 
     pygame.display.update()
