@@ -11,6 +11,7 @@ from buffalo.option import Option
 
 import menu
 import storage
+from player import Player
 
 def return_to_menu():
     
@@ -20,9 +21,46 @@ def return_to_menu():
     menu.init()
 
 def create_character():
+    
+    storage.player = Player(
+        value_character_name,
+        option_race.data[option_race.index],
+        option_profession.data[option_profession.index],
+        5.0 + int(race_cons_mod),
+        5.0 + int(race_endu_mod),
+        5.0 + int(race_pneu_mod),
+        5.0 + int(race_resi_mod),
+        5.0 + int(race_reso_mod),
+        5.0 + int(race_prov_mod),
+        utils.SCREEN_M,
+        )
+    storage.player.save()
 
-    # First create the character
-    # Then go back to the main menu
+    storage.label_player_profession = Label(
+        (
+            20 + 32 + 10,
+            menu.button_new_character.pos[1] - 10,
+        ),
+        storage.player.profession,
+        invert_y_pos = True,
+    )
+    storage.label_player_race = Label(
+        (
+            storage.label_player_profession.pos[0],
+            storage.label_player_profession.pos[1] - 10,
+        ),
+        storage.player.race,
+        invert_y_pos = True,
+    )
+    storage.label_player_name = Label(
+        (
+            storage.label_player_race.pos[0],
+            storage.label_player_race.pos[1] - 10,
+        ),
+        storage.player.name,
+        invert_y_pos = True,
+    )
+    
     return_to_menu()
 
 def update_race_selection():
@@ -320,6 +358,8 @@ def init():
     )
     labels.add( label_profession )
 
+    global option_profession
+    
     option_profession = Option(
         (
             label_profession.pos[0] + label_profession.surface.get_size()[0] + 10,

@@ -7,6 +7,7 @@ from buffalo import utils
 from buffalo.label import Label
 from buffalo.button import Button
 
+import storage
 import new_character
 import solo_game
 
@@ -93,6 +94,8 @@ def init():
         )
     buttons.add( button_new )
 
+    global button_new_character
+    
     button_new_character = Button(
         (20, utils.SCREEN_H - 20),
         "New Character",
@@ -157,6 +160,14 @@ def render():
         label.blit( utils.screen )
     for button in buttons:
         button.blit( utils.screen )
+    if storage.player is not None:
+        storage.player.blit_at(
+            utils.screen,
+            (20, button_new_character.pos[1] - 64 - 10),
+        )
+        storage.label_player_name.blit( utils.screen )
+        storage.label_player_race.blit( utils.screen )
+        storage.label_player_profession.blit( utils.screen )
                              
     pygame.display.update()
     

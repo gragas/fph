@@ -12,7 +12,7 @@ def init():
     global BOARDER_SIZE, BLIT_POSITION
 
     TILE_SIZE = 32
-    BOARDER_SIZE = 2
+    BOARDER_SIZE = 10
     NUM_TILES_SW = utils.SCREEN_W // TILE_SIZE
     NUM_TILES_SH = utils.SCREEN_H // TILE_SIZE
     if not utils.SCREEN_W % TILE_SIZE == 0:

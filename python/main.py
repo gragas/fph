@@ -2,6 +2,7 @@ import pygame
 from buffalo import utils
 
 import menu
+import storage
 
 def main():
 
@@ -23,6 +24,7 @@ if __name__ == "__main__":
         exit()
 
     menu.init()
+    storage.init()
     main()
 
     pygame.quit()

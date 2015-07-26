@@ -20,18 +20,18 @@ class Character(object):
             resi_mult,
             reso_mult,
             prov_mult,
-            chunk_coords,
             pos,
+            running,
+            gender,
             base_hp,
             base_ep,
             base_pp,
-            running,
-            walk_speed,
-            run_mult,
+            base_walk_speed,
+            base_run_mult,
             ):
         self.name = name
         self.race = race
-        self.profession = profession,
+        self.profession = profession
         self.cons = cons
         self.endu = endu
         self.pneu = pneu
@@ -46,12 +46,17 @@ class Character(object):
         self.prov_mult = prov_mult
         self.pos = self.x, self.y = pos
         self.running = running
-        self.walk_speed = walk_speed
-        self.run_mult = run_mult
+        self.gender = gender
+        self.base_hp = base_hp
+        self.base_ep = base_ep
+        self.base_pp = base_pp
+        self.base_walk_speed = base_walk_speed
+        self.base_run_mult = base_run_mult
         self.calculate_maximums()
         self.set_maximums()
         # Load an image of the character
         self.surface = None
+        self.hp_shield = 0.0
 
     def calculate_attribute_bonuses(self):
         # Calculate bonuses based on race, profession, equipped items, etc.
@@ -75,7 +80,7 @@ class Character(object):
     def set_maximums(self):
         self.cur_hp = self.max_hp
         self.cur_ep = self.max_ep
-        self.max_pp = self.max_pp
+        self.cur_pp = self.max_pp
 
     def update(self):
         raise NotImplementedError("The update(self) method has not been implemented for this class.")

@@ -4,6 +4,16 @@ from os.path import isfile, join
 
 from race import Race
 
+def init():
+
+    global player
+    player = None
+
+    global label_player_name, label_player_race, label_player_profession
+    label_player_name = None
+    label_player_race = None
+    label_player_profession = None
+
 def load_races():
 
     def parse_mod(contents, filename):
