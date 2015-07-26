@@ -70,6 +70,13 @@ class Player(Character):
             raise
         self.surface = utils.empty_surface( (32, 64) )
         self.surface.blit( self.down0, (0, 0) )
+        self.blit_pos = utils.SCREEN_W / 2, utils.SCREEN_H / 2
+        self.immobile = False
+        self.calculate_speeds()
+
+    def calculate_speeds(self):
+        self.walk_speed = self.base_walk_speed # + bonuses
+        self.run_mult = self.base_run_mult # + bonuses
 
     def save(self):
         with open(os.path.join('data','saves', self.name + '.save'), 'w') as save_file:
@@ -99,7 +106,7 @@ class Player(Character):
             save_file.write('Current Pneuma Points: ' + str(self.cur_pp) + '\n')
             save_file.write('Base Walk Speed: ' + str(self.base_walk_speed) + '\n')
             save_file.write('Base Run Multiplier: ' + str(self.base_run_mult) + '\n')
-        
+
     def update(self):
         
         keys = pygame.key.get_pressed()
@@ -130,7 +137,7 @@ class Player(Character):
             self.pos = self.x, self.y = (self.x, self.y + change)
 
     def blit(self, dest):
-        dest.blit( self.surface, self.pos )
+        dest.blit( self.surface, self.blit_pos )
 
     def blit_at(self, dest, pos):
         dest.blit( self.surface, pos )

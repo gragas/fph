@@ -44,7 +44,7 @@ class Character(object):
         self.resi_mult = resi_mult
         self.reso_mult = reso_mult
         self.prov_mult = prov_mult
-        self.pos = self.x, self.y = pos
+        self.pos = self.x, self.y = ( int(float(pos[0])), int(float(pos[1])) )
         self.running = running
         self.gender = gender
         self.base_hp = base_hp

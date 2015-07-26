@@ -20,6 +20,8 @@ def logic():
 
 def update():
 
+    storage.player.update()
+    
     # A little camera movement demonstration
     speed = .004 * (1000.0 / utils.FRAMES_PER_SECOND)
     run_mult = 1.9
@@ -51,6 +53,7 @@ def render():
     utils.screen.blit(camera.zero, camera.BLIT_POSITION)
     utils.screen.blit(camera.one, camera.BLIT_POSITION)
     # blit dynamic stuff (the player, NPCs, etc.)
+    storage.player.blit( utils.screen )
     utils.screen.blit(camera.two, camera.BLIT_POSITION)
 
     pygame.display.update()
