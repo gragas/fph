@@ -8,7 +8,6 @@ import storage
 def init():
 
     camera.init()
-    storage.init()
 
 def logic():
 

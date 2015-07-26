@@ -35,32 +35,7 @@ def create_character():
         utils.SCREEN_M,
         )
     storage.player.save()
-
-    storage.label_player_profession = Label(
-        (
-            20 + 32 + 10,
-            menu.button_new_character.pos[1] - 10,
-        ),
-        storage.player.profession,
-        invert_y_pos = True,
-    )
-    storage.label_player_race = Label(
-        (
-            storage.label_player_profession.pos[0],
-            storage.label_player_profession.pos[1] - 10,
-        ),
-        storage.player.race,
-        invert_y_pos = True,
-    )
-    storage.label_player_name = Label(
-        (
-            storage.label_player_race.pos[0],
-            storage.label_player_race.pos[1] - 10,
-        ),
-        storage.player.name,
-        invert_y_pos = True,
-    )
-    
+    menu.gen_player_labels()
     return_to_menu()
 
 def update_race_selection():

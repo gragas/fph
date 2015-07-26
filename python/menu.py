@@ -9,7 +9,35 @@ from buffalo.button import Button
 
 import storage
 import new_character
+import select_character
 import solo_game
+
+def gen_player_labels():
+
+    storage.label_player_profession = Label(
+        (
+            20 + 32 + 10,
+            button_new_character.pos[1] - 10,
+        ),
+        storage.player.profession,
+        invert_y_pos = True,
+    )
+    storage.label_player_race = Label(
+        (
+            storage.label_player_profession.pos[0],
+            storage.label_player_profession.pos[1] - 10,
+        ),
+        storage.player.race,
+        invert_y_pos = True,
+    )
+    storage.label_player_name = Label(
+        (
+            storage.label_player_race.pos[0],
+            storage.label_player_race.pos[1] - 10,
+        ),
+        storage.player.name,
+        invert_y_pos = True,
+    )
 
 def go_to_new_character():
 
@@ -18,8 +46,20 @@ def go_to_new_character():
     utils.render = new_character.render
     new_character.init()
 
+def go_to_select_character():
+
+    utils.logic = select_character.logic
+    utils.update = select_character.update
+    utils.render = select_character.render
+    select_character.init()
+
 def load_game():
 
+    if storage.player is None:
+        return
+
+    # Go to load game screen
+    # Do NOT do the following
     utils.logic = solo_game.logic
     utils.update = solo_game.update
     utils.render = solo_game.render
@@ -111,6 +151,7 @@ def init():
         ),
         "Select Character",
         invert_y_pos=True,
+        func=go_to_select_character,
         )
     buttons.add( button_select_character )
 

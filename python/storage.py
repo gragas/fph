@@ -3,6 +3,7 @@ from os import listdir
 from os.path import isfile, join
 
 from race import Race
+from player import Player
 
 def init():
 
@@ -13,6 +14,119 @@ def init():
     label_player_name = None
     label_player_race = None
     label_player_profession = None
+
+    global player_names
+    player_names = []
+    load_player_names()
+
+def load_player(player_filename):
+
+    if not player_filename[-5:] == '.save':
+        print("ERROR: " + player_filename + " is not a .save file.")
+        raise
+    with open(join('data','saves',player_filename)) as player_file:
+        for line in player_file:
+            contents = line.strip().split()
+            if contents[0] == 'Name:':
+                name = line[line.index(contents[1]):].strip()
+            elif contents[0] == 'Race:':
+                race = line[line.index(contents[1]):].strip()
+            elif contents[0] == 'Gender:':
+                gender = line[line.index(contents[1]):].strip()
+            elif contents[0] == 'Profession:':
+                profession = line[line.index(contents[1]):].strip()
+            elif contents[0] == 'Constitution:':
+                cons = float(line[line.index(contents[1]):].strip())
+            elif contents[0] == 'Endurance:':
+                endu = float(line[line.index(contents[1]):].strip())
+            elif contents[0] == 'Pneuma:':
+                pneu = float(line[line.index(contents[1]):].strip())
+            elif contents[0] == 'Resiliance:':
+                resi = float(line[line.index(contents[1]):].strip())
+            elif contents[0] == 'Resolution:':
+                reso = float(line[line.index(contents[1]):].strip())
+            elif contents[0] == 'Providence:':
+                prov = float(line[line.index(contents[1]):].strip())
+            elif contents[0] + " " + contents[1] == 'Cons Mult:':
+                cons_mult = float(line[line.index(contents[2]):].strip())
+            elif contents[0] + " " + contents[1] == 'Endu Mult:':
+                endu_mult = float(line[line.index(contents[2]):].strip())
+            elif contents[0] + " " + contents[1] == 'Pneu Mult:':
+                pneu_mult = float(line[line.index(contents[2]):].strip())
+            elif contents[0] + " " + contents[1] == 'Resi Mult:':
+                resi_mult = float(line[line.index(contents[2]):].strip())
+            elif contents[0] + " " + contents[1] == 'Reso Mult:':
+                reso_mult = float(line[line.index(contents[2]):].strip())
+            elif contents[0] + " " + contents[1] == 'Prov Mult:':
+                prov_mult = float(line[line.index(contents[2]):].strip())
+            elif contents[0] + " " + contents[1] == 'X Pos:':
+                x = line[line.index(contents[2]):].strip()
+            elif contents[0] + " " + contents[1] == 'Y Pos:':
+                y = line[line.index(contents[2]):].strip()
+            elif contents[0] + " " + contents[1] + " " + contents[2] == 'Base Hit Points:':
+                base_hp = float(line[line.index(contents[3]):].strip())
+            elif contents[0] + " " + contents[1] + " " + contents[2] == 'Current Hit Points:':
+                cur_hp = float(line[line.index(contents[3]):].strip())
+            elif contents[0] + " " + contents[1] + " " + contents[2] == 'Base Energy Points:':
+                base_ep = float(line[line.index(contents[3]):].strip())
+            elif contents[0] + " " + contents[1] + " " + contents[2] == 'Current Energy Points:':
+                cur_ep = float(line[line.index(contents[3]):].strip())
+            elif contents[0] + " " + contents[1] + " " + contents[2] == 'Base Pneuma Points:':
+                base_pp = float(line[line.index(contents[3]):].strip())
+            elif contents[0] + " " + contents[1] + " " + contents[2] == 'Current Pneuma Points:':
+                cur_pp = float(line[line.index(contents[3]):].strip())
+            elif contents[0] + " " + contents[1] + " " + contents[2] == 'Base Walk Speed:':
+                base_walk_speed = float(line[line.index(contents[3]):].strip())
+            elif contents[0] + " " + contents[1] + " " + contents[2] == 'Base Run Multiplier:':
+                base_run_mult = float(line[line.index(contents[3]):].strip())
+
+        global player
+        player = Player(
+            name,
+            race,
+            profession,
+            cons,
+            endu,
+            pneu,
+            resi,
+            reso,
+            prov,
+            (x, y),
+            gender=gender,
+            cons_mult=cons_mult,
+            endu_mult=endu_mult,
+            pneu_mult=pneu_mult,
+            resi_mult=resi_mult,
+            reso_mult=reso_mult,
+            prov_mult=prov_mult,
+            base_hp=base_hp,
+            base_ep=base_ep,
+            base_pp=base_pp,
+            running=False,
+            base_walk_speed=base_walk_speed,
+            base_run_mult=base_run_mult,
+        )
+        player.cur_hp = cur_hp
+        player.cur_ep = cur_ep
+        player.cur_pp = cur_pp
+
+def load_player_names():
+
+    # Only store the players' names, not the players themselves
+    # Only one player should be loaded at any given time
+
+    global player_names
+    player_names = []
+
+    player_filenames = [ f for f in listdir(join('data','saves')) if isfile(join('data','saves',f)) ]
+    for player_filename in player_filenames:
+        if not player_filename[-5:] == '.save':
+            continue
+        with open(join('data','saves',player_filename)) as player_file:
+            for line in player_file:
+                contents = line.strip().split()
+                if contents[0] == 'Name:':
+                    player_names.append( line[line.index(contents[1]):].strip() )
 
 def load_races():
 
