@@ -63,6 +63,26 @@ class Player(Character):
                     'data','fph','race_models',self.gender,self.race,'down0.png'
                 )
             )
+            self.right0 = pygame.image.load(
+                os.path.join(
+                    'data','fph','race_models',self.gender,self.race,'right0.png'
+                )
+            )
+            self.right1 = pygame.image.load(
+                os.path.join(
+                    'data','fph','race_models',self.gender,self.race,'right1.png'
+                )
+            )
+            self.right2 = pygame.image.load(
+                os.path.join(
+                    'data','fph','race_models',self.gender,self.race,'right2.png'
+                )
+            )
+            self.right3 = pygame.image.load(
+                os.path.join(
+                    'data','fph','race_models',self.gender,self.race,'right3.png'
+                )
+            )
         except:
             print(
                 "Could not load " + self.race + " race model."
@@ -70,6 +90,7 @@ class Player(Character):
             raise
         self.surface = utils.empty_surface( (32, 64) )
         self.surface.blit( self.down0, (0, 0) )
+        self.walk_time = utils.delta
         self.blit_pos = utils.SCREEN_W / 2, utils.SCREEN_H / 2
         self.immobile = False
         self.calculate_speeds()
@@ -135,6 +156,28 @@ class Player(Character):
             self.pos = self.x, self.y = (self.x, self.y - change)
         if keys[pygame.K_s]:
             self.pos = self.x, self.y = (self.x, self.y + change)
+
+        self.walk_time += utils.delta
+
+        if False:
+            pass
+        elif keys[pygame.K_d]:
+            self.surface.fill( (0, 0, 0, 0) )
+            if self.walk_time < 250:
+                self.surface.blit( self.right0, (0, 0) )
+            elif self.walk_time >= 250 and self.walk_time < 500:
+                self.surface.blit( self.right1, (0, 0) )
+            elif self.walk_time >= 500 and self.walk_time < 750:
+                self.surface.blit( self.right2, (0, 0) )
+            elif self.walk_time >= 750 and self.walk_time < 1000:
+                self.surface.blit( self.right3, (0, 0) )
+            elif self.walk_time >= 500:
+                self.walk_time = utils.delta
+                self.surface.blit( self.right0, (0, 0) )
+        elif not (keys[pygame.K_d] or keys[pygame.K_a] or \
+        keys[pygame.K_w] or keys[pygame.K_s]):
+            self.surface.fill( (0, 0, 0, 0) )
+            self.surface.blit( self.down0, (0, 0) )
 
     def blit(self, dest):
         dest.blit( self.surface, self.blit_pos )
