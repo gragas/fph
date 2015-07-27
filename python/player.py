@@ -57,6 +57,16 @@ class Player(Character):
             base_walk_speed,
             base_run_mult,
         )
+        self.load_race_models()
+        self.surface = utils.empty_surface( (32, 64) )
+        self.surface.blit( self.down0, (0, 0) )
+        self.walk_time = utils.delta
+        self.blit_pos = utils.SCREEN_W / 2, utils.SCREEN_H / 2
+        self.immobile = False
+        self.calculate_speeds()
+        self.update_point_bars()
+
+    def load_race_models(self):
         try:
             self.down0 = pygame.image.load(
                 os.path.join(
@@ -83,21 +93,59 @@ class Player(Character):
                     'data','fph','race_models',self.gender,self.race,'right3.png'
                 )
             )
+            self.left0 = pygame.image.load(
+                os.path.join(
+                    'data','fph','race_models',self.gender,self.race,'left0.png'
+                )
+            )
+            self.left1 = pygame.image.load(
+                os.path.join(
+                    'data','fph','race_models',self.gender,self.race,'left1.png'
+                )
+            )
+            self.left2 = pygame.image.load(
+                os.path.join(
+                    'data','fph','race_models',self.gender,self.race,'left2.png'
+                )
+            )
+            self.left3 = pygame.image.load(
+                os.path.join(
+                    'data','fph','race_models',self.gender,self.race,'left3.png'
+                )
+            )
         except:
             print(
                 "Could not load " + self.race + " race model."
             )
             raise
-        self.surface = utils.empty_surface( (32, 64) )
-        self.surface.blit( self.down0, (0, 0) )
-        self.walk_time = utils.delta
-        self.blit_pos = utils.SCREEN_W / 2, utils.SCREEN_H / 2
-        self.immobile = False
-        self.calculate_speeds()
 
     def calculate_speeds(self):
         self.walk_speed = self.base_walk_speed # + bonuses
         self.run_mult = self.base_run_mult # + bonuses
+
+    def update_point_bars(self):
+        self.hp_rect = utils.empty_surface(
+            (
+                int(100.0 * self.cur_hp / self.max_hp),
+                15,
+            )
+        )
+        self.hp_rect.fill( (255, 0, 0, 255) )
+        self.ep_rect = utils.empty_surface(
+            (
+                int(100.0 * self.cur_ep / self.max_ep),
+                15,
+            )
+        )
+        self.ep_rect.fill( (255, 255, 0, 255) )
+        self.pp_rect = utils.empty_surface(
+            (
+                int(100.0 * self.cur_pp / self.max_pp),
+                15,
+            )
+        )
+        self.pp_rect.fill( (0, 0, 255, 255) )
+
 
     def save(self):
         with open(os.path.join('data','saves', self.name + '.save'), 'w') as save_file:
@@ -174,10 +222,24 @@ class Player(Character):
             elif self.walk_time >= 500:
                 self.walk_time = utils.delta
                 self.surface.blit( self.right0, (0, 0) )
+        elif keys[pygame.K_a]:
+            self.surface.fill( (0, 0, 0, 0) )
+            if self.walk_time < 250:
+                self.surface.blit( self.left0, (0, 0) )
+            elif self.walk_time >= 250 and self.walk_time < 500:
+                self.surface.blit( self.left1, (0, 0) )
+            elif self.walk_time >= 500 and self.walk_time < 750:
+                self.surface.blit( self.left2, (0, 0) )
+            elif self.walk_time >= 750 and self.walk_time < 1000:
+                self.surface.blit( self.left3, (0, 0) )
+            elif self.walk_time >= 500:
+                self.walk_time = utils.delta
+                self.surface.blit( self.left0, (0, 0) )
         elif not (keys[pygame.K_d] or keys[pygame.K_a] or \
         keys[pygame.K_w] or keys[pygame.K_s]):
             self.surface.fill( (0, 0, 0, 0) )
             self.surface.blit( self.down0, (0, 0) )
+            self.walk_time = utils.delta
 
     def blit(self, dest):
         dest.blit( self.surface, self.blit_pos )

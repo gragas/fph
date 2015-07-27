@@ -50,10 +50,14 @@ def render():
 
     utils.screen.fill( (0, 0, 0, 0) )
     
-    utils.screen.blit(camera.zero, camera.BLIT_POSITION)
-    utils.screen.blit(camera.one, camera.BLIT_POSITION)
+    utils.screen.blit( camera.zero, camera.BLIT_POSITION )
+    utils.screen.blit( camera.one, camera.BLIT_POSITION )
     # blit dynamic stuff (the player, NPCs, etc.)
     storage.player.blit( utils.screen )
-    utils.screen.blit(camera.two, camera.BLIT_POSITION)
+    utils.screen.blit( camera.two, camera.BLIT_POSITION )
+
+    utils.screen.blit( storage.player.hp_rect, (5, utils.SCREEN_H - 60) )
+    utils.screen.blit( storage.player.ep_rect, (5, utils.SCREEN_H - 40) )
+    utils.screen.blit( storage.player.pp_rect, (5, utils.SCREEN_H - 20) )
 
     pygame.display.update()

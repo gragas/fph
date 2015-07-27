@@ -47,9 +47,9 @@ def init():
         ):
             pygame.draw.rect( zero,
                               (
-                                  int(random() * 256),
-                                  int(random() * 256),
-                                  int(random() * 256),
+                                  int(random() * 100),
+                                  int(random() * 100) + 156,
+                                  int(random() * 25),
                                   255
                               ),
                               ( x, y, TILE_SIZE, TILE_SIZE )
