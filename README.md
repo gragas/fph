@@ -1,3 +1,7 @@
+# WARNING
+
+This repository is currently being rewritten. You can find it over [here](https://github.com/gragas/adept).
+
 # FPH
 
 ## Our Philosophy

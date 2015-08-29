@@ -1,0 +1,26 @@
+Name: Serbert
+Race: Lormander
+Gender: male
+Profession: Mathematician
+Constitution: 5.0
+Endurance: 5.0
+Pneuma: 5.0
+Resiliance: 6.0
+Resolution: 6.0
+Providence: 5.0
+Cons Mult: 1.0
+Endu Mult: 1.0
+Pneu Mult: 1.0
+Resi Mult: 0.6
+Reso Mult: 0.6
+Prov Mult: 0.6
+X Pos: 960
+Y Pos: 540
+Base Hit Points: 10
+Current Hit Points: 21.6
+Base Energy Points: 10
+Current Energy Points: 22.200000000000003
+Base Pneuma Points: 10
+Current Pneuma Points: 21.6
+Base Walk Speed: 0.004
+Base Run Multiplier: 1.9

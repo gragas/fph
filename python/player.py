@@ -130,21 +130,21 @@ class Player(Character):
                 15,
             )
         )
-        self.hp_rect.fill( (255, 0, 0, 255) )
+        self.hp_rect.fill( (255, 100, 0, 255) )
         self.ep_rect = utils.empty_surface(
             (
                 int(100.0 * self.cur_ep / self.max_ep),
                 15,
             )
         )
-        self.ep_rect.fill( (255, 255, 0, 255) )
+        self.ep_rect.fill( (255, 255, 100, 255) )
         self.pp_rect = utils.empty_surface(
             (
                 int(100.0 * self.cur_pp / self.max_pp),
                 15,
             )
         )
-        self.pp_rect.fill( (0, 0, 255, 255) )
+        self.pp_rect.fill( (0, 100, 255, 255) )
 
 
     def save(self):
